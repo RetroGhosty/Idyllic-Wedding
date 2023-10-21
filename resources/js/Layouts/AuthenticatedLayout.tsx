@@ -9,6 +9,55 @@ import { User } from '@/types';
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+    const NavigationHeaderUserLevel = (viewPortStatus:string, user:number) => {
+        if (viewPortStatus === "computer"){
+            if (user === 1){
+                return (
+                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <NavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
+                            My Shop
+                        </NavLink>
+                    </div>
+                )       
+            } else if (user >= 2){
+                return (
+                    <>
+                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                            Admin Panel
+                        </NavLink>
+                    </div>
+                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <NavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
+                            My Shop
+                        </NavLink>
+                    </div>
+                    </>
+                )
+            }
+        }
+
+        if (viewPortStatus === "mobile"){
+            if (user === 1){
+                return (
+                    <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
+                        My Shop
+                    </ResponsiveNavLink>
+                )       
+            } else if (user >= 2){
+                return (
+                    <>
+                        <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
+                            My Shop
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                            Admin Panel
+                        </ResponsiveNavLink>
+                    </>
+                )
+            }
+        }
+    }
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -26,6 +75,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                     Dashboard
                                 </NavLink>
                             </div>
+                            {NavigationHeaderUserLevel("computer", user['user_level'])}
+
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
@@ -96,6 +147,9 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        {NavigationHeaderUserLevel("mobile", user['user_level'])}
+
+                        
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">

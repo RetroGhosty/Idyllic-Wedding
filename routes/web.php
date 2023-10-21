@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopVendorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,6 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -34,5 +38,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Vendor Protected
+Route::middleware(['auth'])->group(function() {
+    Route::get('/shop', [ShopVendorController::class,'index'])->name('shopvendor.dashboard');
+});
+
+// Admin Protected Pages
+Route::middleware(['auth'])->group(function(){
+    Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
+    Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
+});    
+
+Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');
 
 require __DIR__.'/auth.php';
