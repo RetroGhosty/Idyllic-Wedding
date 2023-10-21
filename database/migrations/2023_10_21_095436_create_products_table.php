@@ -4,8 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use function Laravel\Prompts\table;
-
 return new class extends Migration
 {
     /**
@@ -13,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shops', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('shop_name');
-            $table->foreignUlid('vendor_id')->constrained(table:'users', column:'id')->onDelete('cascade');
+            $table->foreignUlid('shop_id')->nullable()->constrained('shops', 'id')->onDelete('cascade');
+            $table->string('name');
+            $table->integer('price');
+            $table->mediumText('description');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('shops');
+        Schema::dropIfExists('products');
     }
 };

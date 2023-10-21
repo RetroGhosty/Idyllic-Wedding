@@ -27,11 +27,6 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             Admin Panel
                         </NavLink>
                     </div>
-                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
-                            My Shop
-                        </NavLink>
-                    </div>
                     </>
                 )
             }

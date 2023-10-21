@@ -6,13 +6,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, useForm } from '@inertiajs/react'
 
 const UserAdminView = ({userdetails, auth}:any) => {
-    const {data, setData, patch, errors, wasSuccessful } = useForm({
+    const {data, setData, patch, errors, wasSuccessful, processing } = useForm({
         name: userdetails['name'],
         email: userdetails['email'],
         user_level: userdetails['user_level']
     })
  
-
     const handleSubmit = (e: any) => {
         e.preventDefault()
         patch(route('admin.user.view', {user_id:userdetails['id']}))
@@ -36,7 +35,7 @@ const UserAdminView = ({userdetails, auth}:any) => {
                         <option value="1">Shop Vendor</option>
                     </select>
                     {errors.user_level ? errors.user_level : null}
-                    <div><PrimaryButton type='submit'>Submit</PrimaryButton></div>
+                    <div><PrimaryButton type='submit' disabled={processing}>Submit</PrimaryButton></div>
                 </form>
             </div>
         </div>
