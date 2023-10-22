@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 // Vendor Protected
 Route::middleware(['auth'])->group(function() {
     Route::get('/shop', [ShopVendorController::class,'index'])->name('shopvendor.dashboard');
+    Route::patch('/shop', [ShopVendorController::class,'updateStore'])->name('shopvendor.updatestore');
     Route::post('/shop/product/create', [ShopVendorController::class,'createProduct'])->name('shopvendor.createproduct');
 });
 

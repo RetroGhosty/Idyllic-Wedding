@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('price');
             $table->mediumText('description');
+            $table->float('rate')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

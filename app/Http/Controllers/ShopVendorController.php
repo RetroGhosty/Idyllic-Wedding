@@ -19,15 +19,23 @@ class ShopVendorController extends Controller
             return abort(404, "Page not found");
         }
     }
+    public function updateStore(Request $request){
+        $validatedData = $request->validate([
+            "shop_name"=> "required|unique:shops",
+        ]);
+        $shop = Shop::find($request->id);
+        $shop->shop_name = $validatedData["shop_name"];
+        $shop->save();
+        return back();
+    }
+
     public function createProduct(Request $request){
         $validated = $request->validate([
             'name' => 'required',
             'price' => 'numeric|min:0',
             'description' => 'required',
         ]);
-
         $shop = Shop::find($request->shop_id);
-
         $shop->product()->create([
             "name"=> $request->name,
             "price"=> $request->price,
@@ -41,8 +49,8 @@ class ShopVendorController extends Controller
             $image_name = $image->getClientOriginalName();
             $path = $image->storeAs($destinationPath, $image_name);
         };
-
-
         return back();
     }
+
+   
 }
