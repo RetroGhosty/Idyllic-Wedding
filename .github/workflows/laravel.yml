@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: latest
-    - run: npm install -g npm
+    - run: npm install --save-dev @types/react@latest @types/react-dom@lates
     - run: npm run build
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
