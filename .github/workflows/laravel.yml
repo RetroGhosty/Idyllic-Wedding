@@ -27,13 +27,15 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Compile Node
+    - name: Compile node
       uses: actions/setup-node@v3
       with:
         node-version: latest
-    - run: npm ci 
-    - run: npm run build
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+    - name: Install npm dependencies
+      run: npm ci 
+    - name: Build laravel react assets
+      run: npm run build
+    - name: UNIT AND FEATURE TEST
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
