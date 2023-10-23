@@ -10,10 +10,6 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -32,10 +28,10 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
     - name: Compile Node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
+        node-version: latest
+    - run: npm install -g npm
     - run: npm run build
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
