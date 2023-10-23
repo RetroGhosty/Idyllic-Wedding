@@ -24,12 +24,16 @@ class AdminController extends Controller
     
     public function viewUser($user_id){
         $user = User::find($user_id);
+        if (!auth()->user()->user_level >= 2){
+            return abort(404, "Page not found");
+        } 
         if ($user == null){
             return abort(404, "Page not found");
         }
         return inertia::render("Admin/UserAdminView", ["userdetails"=> $user]);
-        
+
     }
+    
     private function createStoreForVendor($_user_id){
         $user = User::find($_user_id);
         if ($user->user_level >= 1){

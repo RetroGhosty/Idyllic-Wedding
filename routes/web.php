@@ -40,14 +40,14 @@ Route::middleware('auth')->group(function () {
 });
 
 // Vendor Protected
-Route::middleware(['auth', 'shop-creator'])->group(function() {
+Route::middleware(['auth', 'shop-creator', 'user-level:1'])->group(function() {
     Route::get('/shop', [ShopVendorController::class,'index'])->name('shopvendor.dashboard');
     Route::patch('/shop', [ShopVendorController::class,'updateStore'])->name('shopvendor.updatestore');
     Route::post('/shop/product/create', [ShopVendorController::class,'createProduct'])->name('shopvendor.createproduct');
 });
 
 // Admin Protected Pages
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'user-level:2'])->group(function(){
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');

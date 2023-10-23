@@ -29,7 +29,7 @@ class UserVendorPageTest extends TestCase
     {
         $vendorUser = User::factory()->create([
             "password" => bcrypt("password"),
-            "user_level" => 1
+            "user_level" => 0
         ]);
 
         $normalUser = User::factory()->create([
@@ -54,6 +54,6 @@ class UserVendorPageTest extends TestCase
             "email" => "test@gmail.com",
             "user_level" => "1"
         ];
-        $vendorUser = $this->actingAs($vendorUser)->patch(route("admin.user.update", $normalUser->id), $payload)->assertForbidden();  
+        $vendorUser = $this->actingAs($vendorUser)->patch(route("admin.user.update", $normalUser->id), $payload)->assertNotFound();  
     }
 }
