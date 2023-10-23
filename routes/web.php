@@ -47,11 +47,15 @@ Route::middleware(['auth', 'shop-creator', 'user-level:1'])->group(function() {
 });
 
 // Admin Protected Pages
-Route::middleware(['auth', 'user-level:2'])->group(function(){
-    Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
-    Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
-    Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
-});    
+/**
+ Route::middleware(['auth', 'user-level:2'])->group(function(){
+     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
+     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
+     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
+ });    
+ * 
+ * 
+ */
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');
 
