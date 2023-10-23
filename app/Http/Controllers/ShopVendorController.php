@@ -47,7 +47,7 @@ class ShopVendorController extends Controller
             $destinationPath = $shop->shop_name.'/products';
             $image = $request->file('image');
             $image_name = $image->getClientOriginalName();
-            $path = $image->storeAs($destinationPath, $image_name);
+            $image->storeAs($destinationPath, $image_name);
         };
         return back();
     }

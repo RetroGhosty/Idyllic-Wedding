@@ -21,7 +21,7 @@ const EditStoreDetailsPartial = ({shop, className}: any) => {
                 <h2 className="text-lg font-medium text-gray-900">Edit Store</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Make your product here
+                    Edit your store details here
                 </p>
                 </header>
                 <form onSubmit={handleSubmit} className='flex flex-col'>
