@@ -19,6 +19,11 @@ Laging mag git pull bago magsimula mag code
 1. ```php artisan migrate:reset```
 2. ```php artisan migrate```
 
+## How to run the website
+1. Mag open ng dalawang CLI
+2. First CLI (backend) ```php artisan serve```
+3. Second CLI (frontend) ```npm run dev```
+
 ## .env
 ```
 APP_NAME="Idyllic-Wedding"
