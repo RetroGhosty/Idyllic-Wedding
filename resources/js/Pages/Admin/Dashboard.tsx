@@ -34,7 +34,8 @@ const Dashboard = ({auth, users}:PageProps) => {
                   {users.length !== 0 ? users.map((user, index) => (
                     <tr key={index}>
                       <td>{user['id']}</td>
-                      <td>{user['name']}</td>
+                      <td>{user['first_name']}</td>
+                      <td>{user['last_name']}</td>
                       <td>{user['email']}</td>
                       <td>{user['email_verified_at']}</td>
                       <td>{user['user_level']}</td>

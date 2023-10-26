@@ -83,7 +83,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.name}
+                                                {`${user.first_name} ${user.last_name} `}
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -150,7 +150,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">
-                                {user.name}
+                                {`${user.first_name} ${user.last_name}`}
                             </div>
                             <div className="font-medium text-sm text-gray-500">{user.email}</div>
                         </div>
