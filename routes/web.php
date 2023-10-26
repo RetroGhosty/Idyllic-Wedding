@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShopVendorController;
+use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\OurvenueController;
 use Illuminate\Foundation\Application;
@@ -47,9 +47,9 @@ Route::middleware('auth')->group(function () {
 
 // Vendor Protected
 Route::middleware(['auth', 'shop-creator', 'user-level:1'])->group(function() {
-    Route::get('/shop', [ShopVendorController::class,'index'])->name('shopvendor.dashboard');
-    Route::patch('/shop', [ShopVendorController::class,'updateStore'])->name('shopvendor.updatestore');
-    Route::post('/shop/product/create', [ShopVendorController::class,'createProduct'])->name('shopvendor.createproduct');
+    Route::get('/shop', [VenueVendorController::class,'index'])->name('shopvendor.dashboard');
+    Route::patch('/shop', [VenueVendorController::class,'updateStore'])->name('shopvendor.updatestore');
+    Route::post('/shop/product/create', [VenueVendorController::class,'createProduct'])->name('shopvendor.createproduct');
 });
 
 // Admin Protected Pages

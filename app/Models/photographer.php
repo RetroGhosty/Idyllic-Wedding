@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Category extends Model
+class photographer extends Model
 {
     use HasFactory;
-    protected $table = "categories";
     protected $fillable = [
-        "id", "name"
-    ] ;
-    public function products(): HasMany{
-        return $this->hasMany(Product::class);
+        'first_name',
+        'last_name',
+        'email',
+    ];
+
+    public function reservation_transaction(): HasMany {
+        return $this->hasMany(reservation_transaction::class);
     }
 }
