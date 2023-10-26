@@ -10,7 +10,7 @@ const NavBar = () => {
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
                         <Link href="/" className='text-sm'>
-                            Plant E-commerce
+                            Idyllic Wedding
                         </Link>
                     </div>
                 </div>
