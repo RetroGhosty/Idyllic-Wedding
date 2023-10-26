@@ -14,10 +14,6 @@ Laging mag git pull bago magsimula mag code
 5. ```npm install```
 6. ilagay sa .env yung mga database details
 7. ```php artisan migrate```
-8. dagdag mo ito!!
-9. config -> database.php
-10. hanapin mo ito: https://imgur.com/eUynBkf
-11. Tapos idagdag mo ito sa ilalim ng 'engine' => null
 
 ## Database refresher
 1. ```php artisan migrate:reset```
