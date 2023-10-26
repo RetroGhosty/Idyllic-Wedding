@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopVendorController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\OurvenueController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +32,8 @@ Route::get('/', function () {
 
 // localhost:8000/About
 Route::get("/About", [AboutController::class, 'about'])->name('about.home');
+
+Route::get("/OurVenue", [OurvenueController::class, 'venue'])->name('OurVenue.home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
