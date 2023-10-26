@@ -1,9 +1,11 @@
 # Important
-Laging mag git pull bago magsimula mag code 
-* kung bash ang gamit: ```git pull``` 
-* kung naka github desktop
-    1. Click fetch
-    2. Click pull
+1. Laging mag git pull bago magsimula mag code 
+    * kung bash ang gamit: ```git pull``` 
+    * kung naka github desktop
+        1. Click fetch
+        2. Click pull
+2. Laging mag test muna ng code ```php artisan test``` bago mag ```git push```
+
 
 
 # Installation
