@@ -10,7 +10,8 @@ const UserAdminView = ({userdetails, auth}:any) => {
         first_name: userdetails['first_name'],
         last_name: userdetails['last_name'],
         email: userdetails['email'],
-        user_level: userdetails['user_level']
+        user_level: userdetails['user_level'],
+        status: userdetails['status'],
     })
  
     const handleSubmit = (e: any) => {
@@ -46,6 +47,14 @@ const UserAdminView = ({userdetails, auth}:any) => {
                             <option value="vendor">Venue Vendor</option>
                         </select>
                         {errors.user_level ? errors.user_level : null}
+                    </div>
+                    <div className='flex flex-col'>
+                        <InputLabel htmlFor='status'>User Level</InputLabel>
+                        <select id='status' onChange={(e) => setData('status', e.target.value)} value={data.status} className='border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                            <option value="active">Active</option>
+                            <option value="disabled">Disable</option>
+                        </select>
+                        {errors.status ? errors.status : null}
                     </div>
                     <div><PrimaryButton type='submit' disabled={processing}>Submit</PrimaryButton></div>
                 </form>

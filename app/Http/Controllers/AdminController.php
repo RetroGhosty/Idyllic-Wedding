@@ -13,7 +13,7 @@ class AdminController extends Controller
 {
     //
     public function index(){
-        $users = DB::table("users")->select('id', 'first_name', 'last_name', 'email', 'email_verified_at', 'user_level')->where("user_level", "!=", "admin")->get();
+        $users = DB::table("users")->select('id', 'first_name', 'last_name', 'email', 'email_verified_at', 'user_level', 'status')->where("user_level", "!=", "admin")->get();
         $venues = Venue::all();
         $Photographers = Photographer::all();
         $payload = [
@@ -35,10 +35,7 @@ class AdminController extends Controller
         if ($user == null){
             return abort(404, "User not found");
         }
-        $user->first_name= $validatedData['first_name'];
-        $user->last_name= $validatedData['last_name'];
-        $user->email= $validatedData['email'];
-        $user->user_level= $validatedData['user_level'];
+        $user->update($validatedData);
         $user->save();
         return to_route('admin.dashboard');
     }

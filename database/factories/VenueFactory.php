@@ -21,7 +21,6 @@ class VenueFactory extends Factory
             'address'=> fake()->address(),
             'price' => fake()->numberBetween(1000, 5000),
             'Venue_owner' => fake()->unique()->numberBetween(1, 10),
-            'iS_active' => fake()->boolean(),
             //
         ];
     }

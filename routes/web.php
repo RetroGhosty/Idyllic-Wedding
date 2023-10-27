@@ -40,21 +40,21 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Vendor Protected
-Route::middleware(['auth', 'shop-creator', 'user-level:vendor'])->group(function() {
+Route::middleware(['auth', 'check-disabled', 'shop-creator', 'user-level:vendor'])->group(function() {
     Route::get('/shop', [VenueVendorController::class,'index'])->name('shopvendor.dashboard');
     Route::patch('/shop', [VenueVendorController::class,'updateStore'])->name('shopvendor.updatestore');
     Route::post('/shop/product/create', [VenueVendorController::class,'createProduct'])->name('shopvendor.createproduct');
 });
 
 // Admin Protected Pages
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');

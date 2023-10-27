@@ -7,6 +7,7 @@ const UserSection = ({className, users}: any) => {
   const navigateTo = (user_id: any) => {
     router.get(route('admin.user.view', {user_id:user_id}))
   }
+  console.log(users)
 
   return (
     <div className={className}>
@@ -21,6 +22,7 @@ const UserSection = ({className, users}: any) => {
                 <th>Email</th>
                 <th>Email Verified at</th>
                 <th>User level</th>
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -34,6 +36,7 @@ const UserSection = ({className, users}: any) => {
                   <td>{user['email']}</td>
                   <td>{user['email_verified_at']}</td>
                   <td>{user['user_level']}</td>
+                  <td>{user['status']}</td>
                   <td>
                     <div className='flex flex-row space-x-2'>
                       <PrimaryButton onClick={() => navigateTo(user['id'])} className='pe-3 m-0'>Edit</PrimaryButton>

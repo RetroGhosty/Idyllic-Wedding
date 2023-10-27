@@ -1,7 +1,6 @@
 import DangerButton from '@/Components/DangerButton'
 import PrimaryButton from '@/Components/PrimaryButton'
 import { router } from '@inertiajs/react'
-import React from 'react'
 
 const VenueSection = ({className, venues}: any) => {
     const navigateTo = (venue_id: any) => {

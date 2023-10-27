@@ -12,7 +12,7 @@ class VenueController extends Controller
     {
         $venue = Venue::find($venue_id);
         $user = $venue->owner;
-        $this->authorize('show', [$user, $venue]);
+        $this->authorize('view', [$user, $venue]);
         $payload = [
             'venue' => $venue
         ];

@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Shop;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
+use App\choices\UserAccountLevel;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             "email" => "davilajohn810@gmail.com",
             "password"=> bcrypt("123"),
-            "user_level" => "admin",
+            "user_level" => UserAccountLevel::ADMIN,
          ]);
 
          \App\Models\Venue::factory(10)->create();

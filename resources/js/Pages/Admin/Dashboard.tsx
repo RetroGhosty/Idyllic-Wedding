@@ -6,7 +6,6 @@ import VenueSection from './Partials/VenueSection';
 
 const Dashboard = ({auth, users, venues, photographers}:any) => {
 
-  console.log(venues)
   return (
     <AuthenticatedLayout user={auth.user} 
     header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Admin Dashboard</h2>}>

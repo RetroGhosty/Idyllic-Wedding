@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'user-level' => \App\Http\Middleware\UserRolePagePermission::class,
         'shop-creator' => \App\Http\Middleware\MakeShop::class,
+        'check-disabled' => \App\Http\Middleware\IsAccountDisabled::class,
     ];
 }
