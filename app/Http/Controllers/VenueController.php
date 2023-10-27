@@ -36,4 +36,14 @@ class VenueController extends Controller
         $venue->refresh();
         return to_route('admin.venue.view', ['venue_id' => $venue->id]);
     }
+
+    public function delete($venue_id)
+    {
+        $venue = Venue::find($venue_id);
+        if ($venue == null) {
+            return abort(404, "Venue not found");
+        }
+        $venue->delete();
+        return to_route('admin.dashboard');
+    }
 }

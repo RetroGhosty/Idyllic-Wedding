@@ -7,7 +7,10 @@ const UserSection = ({className, users}: any) => {
   const navigateTo = (user_id: any) => {
     router.get(route('admin.user.view', {user_id:user_id}))
   }
-  console.log(users)
+
+  const deleteFunction = (user_id: any) => {
+    router.delete(route('admin.user.delete', {user_id:user_id}))
+  }
 
   return (
     <div className={className}>
@@ -40,7 +43,7 @@ const UserSection = ({className, users}: any) => {
                   <td>
                     <div className='flex flex-row space-x-2'>
                       <PrimaryButton onClick={() => navigateTo(user['id'])} className='pe-3 m-0'>Edit</PrimaryButton>
-                      <DangerButton>Delete</DangerButton>
+                      <DangerButton onClick={() => deleteFunction(user['id'])}>Delete</DangerButton>
                     </div>
                   </td>
                 </tr>

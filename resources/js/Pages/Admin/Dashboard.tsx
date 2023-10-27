@@ -3,6 +3,7 @@ import { PageProps } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import UserSection from './Partials/UserSection';
 import VenueSection from './Partials/VenueSection';
+import PhotographerSection from './Partials/PhotographerSection';
 
 const Dashboard = ({auth, users, venues, photographers}:any) => {
 
@@ -15,6 +16,7 @@ const Dashboard = ({auth, users, venues, photographers}:any) => {
         
           <UserSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" users={users}/>
           <VenueSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" venues={venues}/>
+          <PhotographerSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" photographers={photographers}/>
         </div>
       </div>
     </AuthenticatedLayout>

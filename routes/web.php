@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
+use App\Http\Controllers\PhotographerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
@@ -58,8 +59,14 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
+    Route::delete('/admin/profile/user/{user_id}', [AdminController::class,'delete'])->name('admin.user.delete');
     Route::get('/admin/venue/{venue_id}', [VenueController::class,'view'])->name('admin.venue.view');
-    Route::patch('/admin/venue/{venue_id}', [VenueController::class,'edit'])->name('admin.venue.edit');
+    Route::patch('/admin/venue/{venue_id}', [VenueController::class,'edit'])->name('admin.venue.update');
+    Route::delete('/admin/venue/{venue_id}', [VenueController::class,'delete'])->name('admin.venue.delete');
+    Route::get('/admin/photographer/{photographer_id}', [PhotographerController::class,'view'])->name('admin.photographer.view');
+    Route::patch('/admin/photographer/{photographer_id}', [PhotographerController::class,'update'])->name('admin.photographer.update');
+    Route::delete('/admin/photographer/{photographer_id}', [PhotographerController::class,'delete'])->name('admin.photographer.delete');
+
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

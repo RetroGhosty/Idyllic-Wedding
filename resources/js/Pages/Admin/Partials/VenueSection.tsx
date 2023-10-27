@@ -6,6 +6,10 @@ const VenueSection = ({className, venues}: any) => {
     const navigateTo = (venue_id: any) => {
         router.get(route('admin.venue.view', {venue_id:venue_id}))
     }
+
+    const deleteFunction = (venue_id: any) => {
+      router.delete(route('admin.venue.delete', {venue_id:venue_id}))
+    }
   return (
     <div className={className}>
     <div className="text-gray-900">Venues</div>
@@ -33,7 +37,7 @@ const VenueSection = ({className, venues}: any) => {
                 <td>
                   <div className='flex flex-row space-x-2'>
                     <PrimaryButton onClick={() => navigateTo(venue['id'])} className='pe-3 m-0'>Edit</PrimaryButton>
-                    <DangerButton>Delete</DangerButton>
+                    <DangerButton onClick={() => deleteFunction(venue['id'])}>Delete</DangerButton>
                   </div>
                 </td>
               </tr>
