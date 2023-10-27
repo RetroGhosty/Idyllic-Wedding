@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class reservation_transaction extends Model
+class Reservation_transaction extends Model
 {
     use HasFactory;
     public $fillable = [
-        'venue_id',
-        'photographer_id',
+        'Venue_id',
+        'Photographer_id',
         'total_price',
         'event_on',
     ];
@@ -21,10 +21,10 @@ class reservation_transaction extends Model
         return $this->BelongsTo(User::class);
     }
 
-    public function unregistered_user(): BelongsTo{
-        return $this->BelongsTo(unregistered_user::class);
+    public function Unregistered_user(): BelongsTo{
+        return $this->BelongsTo(Unregistered_user::class);
     }
-    public function venue(): BelongsTo{
-        return $this->BelongsTo(venue::class);
+    public function Venue(): BelongsTo{
+        return $this->BelongsTo(Venue::class);
     }
 }

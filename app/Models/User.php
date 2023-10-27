@@ -51,9 +51,9 @@ class User extends Authenticatable
     ];
 
     public function venue(): HasOne{
-        return $this->hasOne(venue::class);
+        return $this->hasOne(Venue::class, 'Venue_owner');
     }
     public function transactions(): HasMany {
-        return $this->hasMany(reservation_transaction::class);
+        return $this->hasMany(Reservation_transaction::class);
     }
 }

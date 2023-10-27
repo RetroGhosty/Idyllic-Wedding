@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class venue extends Model
+class Venue extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -17,20 +17,20 @@ class venue extends Model
         'venue_owner',
     ];
 
-    public function venue_owner(): HasOne{
-        return $this->hasOne(User::class);
+    public function owner(): HasOne{
+        return $this->hasOne(User::class, 'id', 'venue_owner');
     }
     
-    public function venue_landing_photo(): HasOne{
-        return $this->hasOne(venue_landing_photo::class);
+    public function landing_photo(): HasOne{
+        return $this->hasOne(Venue_landing_photo::class);
     }
     
-    public function venue_showcase_photo(): HasMany{
-        return $this->hasMany(venue_showcase_photo::class);
+    public function showcase_photo(): HasMany{
+        return $this->hasMany(Venue_landing_photo::class);
     }
     
-    public function reservation_transaction(): HasMany{
-        return $this->hasMany(reservation_transaction::class);
+    public function transaction(): HasMany{
+        return $this->hasMany(Venue_landing_photo::class);
     }
     
 }

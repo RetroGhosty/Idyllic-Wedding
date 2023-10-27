@@ -1,8 +1,10 @@
 import React from 'react'
 import NavLink from '@/Components/NavLink'
 import { Link } from '@inertiajs/react'
+import { PageProps } from '@/types'
 
-const NavBar = () => {
+const NavBar = ({user}: any) => {
+    console.log(user)
   return (
     <nav className="bg-zinc-900 border-b border-gray-200 text-white">
         <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +16,8 @@ const NavBar = () => {
                         </Link>
                     </div>
                 </div>
-                <div className='flex space-x-reverse'>
+                {!user 
+                ? <div className='flex space-x-reverse'>
                     <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <NavLink className='text-slate-400 hover:text-white' href={route('login')} active={route().current('login')}>
                             Login
@@ -26,6 +29,15 @@ const NavBar = () => {
                         </NavLink>
                     </div>
                 </div>
+                : <div className='flex space-x-reverse'>
+                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <NavLink className='text-slate-400 hover:text-white' href={route('dashboard')} active={route().current('register')}>
+                            Dashboard
+                        </NavLink>
+                    </div>
+                </div>
+                
+                }
             </div>
         </div>  
     </nav>

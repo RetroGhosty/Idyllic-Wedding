@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class photographer extends Model
+class Photographer extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -15,7 +15,7 @@ class photographer extends Model
         'email',
     ];
 
-    public function reservation_transaction(): HasMany {
-        return $this->hasMany(reservation_transaction::class);
+    public function Reservation_transaction(): HasMany {
+        return $this->hasMany(Reservation_transaction::class);
     }
 }

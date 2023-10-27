@@ -4,7 +4,7 @@ export interface User {
     last_name: string;
     email: string;
     email_verified_at: string;
-    user_level: number;
+    user_level: string;
 }
 
 export interface PullUsers{
@@ -13,7 +13,7 @@ export interface PullUsers{
     last_name: string;
     email: string;
     email_verified_at: string;
-    user_level: number;
+    user_level: string;
 }
 export interface PullUsersArr extends Array<PullUsers>{}
 

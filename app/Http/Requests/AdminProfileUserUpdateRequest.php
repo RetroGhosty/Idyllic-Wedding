@@ -13,11 +13,7 @@ class AdminProfileUserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if ($this->user()->user_level == 2) {
-            return true;
-        } else{
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -29,9 +25,10 @@ class AdminProfileUserUpdateRequest extends FormRequest
     {
         $user = User::find($this->route("user_id"));
         return [
-            'name' => ['string', 'max:255'],
+            'first_name' => ['string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'user_level' => ['numeric', 'max:1']
+            'user_level' => ['string']
         ];
     }
     public function messages(): array{
