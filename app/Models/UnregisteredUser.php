@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class unregistered_user extends Model
+class UnregisteredUser extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -17,6 +17,6 @@ class unregistered_user extends Model
     ];
 
     public function transactions(): HasMany {
-        return $this->hasMany(reservation_transaction::class);
+        return $this->hasMany(ReservationTransaction::class);
     }
 }

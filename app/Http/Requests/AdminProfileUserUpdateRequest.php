@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\choices\UserAccountLevel;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use App\choices\UserAccountStatusEnum;
 
 class AdminProfileUserUpdateRequest extends FormRequest
 {
@@ -13,11 +15,7 @@ class AdminProfileUserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if ($this->user()->user_level == 2) {
-            return true;
-        } else{
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -28,10 +26,14 @@ class AdminProfileUserUpdateRequest extends FormRequest
     public function rules(): array
     {
         $user = User::find($this->route("user_id"));
+        $availableAccountLevel = UserAccountLevel::cases();
+        $availableAccountStatus = UserAccountStatusEnum::cases();
         return [
-            'name' => ['string', 'max:255'],
+            'first_name' => ['string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'user_level' => ['numeric', 'max:1']
+            'user_level' => ['string', Rule::in(array_column($availableAccountLevel,'value'))],
+            'status' => ['string', Rule::in(array_column($availableAccountStatus,'value'))]
         ];
     }
     public function messages(): array{

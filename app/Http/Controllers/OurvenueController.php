@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class OurvenueController extends Controller
+class OurVenueController extends Controller
 {
-    public function venue(){
+    public function Venue(){
         return Inertia::render("Guest/OurVenue");
     }
 }

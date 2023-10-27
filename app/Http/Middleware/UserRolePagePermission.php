@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\choices\UserAccountLevel;
+
 class UserRolePagePermission
 {
     /**
@@ -15,7 +17,7 @@ class UserRolePagePermission
      */
     public function handle(Request $request, Closure $next, $roleLevel): Response
     {
-        if (Auth::check() && Auth::user()->user_level == $roleLevel){
+        if (Auth::check() && Auth::user()->user_level == UserAccountLevel::from($roleLevel)) {
             return $next($request);
         } else{
             return abort(404);

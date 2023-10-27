@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('venue_showcase_photos', function (Blueprint $table) {
             $table->id();
             $table->string('photo_url');
-            $table->foreignId('venue_id')->constrained('venues', 'id');
+            $table->foreignId('Venue_id')->constrained('Venues', 'id');
             $table->timestamps();
         });
     }

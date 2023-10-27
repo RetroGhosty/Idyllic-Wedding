@@ -9,9 +9,9 @@ import { User } from '@/types';
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
-    const NavigationHeaderUserLevel = (viewPortStatus:string, user:number) => {
+    const NavigationHeaderUserLevel = (viewPortStatus:string, user:string) => {
         if (viewPortStatus === "computer"){
-            if (user === 1){
+            if (user === "vendor"){
                 return (
                     <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <NavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
@@ -19,7 +19,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                         </NavLink>
                     </div>
                 )       
-            } else if (user >= 2){
+            } else if (user === "admin"){
                 return (
                     <>
                     <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -33,13 +33,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
         }
 
         if (viewPortStatus === "mobile"){
-            if (user === 1){
+            if (user === "vendor"){
                 return (
                     <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
                         My Shop
                     </ResponsiveNavLink>
                 )       
-            } else if (user >= 2){
+            } else if (user === "admin"){
                 return (
                     <>
                         <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>

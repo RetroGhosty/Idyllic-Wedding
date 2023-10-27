@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class venue_landing_photo extends Model
+class VenueLandingPhoto extends Model
 {
     use HasFactory;
     protected $fillable = [
         'photo_url',
-        'venue_id',
+        'Venue_id',
     ];
 
-    public function venue(): HasOne {
-        return $this->hasOne(venue::class);
+    public function Venue(): HasOne {
+        return $this->hasOne(Venue::class);
     }
 
 }
