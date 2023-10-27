@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Reservation_transaction extends Model
+class ReservationTransaction extends Model
 {
     use HasFactory;
     public $fillable = [
@@ -22,7 +20,7 @@ class Reservation_transaction extends Model
     }
 
     public function Unregistered_user(): BelongsTo{
-        return $this->BelongsTo(Unregistered_user::class);
+        return $this->BelongsTo(UnregisteredUser::class);
     }
     public function Venue(): BelongsTo{
         return $this->BelongsTo(Venue::class);

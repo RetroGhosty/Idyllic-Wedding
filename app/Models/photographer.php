@@ -16,6 +16,6 @@ class Photographer extends Model
     ];
 
     public function Reservation_transaction(): HasMany {
-        return $this->hasMany(Reservation_transaction::class);
+        return $this->hasMany(ReservationTransaction::class);
     }
 }

@@ -37,7 +37,7 @@ class AdminController extends Controller
         }
         $user->update($validatedData);
         $user->save();
-        return to_route('admin.dashboard');
+        return to_route('admin.user.view', ['user_id' => $user->id]);
     }
 
 

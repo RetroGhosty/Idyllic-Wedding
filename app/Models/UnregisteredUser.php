@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class One_time_customer extends Model
+class UnregisteredUser extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -14,4 +15,8 @@ class One_time_customer extends Model
         'first_name',
         'last_name',
     ];
+
+    public function transactions(): HasMany {
+        return $this->hasMany(ReservationTransaction::class);
+    }
 }

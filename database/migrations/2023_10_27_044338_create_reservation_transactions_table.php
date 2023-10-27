@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Reservation_transactions', function (Blueprint $table) {
+        Schema::create('reservation_transactions', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignId('registered_user')->nullable()->constrained('users', 'id');
             $table->foreignId('Unregistered_user')->nullable()->constrained('Unregistered_users', 'id');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Reservation_transactions');
+        Schema::dropIfExists('reservation_transactions');
     }
 };

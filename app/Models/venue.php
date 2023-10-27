@@ -22,15 +22,19 @@ class Venue extends Model
     }
     
     public function landing_photo(): HasOne{
-        return $this->hasOne(Venue_landing_photo::class);
+        return $this->hasOne(VenueLandingPhoto::class);
     }
     
     public function showcase_photo(): HasMany{
-        return $this->hasMany(Venue_landing_photo::class);
+        return $this->hasMany(VenueShowcasePphoto::class);
     }
     
+    public function photographers(): HasMany{
+        return $this->hasMany(Photographer::class);
+    }
+
     public function transaction(): HasMany{
-        return $this->hasMany(Venue_landing_photo::class);
+        return $this->hasMany(ReservationTransaction::class);
     }
     
 }
