@@ -3,18 +3,37 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, router, useForm } from '@inertiajs/react'
+import { KeyObject } from 'crypto'
+import React from 'react'
 
 const VenueSettings = ({auth, venue}: any) => {
-    const {data, setData, patch, errors, wasSuccessful, processing } = useForm({
+
+    interface IVEnue{
+        venue_name: string,
+        description: string,
+        limit: number | string,
+        price: number | string,
+        header_image?: FileList | undefined,
+        sub_images?: FileList | undefined,
+    }
+
+    const {data, setData, patch, errors, wasSuccessful, processing } = useForm<IVEnue>({
         venue_name: venue['venue_name'],
         description: venue['description'],
         limit: venue['limit'],
-        price: venue['price']
+        price: venue['price'],
+        header_image: undefined,
+        sub_images: undefined,
     })
  
     const handleSubmit = (e: any) => {
         e.preventDefault()
         patch(route('admin.venue.update', {venue_id:venue['id']}))
+    }
+
+    const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IVEnue) => {
+        const file = e.target as HTMLInputElement & {files: FileList}
+        setData(formModel, file.files)
     }
 
 
@@ -25,6 +44,18 @@ const VenueSettings = ({auth, venue}: any) => {
             <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
                 {wasSuccessful ? "User profile successfully modified" : null}
                 <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
+
+                    <div className='flex flex-col'>
+                        <InputLabel htmlFor="header_image">Header Image</InputLabel>
+                        <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image')} accept='image/jpeg, image/png, image/jpg'/>
+                        {errors.header_image ? errors.header_image : null}
+                    </div>
+                    <div className='flex flex-col'>
+                        <InputLabel htmlFor="sub_images">Sub Images</InputLabel>
+                        <input autoComplete="off"  id='sub_images' type="file" multiple={true} onChange={(e) => handleFile(e, 'sub_images')} accept='image/jpeg, image/png, image/jpg'/>
+                        {errors.sub_images ? errors.sub_images : null}
+                    </div>
+
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="venue_name" value='Venue Name'/> 
                         <TextInput autoComplete="off"  id='venue_name' type="text" value={data.venue_name} onChange={(e) => setData('venue_name', e.target.value)} />
@@ -48,6 +79,11 @@ const VenueSettings = ({auth, venue}: any) => {
                         <TextInput autoComplete="off"  id='price' type="text" value={data.price} onChange={(e) => setData('price', e.target.value)} />
                         {errors.price ? errors.price : null}
                     </div>
+
+
+
+
+
                     <div><PrimaryButton type='submit' disabled={processing}>Submit</PrimaryButton></div>
                 </form>
             </div>
