@@ -12,16 +12,15 @@ const VenueSection = ({className, venues}: any) => {
     }
   return (
     <div className={className}>
-    <div className="text-gray-900">Venues</div>
-      <div className='relative overflow-x-auto sm:rounded-lg'>
-        <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+    <h1 className="text-gray-900 text-xl font-bold mb-6">Venues</h1>
+    <div className='relative overflow-x-auto sm:rounded-lg'>
+        <table className='table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead>
             <tr>
               <th>ID</th>
               <th>Venue</th>
-              <th>Address</th>
+              <th>Head Limit</th>
               <th>Price</th>
-              <th>Owner</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -31,9 +30,8 @@ const VenueSection = ({className, venues}: any) => {
               <tr key={index}>
                 <td>{venue['id']}</td>
                 <td>{venue['venue_name']}</td>
-                <td>{venue['address']}</td>
+                <td>{venue['limit']}</td>
                 <td>{venue['price']}</td>
-                <td>{venue['venue_owner']}</td>
                 <td>
                   <div className='flex flex-row space-x-2'>
                     <PrimaryButton onClick={() => navigateTo(venue['id'])} className='pe-3 m-0'>Edit</PrimaryButton>

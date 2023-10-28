@@ -4,7 +4,6 @@ import { Link } from '@inertiajs/react'
 import { PageProps } from '@/types'
 
 const NavBar = ({user}: any) => {
-    console.log(user)
   return (
     <nav className="bg-zinc-900 border-b border-gray-200 text-white">
         <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">

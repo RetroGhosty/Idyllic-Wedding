@@ -12,9 +12,9 @@ const PhotographerSection = ({className, photographers}:any) => {
     }
   return (
     <div className={className}>
-      <div className="text-gray-900">Photographers</div>
-        <div className='relative overflow-x-auto sm:rounded-lg'>
-          <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+      <h1 className="text-gray-900 text-xl font-bold mb-6">Photographers</h1>
+      <div className='relative overflow-x-auto sm:rounded-lg'>
+          <table className='w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -24,6 +24,7 @@ const PhotographerSection = ({className, photographers}:any) => {
                 <th>Phone Number</th>
                 <th>Facebook</th>
                 <th>Instagram</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -37,7 +38,6 @@ const PhotographerSection = ({className, photographers}:any) => {
                   <td>{photographer['phone_number']}</td>
                   <td>{photographer['facebook_contact']}</td>
                   <td>{photographer['instagram_contact']}</td>
-                  <td>{photographer['profile_picture']}</td>
                   <td>
                     <div className='flex flex-row space-x-2'>
                       <PrimaryButton onClick={() => navigateTo(photographer['id'])} className='pe-3 m-0'>Edit</PrimaryButton>

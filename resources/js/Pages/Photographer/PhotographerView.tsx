@@ -20,7 +20,6 @@ const PhotographerView = ({photographer, auth}: any) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        console.log(data)
         patch(route('admin.photographer.update', {photographer_id:photographer['id']}))
     }
   return (

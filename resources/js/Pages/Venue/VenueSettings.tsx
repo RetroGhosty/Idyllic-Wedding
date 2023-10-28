@@ -7,9 +7,9 @@ import { Head, router, useForm } from '@inertiajs/react'
 const VenueSettings = ({auth, venue}: any) => {
     const {data, setData, patch, errors, wasSuccessful, processing } = useForm({
         venue_name: venue['venue_name'],
-        address: venue['address'],
-        price: venue['price'],
-        iS_active: venue['iS_active']
+        description: venue['description'],
+        limit: venue['limit'],
+        price: venue['price']
     })
  
     const handleSubmit = (e: any) => {
@@ -32,11 +32,17 @@ const VenueSettings = ({auth, venue}: any) => {
                     </div>
 
                     <div className='flex flex-col'>
-                        <InputLabel htmlFor="address">Address</InputLabel>
-                        <TextInput autoComplete="off"  id='address' type="text" value={data.address} onChange={(e) => setData('address', e.target.value)} />
-                        {errors.address ? errors.address : null}
+                        <InputLabel htmlFor="description">Description</InputLabel>
+                        <textarea rows={5} autoComplete="off"  id='description' value={data.description} onChange={(e) => setData('description', e.target.value)} />
+                        {errors.description ? errors.description : null}
                     </div>
 
+                    <div className='flex flex-col'>
+                        <InputLabel htmlFor="limit">Limit</InputLabel>
+                        <TextInput autoComplete="off"  id='limit' type="text" value={data.limit} onChange={(e) => setData('limit', e.target.value)} />
+                        {errors.limit ? errors.limit : null}
+                    </div>
+                    
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="price">Price</InputLabel>
                         <TextInput autoComplete="off"  id='price' type="text" value={data.price} onChange={(e) => setData('price', e.target.value)} />

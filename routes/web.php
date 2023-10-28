@@ -48,11 +48,14 @@ Route::middleware(['auth', 'check-disabled'])->group(function () {
 });
 
 // Vendor Protected
-Route::middleware(['auth', 'check-disabled', 'shop-creator', 'user-level:vendor'])->group(function() {
-    Route::get('/shop', [VenueVendorController::class,'index'])->name('shopvendor.dashboard');
-    Route::patch('/shop', [VenueVendorController::class,'updateStore'])->name('shopvendor.updatestore');
-    Route::post('/shop/product/create', [VenueVendorController::class,'createProduct'])->name('shopvendor.createproduct');
-});
+/**
+ Route::middleware(['auth', 'check-disabled', 'shop-creator', 'user-level:vendor'])->group(function() {
+     Route::get('/shop', [VenueVendorController::class,'index'])->name('shopvendor.dashboard');
+     Route::patch('/shop', [VenueVendorController::class,'updateStore'])->name('shopvendor.updatestore');
+     Route::post('/shop/product/create', [VenueVendorController::class,'createProduct'])->name('shopvendor.createproduct');
+ });
+  
+ */
 
 // Admin Protected Pages
 Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){

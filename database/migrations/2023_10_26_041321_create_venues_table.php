@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('venues', function (Blueprint $table) {
             $table->id();
             $table->string('venue_name');
-            $table->string('address');
+            $table->string('description');
+            $table->integer('limit');   
             $table->string('price');
-            $table->foreignId('venue_owner')->constrained('users', 'id');
             $table->timestamps();
         });
     }

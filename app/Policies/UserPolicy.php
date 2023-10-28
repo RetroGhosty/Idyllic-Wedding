@@ -15,13 +15,13 @@ class UserPolicy
     {
         return ($user->user_level == UserAccountLevel::ADMIN);
     }
-
+    
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, $venue): bool
+    public function view(User $user): bool
     {
-        return $user->user_level == UserAccountLevel::ADMIN || (auth()->check() && $venue->venue_owner == auth()->user()->id);
+        return ($user->user_level == UserAccountLevel::ADMIN);
     }
 
     /**
@@ -50,16 +50,16 @@ class UserPolicy
 
     public function createVenue(User $user): bool
     {
-        return ($user->user_level == UserAccountLevel::ADMIN || (auth()->check() && $user->user_level == UserAccountLevel::VENDOR));
+        return ($user->user_level == UserAccountLevel::ADMIN);
     }
-
-    public function updateVenue(User $user, $venue): bool
+    
+    public function updateVenue(User $user): bool
     {
-        return ($user->user_level == UserAccountLevel::ADMIN || (auth()->check() && $venue->venue_owner == $user->id));
+        return ($user->user_level == UserAccountLevel::ADMIN);
     }
-
-    public function deleteVenue(User $user, $venue): bool
+    
+    public function deleteVenue(User $user): bool
     {
-        return ($user->user_level == UserAccountLevel::ADMIN || (auth()->check() && $venue->venue_owner == $user->id));
+        return ($user->user_level == UserAccountLevel::ADMIN);
     }
 }

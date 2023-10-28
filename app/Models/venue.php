@@ -12,15 +12,11 @@ class Venue extends Model
     use HasFactory;
     protected $fillable = [
         'venue_name',
-        'address',
+        'description',
+        'limit',
         'price',
-        'venue_owner',
     ];
 
-    public function owner(): HasOne{
-        return $this->hasOne(User::class, 'id', 'venue_owner');
-    }
-    
     public function landing_photo(): HasOne{
         return $this->hasOne(VenueLandingPhoto::class);
     }
@@ -33,8 +29,8 @@ class Venue extends Model
         return $this->hasMany(Photographer::class);
     }
 
-    public function transaction(): HasMany{
-        return $this->hasMany(ReservationTransaction::class);
+    public function available_reservation(): HasMany{
+        return $this->hasMany(Reservation::class);
     }
     
 }

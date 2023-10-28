@@ -18,9 +18,9 @@ class VenueFactory extends Factory
     {
         return [
             'venue_name' => fake()->name(),
-            'address'=> fake()->address(),
+            'description' => fake()->text(),
+            'limit' => fake()->numberBetween(20, 200),
             'price' => fake()->numberBetween(1000, 5000),
-            'Venue_owner' => fake()->unique()->numberBetween(1, 10),
             //
         ];
     }

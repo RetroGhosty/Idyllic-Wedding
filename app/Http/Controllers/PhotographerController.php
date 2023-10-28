@@ -23,15 +23,16 @@ class PhotographerController extends Controller
         $validatedData = $request->validated();
         $photographer->update($validatedData);
         $photographer->save();
-        return to_route('admin.photographer.view', ['photographer_id' => $photographer->id]);
+        $photographer->refresh();
+        return back()->with('success', 'Photographer deleted successfully');
     }
-
+    
     public function delete($photographer_id){
         $photographer = Photographer::find($photographer_id);
         if ($photographer == null){
             return abort(404, "Photographer not found");
         }
         $photographer->delete();
-        return to_route('admin.dashboard');
+        return back()->with('success', 'Photographer deleted successfully');
     }
 }

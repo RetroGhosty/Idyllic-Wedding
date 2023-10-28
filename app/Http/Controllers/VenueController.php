@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VenueRequest;
 use App\Models\User;
 use App\Models\Venue;
 use Inertia\Inertia;
@@ -11,27 +12,32 @@ class VenueController extends Controller
     public function view($venue_id)
     {
         $venue = Venue::find($venue_id);
-        $user = $venue->owner;
-        $this->authorize('view', [$user, $venue]);
+        $this->authorize('view', auth()->user());
         $payload = [
             'venue' => $venue
         ];
         return Inertia::render('Venue/VenueSettings', $payload);
     }
 
-    public function edit($venue_id)
+    public function post(VenueRequest $request)
     {
+        $this->authorize('create', auth()->user());
+        $validated = $request->validated();
+        $venue = Venue::create($validated);
+        $venue->save();
+        $venue->refresh();
+        return to_route('admin.venue.view', ['venue_id' => $venue->id]);
+    }
+
+    public function edit(VenueRequest $request, $venue_id)
+    {
+        $this->authorize('update', auth()->user());
         $venue = Venue::find($venue_id);
         $payload = [
             'venue' => $venue
         ];
-        $validate = request()->validate([
-            'venue_name' => 'required',
-            'address' => 'required',
-            'price' => 'numeric|required|min:0',
-        ]);
-
-        $venue->update($validate);
+        $validated = $request->validated();
+        $venue->update($validated);
         $venue->save();
         $venue->refresh();
         return to_route('admin.venue.view', ['venue_id' => $venue->id]);
