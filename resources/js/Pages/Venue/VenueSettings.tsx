@@ -47,14 +47,8 @@ const VenueSettings = ({auth, venue}: any) => {
         }, onSuccess: () => {
             setIsSubmitted(true)
             clearErrors()
-            setDefaults({
-                venue_name: venue['venue_name'],
-                description: venue['description'],
-                limit: venue['limit'],
-                price: venue['price'],
-                header_image: undefined,
-                sub_images: undefined,
-            })
+            setData('header_image', undefined)
+            setData('sub_images', undefined)
         }
     
     })
@@ -80,6 +74,7 @@ const VenueSettings = ({auth, venue}: any) => {
                 {Object.keys(errors).length === 0 && isSubmitted === true ? "User profile successfully modified" : null}
                 <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
 
+ 
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="header_image">Header Image</InputLabel>
                         <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image', 'File')} accept='image/jpeg, image/png, image/jpg'/>
@@ -109,14 +104,12 @@ const VenueSettings = ({auth, venue}: any) => {
                         {errors.limit ? errors.limit : null}
                     </div>
                     
+                
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="price">Price</InputLabel>
                         <TextInput autoComplete="off"  id='price' type="text" value={data.price} onChange={(e) => setData('price', e.target.value)} />
                         {errors.price ? errors.price : null}
                     </div>
-
-
-
 
 
                     <div><PrimaryButton type='submit' disabled={processing}>Submit</PrimaryButton></div>

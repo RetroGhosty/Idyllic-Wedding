@@ -8,6 +8,7 @@ use App\Models\Venue;
 use App\Models\VenueLandingPhoto;
 use App\Models\VenueShowcasePhoto;
 use App\Models\VenueShowcasePphoto;
+use GuzzleHttp\Psr7\Header;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -32,6 +33,7 @@ class VenueController extends Controller
         $payload = [
             'venue' => $venue
         ];
+        dd($venue->landing_photo);
         return Inertia::render('Venue/VenueSettings', $payload);
 }
 
@@ -40,6 +42,34 @@ class VenueController extends Controller
         $this->authorize('create', auth()->user());
         $validated = $request->validated();
         $venue = Venue::create($validated);
+        
+        if (array_key_exists('header_image', $request->files->all())) {
+            if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $request->header_image)) {
+                return abort(500, "Failed to upload header image");
+            }
+
+
+
+            $venueHeaderImage = VenueLandingPhoto::create([
+                'venue_id' => $venue->id,
+                'photo_url' => 'venue/landing_images/'.$venue->id.'/'.$request->header_image->hashName()
+            ]);
+            $venueHeaderImage->save();
+        }
+        
+        if (array_key_exists('sub_images', $request->files->all())){
+            if (!$this->uploadFiles($request->sub_images, $venue->id)) {
+                return abort(500, "Failed to upload sub images");
+            }
+            foreach ($request->sub_images as $key => $value) {
+                $venueSubImage = VenueShowcasePhoto::create([
+                    'venue_id' => $venue->id,
+                    'photo_url' => 'venue/subimages/'.$venue->id.'/'.$value->hashName()
+                ]);
+                $venueSubImage->save();
+            }
+        }
+
         $venue->save();
         $venue->refresh();
         
@@ -55,22 +85,27 @@ class VenueController extends Controller
         ];
         $validated = $request->validated();
         $venue->update($validated);
-        if (array_key_exists('header_image', $validated)) {
-            if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $validated['header_image'])) {
+
+        if (array_key_exists('header_image', $request->files->all())) {
+            if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $request->header_image)) {
                 return abort(500, "Failed to upload header image");
             }
+
+
+
             $venueHeaderImage = VenueLandingPhoto::create([
                 'venue_id' => $venue->id,
-                'photo_url' => 'venue/landing_images/'.$venue->id.'/'.$validated['header_image']->hashName()
+                'photo_url' => 'venue/landing_images/'.$venue->id.'/'.$request->header_image->hashName()
             ]);
             $venueHeaderImage->save();
         }
 
-        if (array_key_exists('sub_images', $validated)){
-            if (!$this->uploadFiles($validated['sub_images'], $venue->id)) {
+        
+        if (array_key_exists('sub_images', $request->files->all())){
+            if (!$this->uploadFiles($request->sub_images, $venue->id)) {
                 return abort(500, "Failed to upload sub images");
             }
-            foreach ($validated['sub_images'] as $key => $value) {
+            foreach ($request->sub_images as $key => $value) {
                 $venueSubImage = VenueShowcasePhoto::create([
                     'venue_id' => $venue->id,
                     'photo_url' => 'venue/subimages/'.$venue->id.'/'.$value->hashName()
@@ -81,7 +116,7 @@ class VenueController extends Controller
 
         $venue->save();
         $venue->refresh();
-        return to_route('admin.venue.view', ['venue_id' => $venue->id]);
+        return to_route('admin.dashboard');
     }
 
     public function delete($venue_id)

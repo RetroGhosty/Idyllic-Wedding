@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\VenueShowcasePhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,7 +23,7 @@ class Venue extends Model
     }
     
     public function showcase_photo(): HasMany{
-        return $this->hasMany(VenueShowcasePphoto::class);
+        return $this->hasMany(VenueShowcasePhoto::class);
     }
     
     public function photographers(): HasMany{
