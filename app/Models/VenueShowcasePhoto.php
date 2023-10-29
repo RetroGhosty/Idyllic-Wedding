@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class VenueShowcasePphoto extends Model
+class VenueShowcasePhoto extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'photo_url',
-        'Venue_id',
+        'venue_id',
     ];
 
-    public function Venue(): BelongsTo {
+    public function venue(): BelongsTo {
         return $this->belongsTo(Venue::class);
     }
 }

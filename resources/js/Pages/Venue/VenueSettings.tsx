@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, router, useForm } from '@inertiajs/react'
+import { count, error } from 'console'
 import React from 'react'
 
 const VenueSettings = ({auth, venue}: any) => {
@@ -16,7 +17,7 @@ const VenueSettings = ({auth, venue}: any) => {
         sub_images?: FileList | undefined,
     }
 
-    const {data, setData, patch, errors, wasSuccessful, processing } = useForm<IVEnue>({
+    const {data, setData, patch, errors, setError, setDefaults, clearErrors, wasSuccessful, processing } = useForm<any>({
         venue_name: venue['venue_name'],
         description: venue['description'],
         limit: venue['limit'],
@@ -24,7 +25,9 @@ const VenueSettings = ({auth, venue}: any) => {
         header_image: undefined,
         sub_images: undefined,
     })
- 
+
+    const [isSubmitted, setIsSubmitted] = React.useState(false)
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
         router.post(route('admin.venue.update', venue['id']), {
@@ -35,7 +38,27 @@ const VenueSettings = ({auth, venue}: any) => {
             price: data.price,
             header_image: data.header_image,
             sub_images: data.sub_images as any,
-        })
+        }, {onStart: () => {
+            setIsSubmitted(false)
+        }, onError: (errors: any) => {
+            setError(errors)
+            setData('header_image', undefined)
+            setData('sub_images', undefined)
+        }, onSuccess: () => {
+            setIsSubmitted(true)
+            clearErrors()
+            setDefaults({
+                venue_name: venue['venue_name'],
+                description: venue['description'],
+                limit: venue['limit'],
+                price: venue['price'],
+                header_image: undefined,
+                sub_images: undefined,
+            })
+        }
+    
+    })
+        
     }
 
     const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IVEnue, fileType: string) => {
@@ -49,13 +72,12 @@ const VenueSettings = ({auth, venue}: any) => {
         }
     }
 
-
     return (
         <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{venue ? `Edit > Venue > [ ID: ${venue['id']} ] ${venue['venue_name']}` : "Venue not found"}</h2>}>
         <Head title="Admin | Edit User" />
         <div className="py-12">
             <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
-                {wasSuccessful ? "User profile successfully modified" : null}
+                {Object.keys(errors).length === 0 && isSubmitted === true ? "User profile successfully modified" : null}
                 <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
 
                     <div className='flex flex-col'>

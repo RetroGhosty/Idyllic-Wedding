@@ -24,7 +24,7 @@ class PhotographerController extends Controller
         $photographer->update($validatedData);
         $photographer->save();
         $photographer->refresh();
-        return back()->with('success', 'Photographer deleted successfully');
+        return back()->with('success', 'Photographer updated successfully');
     }
     
     public function delete($photographer_id){
