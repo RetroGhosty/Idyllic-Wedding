@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VenueRequest;
 use App\Models\User;
 use App\Models\Venue;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class VenueController extends Controller
@@ -37,6 +38,7 @@ class VenueController extends Controller
             'venue' => $venue
         ];
         $validated = $request->validated();
+        dd($validated);
         $venue->update($validated);
         $venue->save();
         $venue->refresh();

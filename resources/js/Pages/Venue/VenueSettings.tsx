@@ -3,7 +3,6 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, router, useForm } from '@inertiajs/react'
-import { KeyObject } from 'crypto'
 import React from 'react'
 
 const VenueSettings = ({auth, venue}: any) => {
@@ -13,7 +12,7 @@ const VenueSettings = ({auth, venue}: any) => {
         description: string,
         limit: number | string,
         price: number | string,
-        header_image?: FileList | undefined,
+        header_image?: File | undefined,
         sub_images?: FileList | undefined,
     }
 
@@ -28,12 +27,26 @@ const VenueSettings = ({auth, venue}: any) => {
  
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        patch(route('admin.venue.update', {venue_id:venue['id']}))
+        router.post(route('admin.venue.update', venue['id']), {
+            _method: 'patch',
+            venue_name: data.venue_name,
+            description: data.description,
+            limit: data.limit,
+            price: data.price,
+            header_image: data.header_image,
+            sub_images: data.sub_images as any,
+        })
     }
 
-    const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IVEnue) => {
+    const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IVEnue, fileType: string) => {
         const file = e.target as HTMLInputElement & {files: FileList}
-        setData(formModel, file.files)
+        if (fileType !== 'FileList' && fileType !== 'File') throw new Error('fileType must be File or FileList')
+
+        if (fileType === 'FileList'){
+            setData(formModel, file.files)
+        } else if (fileType === 'File'){
+            setData(formModel, file.files[0])
+        }
     }
 
 
@@ -47,12 +60,12 @@ const VenueSettings = ({auth, venue}: any) => {
 
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="header_image">Header Image</InputLabel>
-                        <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image')} accept='image/jpeg, image/png, image/jpg'/>
+                        <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image', 'File')} accept='image/jpeg, image/png, image/jpg'/>
                         {errors.header_image ? errors.header_image : null}
                     </div>
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="sub_images">Sub Images</InputLabel>
-                        <input autoComplete="off"  id='sub_images' type="file" multiple={true} onChange={(e) => handleFile(e, 'sub_images')} accept='image/jpeg, image/png, image/jpg'/>
+                        <input autoComplete="off"  id='sub_images' type="file" multiple={true} onChange={(e) => handleFile(e, 'sub_images', 'FileList')} accept='image/jpeg, image/png, image/jpg'/>
                         {errors.sub_images ? errors.sub_images : null}
                     </div>
 
