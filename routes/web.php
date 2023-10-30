@@ -4,10 +4,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\PhotographerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VenueShowcasePhotoController;
 use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\OurVenueController;
 use App\Http\Controllers\VenueController;
+use App\Http\Controllers\VenueLandingPhotoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,7 +71,8 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get('/admin/photographer/{photographer_id}', [PhotographerController::class,'view'])->name('admin.photographer.view');
     Route::patch('/admin/photographer/{photographer_id}', [PhotographerController::class,'update'])->name('admin.photographer.update');
     Route::delete('/admin/photographer/{photographer_id}', [PhotographerController::class,'delete'])->name('admin.photographer.delete');
-
+    Route::delete('/admin/landingphoto', [VenueLandingPhotoController::class,'delete'])->name('admin.landingphoto.delete');
+    Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

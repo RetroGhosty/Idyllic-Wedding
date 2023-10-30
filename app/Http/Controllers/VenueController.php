@@ -28,12 +28,17 @@ class VenueController extends Controller
 
     public function view($venue_id)
     {
+        $this->authorize('delete', auth()->user());
         $venue = Venue::find($venue_id);
+        $serializedVenue = $venue->toArray();
         $this->authorize('view', auth()->user());
+        $header_image = $venue->landing_photo;
+        $sub_images = $venue->showcase_photo;
         $payload = [
-            'venue' => $venue
+            'venue' => $serializedVenue,
+            'header_image' => $header_image,
+            'showcase_image' => $sub_images
         ];
-        dd($venue->landing_photo);
         return Inertia::render('Venue/VenueSettings', $payload);
 }
 
@@ -47,9 +52,6 @@ class VenueController extends Controller
             if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $request->header_image)) {
                 return abort(500, "Failed to upload header image");
             }
-
-
-
             $venueHeaderImage = VenueLandingPhoto::create([
                 'venue_id' => $venue->id,
                 'photo_url' => 'venue/landing_images/'.$venue->id.'/'.$request->header_image->hashName()
@@ -90,9 +92,6 @@ class VenueController extends Controller
             if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $request->header_image)) {
                 return abort(500, "Failed to upload header image");
             }
-
-
-
             $venueHeaderImage = VenueLandingPhoto::create([
                 'venue_id' => $venue->id,
                 'photo_url' => 'venue/landing_images/'.$venue->id.'/'.$request->header_image->hashName()
@@ -121,6 +120,7 @@ class VenueController extends Controller
 
     public function delete($venue_id)
     {
+        $this->authorize('delete', auth()->user());
         $venue = Venue::find($venue_id);
         if ($venue == null) {
             return abort(404, "Venue not found");

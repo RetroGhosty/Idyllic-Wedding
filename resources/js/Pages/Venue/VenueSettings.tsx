@@ -2,11 +2,12 @@ import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, router, useForm } from '@inertiajs/react'
-import { count, error } from 'console'
+import { Head, router, useForm, Link } from '@inertiajs/react'
+import {AiFillCloseSquare} from 'react-icons/ai'
+import {BsBoxArrowUpRight} from 'react-icons/bs'
 import React from 'react'
 
-const VenueSettings = ({auth, venue}: any) => {
+const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
 
     interface IVEnue{
         venue_name: string,
@@ -49,10 +50,7 @@ const VenueSettings = ({auth, venue}: any) => {
             clearErrors()
             setData('header_image', undefined)
             setData('sub_images', undefined)
-        }
-    
-    })
-        
+        }})
     }
 
     const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IVEnue, fileType: string) => {
@@ -66,6 +64,26 @@ const VenueSettings = ({auth, venue}: any) => {
         }
     }
 
+    const deleteLandingPhoto = ($image_id: number, $venue_id: number) => {
+        router.visit(route('admin.landingphoto.delete'), {
+            method: 'delete',
+            data:{
+                venue_id: $venue_id,
+                image_id: $image_id
+            }
+        })
+    }
+    
+    const deleteShowcasePhoto = ($image_id: number, $venue_id: number) => {
+        router.visit(route('admin.showcasephoto.delete'), {
+            method: 'delete',
+            data:{
+                venue_id: $venue_id,
+                image_id: $image_id
+            }
+        })
+    }
+
     return (
         <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{venue ? `Edit > Venue > [ ID: ${venue['id']} ] ${venue['venue_name']}` : "Venue not found"}</h2>}>
         <Head title="Admin | Edit User" />
@@ -73,17 +91,47 @@ const VenueSettings = ({auth, venue}: any) => {
             <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
                 {Object.keys(errors).length === 0 && isSubmitted === true ? "User profile successfully modified" : null}
                 <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
-
- 
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="header_image">Header Image</InputLabel>
                         <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image', 'File')} accept='image/jpeg, image/png, image/jpg'/>
                         {errors.header_image ? errors.header_image : null}
+                        {header_image && (
+                            <div className='mt-4 space-y-3'>
+                                <div className='flex flex-row items-center'>
+                                    <button type='button' onClick={() => deleteLandingPhoto(header_image['id'], venue['id'])} className='flex flex-wrap space-x-2 bg-slate-800 text-white p-2 rounded me-1 md:me-3'>
+                                        <AiFillCloseSquare className="text-2xl text-red-600"/>
+                                        <span>Delete Image</span>
+                                    </button>
+                                    <div className='flex flex-row items-center space-x-3'>
+                                        <a href={`/storage/${header_image['photo_url']}`} className='text-cyan-700 underline underline-offset-4'>Preview Image</a>
+                                        <BsBoxArrowUpRight/>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        )}
                     </div>
+
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="sub_images">Sub Images</InputLabel>
                         <input autoComplete="off"  id='sub_images' type="file" multiple={true} onChange={(e) => handleFile(e, 'sub_images', 'FileList')} accept='image/jpeg, image/png, image/jpg'/>
                         {errors.sub_images ? errors.sub_images : null}
+                        {showcase_image && (
+                            <div className='mt-4 space-y-3'>
+                                {showcase_image.map((image: any, key: number) => (
+                                    <div key={key} className='flex flex-wrap space-x-3 items-center'>
+                                        <button onClick={() => deleteShowcasePhoto(image['id'], venue['id'])} type='button' className='flex flex-row space-x-2 bg-slate-800 text-white p-2 rounded'>
+                                            <AiFillCloseSquare className="text-2xl text-red-600"/>
+                                            <span>Delete Image {key + 1}</span>
+                                        </button>
+                                        <div className='flex flex-row  items-center space-x-3'>
+                                            <a href={`/storage/${image['photo_url']}`} className='text-cyan-700 underline underline-offset-4'>Preview Image</a>
+                                            <BsBoxArrowUpRight/>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className='flex flex-col'>
