@@ -7,7 +7,9 @@ import {AiFillCloseSquare} from 'react-icons/ai'
 import {BsBoxArrowUpRight} from 'react-icons/bs'
 import React from 'react'
 
+
 const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
+    
 
     interface IVEnue{
         venue_name: string,
@@ -31,15 +33,19 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        router.post(route('admin.venue.update', venue['id']), {
+        console.log(data)
+        const payload = {
             _method: 'patch',
             venue_name: data.venue_name,
             description: data.description,
             limit: data.limit,
             price: data.price,
             header_image: data.header_image,
-            sub_images: data.sub_images as any,
-        }, {onStart: () => {
+            sub_images: data.sub_images,
+        }
+        if (data.header_image === undefined) delete payload.header_image
+        if (data.sub_images === undefined) delete payload.sub_images
+        router.post(route('admin.venue.update', venue['id']), payload, {onStart: () => {
             setIsSubmitted(false)
         }, onError: (errors: any) => {
             setError(errors)

@@ -19,6 +19,9 @@ class VenueRequest extends FormRequest
             'description' => ['required'],
             'limit' => ['numeric', 'required', 'min:10'],
             'price' => ['numeric', 'required', 'min:0'],
+            'header_image' => ['image'],
+            'sub_images' => ['array'],
+            'sub_images.*' => ['image'],
         ];
     }
 }
