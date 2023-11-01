@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservation_transactions', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('registered_user')->nullable()->constrained('users', 'id');
-            $table->foreignId('Unregistered_user')->nullable()->constrained('Unregistered_users', 'id');
-            $table->foreignId('Venue_id')->constrained('Venues', 'id');
-            $table->foreignId('Photographer_id')->constrained('Photographers', 'id');
+            $table->foreignId('customer_id')->nullable()->constrained('Unregistered_users', 'id')->onDelete('SET NULL');
+            $table->foreignId('venue_id')->nullable()->constrained('Venues', 'id')->onDelete('SET NULL');
+            $table->foreignId('photographer_id')->nullable()->constrained('Photographers', 'id')->onDelete('SET NULL');
             $table->integer('total_price');
-            $table->date('event_on');
+            $table->date('event_date');
             $table->string('status')->default('pending');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservation_transactions');
+        Schema::dropIfExists('reservations');
     }
 };

@@ -13,9 +13,13 @@ class Photographer extends Model
         'first_name',
         'last_name',
         'email',
+        'phone_number',
+        'facebook_contact',
+        'instagram_contact',
+        'profile_picture',
     ];
 
     public function Reservation_transaction(): HasMany {
-        return $this->hasMany(ReservationTransaction::class);
+        return $this->hasMany(Reservation::class);
     }
 }

@@ -14,9 +14,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
             if (user === "vendor"){
                 return (
                     <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
-                            My Shop
-                        </NavLink>
+
                     </div>
                 )       
             } else if (user === "admin"){
@@ -35,16 +33,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
         if (viewPortStatus === "mobile"){
             if (user === "vendor"){
                 return (
-                    <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
-                        My Shop
-                    </ResponsiveNavLink>
+                    <>
+                    test
+                    </>
                 )       
             } else if (user === "admin"){
                 return (
                     <>
-                        <ResponsiveNavLink href={route('shopvendor.dashboard')} active={route().current('shopvendor.*')}>
-                            My Shop
-                        </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
                             Admin Panel
                         </ResponsiveNavLink>

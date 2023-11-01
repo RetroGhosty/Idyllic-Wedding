@@ -11,7 +11,7 @@ class VenueLandingPhoto extends Model
     use HasFactory;
     protected $fillable = [
         'photo_url',
-        'Venue_id',
+        'venue_id',
     ];
 
     public function Venue(): HasOne {

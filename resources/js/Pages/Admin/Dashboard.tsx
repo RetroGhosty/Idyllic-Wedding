@@ -1,8 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { PageProps } from '@/types';
-import { Head, router } from '@inertiajs/react';
-import UserSection from './Partials/UserSection';
+import { Head } from '@inertiajs/react';
 import VenueSection from './Partials/VenueSection';
+import PhotographerSection from './Partials/PhotographerSection';
 
 const Dashboard = ({auth, users, venues, photographers}:any) => {
 
@@ -12,9 +11,8 @@ const Dashboard = ({auth, users, venues, photographers}:any) => {
       <Head title="Dashboard" />
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col space-y-10">
-        
-          <UserSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" users={users}/>
           <VenueSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" venues={venues}/>
+          <PhotographerSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" photographers={photographers}/>
         </div>
       </div>
     </AuthenticatedLayout>

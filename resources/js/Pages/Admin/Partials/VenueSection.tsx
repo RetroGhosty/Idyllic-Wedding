@@ -6,18 +6,24 @@ const VenueSection = ({className, venues}: any) => {
     const navigateTo = (venue_id: any) => {
         router.get(route('admin.venue.view', {venue_id:venue_id}))
     }
+
+    const deleteFunction = (venue_id: any) => {
+      router.delete(route('admin.venue.delete', {venue_id:venue_id}))
+    }
   return (
     <div className={className}>
-    <div className="text-gray-900">Venues</div>
-      <div className='relative overflow-x-auto sm:rounded-lg'>
-        <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+    <div className='flex flex-row items-center justify-between mb-4'>
+      <h1 className="text-gray-900 text-xl font-bold">Venues</h1>
+      <PrimaryButton onClick={() => {router.get(route('admin.venue.createView'))}}>Create Venue</PrimaryButton>
+    </div>
+    <div className='relative overflow-x-auto sm:rounded-lg'>
+        <table className='table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead>
             <tr>
               <th>ID</th>
               <th>Venue</th>
-              <th>Address</th>
+              <th>Head Limit</th>
               <th>Price</th>
-              <th>Owner</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -27,13 +33,12 @@ const VenueSection = ({className, venues}: any) => {
               <tr key={index}>
                 <td>{venue['id']}</td>
                 <td>{venue['venue_name']}</td>
-                <td>{venue['address']}</td>
+                <td>{venue['limit']}</td>
                 <td>{venue['price']}</td>
-                <td>{venue['venue_owner']}</td>
                 <td>
                   <div className='flex flex-row space-x-2'>
                     <PrimaryButton onClick={() => navigateTo(venue['id'])} className='pe-3 m-0'>Edit</PrimaryButton>
-                    <DangerButton>Delete</DangerButton>
+                    <DangerButton onClick={() => deleteFunction(venue['id'])}>Delete</DangerButton>
                   </div>
                 </td>
               </tr>

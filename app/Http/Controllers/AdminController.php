@@ -15,11 +15,11 @@ class AdminController extends Controller
     public function index(){
         $users = DB::table("users")->select('id', 'first_name', 'last_name', 'email', 'email_verified_at', 'user_level', 'status')->where("user_level", "!=", "admin")->get();
         $venues = Venue::all();
-        $Photographers = Photographer::all();
+        $photographers = Photographer::all();
         $payload = [
             "users" => $users,
             "venues" => $venues,
-            "Photographers" => $Photographers
+            "photographers" => $photographers
         ];
         return Inertia::render("Admin/Dashboard", $payload);
     }
@@ -40,6 +40,14 @@ class AdminController extends Controller
         return to_route('admin.user.view', ['user_id' => $user->id]);
     }
 
+    public function delete($user_id){
+        $user = User::find($user_id);
+        if ($user == null){
+            return abort(404, "User not found");
+        }
+        $user->delete();
+        return to_route('admin.dashboard');
+    }
 
     
 }

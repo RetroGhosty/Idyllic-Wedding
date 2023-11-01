@@ -3,6 +3,7 @@
         "allowJs": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
         "jsx": "react-jsx",
         "strict": true,
         "isolatedModules": true,
@@ -10,6 +11,7 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
+        "noImplicitAny": false,
         "paths": {
             "@/*": ["./resources/js/*"]
         }
