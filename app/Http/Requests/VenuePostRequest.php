@@ -6,9 +6,8 @@ use App\Rules\DoesVenueHeaderImgAlreadyExist;
 use App\Rules\VenueShowcasePhotoMaximumLimit;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VenueRequest extends FormRequest
+class VenuePostRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,10 +20,9 @@ class VenueRequest extends FormRequest
             'description' => ['required'],
             'limit' => ['numeric', 'required', 'min:10'],
             'price' => ['numeric', 'required', 'min:0'],
-            'header_image' => ['image', new DoesVenueHeaderImgAlreadyExist('patch', $this->route('venue_id'))],
-            'sub_images' => ['array', new VenueShowcasePhotoMaximumLimit('patch', $this->route('venue_id'))],
-            'sub_images.*' => ['image'],
+            'header_image' => ['required', 'image', new DoesVenueHeaderImgAlreadyExist('post', null)],
+            'sub_images' => ['required', 'array', new VenueShowcasePhotoMaximumLimit('post', null)],
+            'sub_images.*' => ['required', 'image'],
         ];
     }
 }
-

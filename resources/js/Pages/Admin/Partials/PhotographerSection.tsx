@@ -12,7 +12,10 @@ const PhotographerSection = ({className, photographers}:any) => {
     }
   return (
     <div className={className}>
-      <h1 className="text-gray-900 text-xl font-bold mb-6">Photographers</h1>
+      <div className='flex flex-row items-center justify-between mb-4'>
+        <h1 className="text-gray-900 text-xl font-bold">Photographers</h1>
+        <PrimaryButton onClick={() => {router.get(route('admin.photographer.createView'))}}>Create Profile</PrimaryButton>
+      </div>
       <div className='relative overflow-x-auto sm:rounded-lg'>
           <table className='w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400'>
             <thead>

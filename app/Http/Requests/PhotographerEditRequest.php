@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PhotographerRequest extends FormRequest
+class PhotographerEditRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,21 +14,13 @@ class PhotographerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_picture' => ['required', 'image', 'max:1024'],
+            'profile_picture' => ['image', 'max:1024'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone_number' => ['required', 'string', 'max:255'],
             'facebook_contact' => ['string', 'nullable'],
             'instagram_contact' => ['string', 'nullable'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'profile_picture.required' => "This field is required",
-            'profile_picture.max' => 'Profile picture must be less than 1MB',
         ];
     }
 }

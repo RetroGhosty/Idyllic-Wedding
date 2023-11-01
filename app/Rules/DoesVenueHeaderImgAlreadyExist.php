@@ -16,15 +16,20 @@ class DoesVenueHeaderImgAlreadyExist implements ValidationRule
      */
 
      protected $venue_id;
-     public function __construct(int $venue_id)
+     protected $validateIntent; // Is post or patch
+     public function __construct(string $validateIntent, ?int $venue_id)
      {
          $this->venue_id = $venue_id;
+         $this->validateIntent = $validateIntent;
      }
+     
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $venue = Venue::find($this->venue_id)->landing_photo;
-        if ($venue != null){
-            $fail("Venue already has header image");
+        if ($this->validateIntent == "patch"){
+            $venue = Venue::find($this->venue_id)->landing_photo;
+            if ($venue != null){
+                $fail("Venue already has header image");
+            }
         }
     }
 }

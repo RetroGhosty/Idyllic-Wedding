@@ -15,18 +15,26 @@ class VenueShowcasePhotoMaximumLimit implements ValidationRule
      */
 
      protected $venue_id;
+     protected $validateIntent; // Is post or patch
 
-     public function __construct(int $venue_id)
+     public function __construct(string $validateIntent, ?int $venue_id)
      {
          $this->venue_id = $venue_id;
+         $this->validateIntent = $validateIntent;
      }
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $venueShowcasePhoto = Venue::find($this->venue_id)->showcase_photo;
-        $totalShowcasePhoto = count($venueShowcasePhoto) + count($value);
-        if ($totalShowcasePhoto > 8){
-            $fail("Venue already has maximum number of showcase images");
+        if ($this->validateIntent == "post"){
+            if (count($value) > 8){
+                $fail("Venue already has maximum number of showcase images");
+            }
+        } else{
+            $venueShowcasePhoto = Venue::find($this->venue_id)->showcase_photo;
+            $totalShowcasePhoto = count($venueShowcasePhoto) + count($value);
+            if ($totalShowcasePhoto > 8){
+                $fail("Venue already has maximum number of showcase images");
+            }
         }
     }
 }

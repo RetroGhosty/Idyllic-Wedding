@@ -170,7 +170,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
                 </form>
             </div>
         </div>
-    </AuthenticatedLayout>
+        </AuthenticatedLayout>
   )
 }
 

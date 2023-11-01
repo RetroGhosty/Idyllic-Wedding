@@ -34,7 +34,6 @@ Route::get('/', function () {
     ]);
 });
 
-// localhost:8000/About
 Route::get("/About", [AboutController::class, 'about'])->name('about.home');
 
 Route::get("/OurVenue", [OurVenueController::class, 'Venue'])->name('OurVenue.home');
@@ -49,15 +48,6 @@ Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Vendor Protected
-/**
- Route::middleware(['auth', 'check-disabled', 'shop-creator', 'user-level:vendor'])->group(function() {
-     Route::get('/shop', [VenueVendorController::class,'index'])->name('shopvendor.dashboard');
-     Route::patch('/shop', [VenueVendorController::class,'updateStore'])->name('shopvendor.updatestore');
-     Route::post('/shop/product/create', [VenueVendorController::class,'createProduct'])->name('shopvendor.createproduct');
- });
-  
- */
 
 // Admin Protected Pages
 Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
@@ -65,11 +55,15 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
     Route::delete('/admin/profile/user/{user_id}', [AdminController::class,'delete'])->name('admin.user.delete');
-    Route::get('/admin/venue/{venue_id}', [VenueController::class,'view'])->name('admin.venue.view');
+    Route::get('/admin/venue', [VenueController::class,'createView'])->name('admin.venue.createView');
+    Route::post('/admin/venue', [VenueController::class,'post'])->name('admin.venue.create');
+    Route::get('/admin/venue/{venue_id}', [VenueController::class,'editView'])->name('admin.venue.view');
     Route::patch('/admin/venue/{venue_id}', [VenueController::class,'edit'])->name('admin.venue.update');
     Route::delete('/admin/venue/{venue_id}', [VenueController::class,'delete'])->name('admin.venue.delete');
+    Route::get('/admin/photographer', [PhotographerController::class,'createView'])->name('admin.photographer.createView');
+    Route::post('/admin/photographer', [PhotographerController::class,'createPhotographer'])->name('admin.photographer.createPhotographer');
     Route::get('/admin/photographer/{photographer_id}', [PhotographerController::class,'view'])->name('admin.photographer.view');
-    Route::patch('/admin/photographer/{photographer_id}', [PhotographerController::class,'update'])->name('admin.photographer.update');
+    Route::post('/admin/photographer/{photographer_id}', [PhotographerController::class,'update'])->name('admin.photographer.update');
     Route::delete('/admin/photographer/{photographer_id}', [PhotographerController::class,'delete'])->name('admin.photographer.delete');
     Route::delete('/admin/landingphoto', [VenueLandingPhotoController::class,'delete'])->name('admin.landingphoto.delete');
     Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');

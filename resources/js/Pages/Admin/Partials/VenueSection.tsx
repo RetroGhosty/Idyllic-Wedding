@@ -12,7 +12,10 @@ const VenueSection = ({className, venues}: any) => {
     }
   return (
     <div className={className}>
-    <h1 className="text-gray-900 text-xl font-bold mb-6">Venues</h1>
+    <div className='flex flex-row items-center justify-between mb-4'>
+      <h1 className="text-gray-900 text-xl font-bold">Venues</h1>
+      <PrimaryButton onClick={() => {router.get(route('admin.venue.createView'))}}>Create Venue</PrimaryButton>
+    </div>
     <div className='relative overflow-x-auto sm:rounded-lg'>
         <table className='table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead>
