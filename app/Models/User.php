@@ -53,7 +53,6 @@ class User extends Authenticatable
         'status' => UserAccountStatusEnum::class
     ];
 
-  
 
     public function venue(): HasOne{
         return $this->hasOne(Venue::class, 'Venue_owner');

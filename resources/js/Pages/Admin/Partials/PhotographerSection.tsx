@@ -5,10 +5,10 @@ import { router } from '@inertiajs/react'
 
 const PhotographerSection = ({className, photographers}:any) => {
     const navigateTo = (photographer_id: any) => {
-        router.get(route('admin.photographer.view', {photographer_id:photographer_id}))
+        router.get(route('admin.photographer.view', {photographer_id:photographer_id}), {preserveScroll: true})
       }
     const deleteFunction = (photographer_id: any) => {
-        router.delete(route('admin.photographer.delete', {photographer_id:photographer_id}))
+        router.delete(route('admin.photographer.delete', {photographer_id:photographer_id}), {preserveScroll: true})
     }
   return (
     <div className={className}>

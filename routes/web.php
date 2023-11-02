@@ -4,12 +4,15 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\PhotographerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VenueShowcasePhotoController;
 use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminReservationController;
 use App\Http\Controllers\OurVenueController;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueLandingPhotoController;
+use App\Models\Reservation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,10 +41,9 @@ Route::get("/About", [AboutController::class, 'about'])->name('about.home');
 
 Route::get("/OurVenue", [OurVenueController::class, 'Venue'])->name('OurVenue.home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::middleware(['auth', 'verified'])->group(function(){
+    Route::get("/dashboard", [AdminReservationController::class, 'viewReservation'])->name('dashboard');
+});
 Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -67,6 +69,7 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::delete('/admin/photographer/{photographer_id}', [PhotographerController::class,'delete'])->name('admin.photographer.delete');
     Route::delete('/admin/landingphoto', [VenueLandingPhotoController::class,'delete'])->name('admin.landingphoto.delete');
     Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');
+    Route::patch('/admin/reservation/edit/{reservation_id}', [ReservationController::class,'editStatus'])->name('admin.reservation.editStatus');
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

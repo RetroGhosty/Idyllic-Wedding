@@ -31,7 +31,7 @@ const PhotographerView = ({photographer, auth}: any) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        post(route('admin.photographer.update', {photographer_id:photographer['id']}))
+        post(route('admin.photographer.update', {photographer_id:photographer['id']}), {preserveScroll: true})
     }
     const handleFile = (e: React.FormEvent<HTMLInputElement>, formModel: keyof IPhotographer) => {
         const file = e.target as HTMLInputElement & {files: FileList}

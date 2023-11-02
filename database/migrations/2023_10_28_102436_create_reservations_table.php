@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('photographer_id')->nullable()->constrained('Photographers', 'id')->onDelete('SET NULL');
             $table->integer('total_price');
             $table->date('event_date');
+            $table->string('payment_method');
+            $table->string('payment_proof')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });

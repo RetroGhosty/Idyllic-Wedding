@@ -45,7 +45,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
         }
         if (data.header_image === undefined) delete payload.header_image
         if (data.sub_images === undefined) delete payload.sub_images
-        router.post(route('admin.venue.update', venue['id']), payload, {onStart: () => {
+        router.post(route('admin.venue.update', venue['id']), payload, {preserveScroll: true, onStart: () => {
             setIsSubmitted(false)
         }, onError: (errors: any) => {
             setError(errors)

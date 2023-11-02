@@ -53,8 +53,10 @@ class PhotographerController extends Controller
                 return abort(500, "Failed to upload profile picture");
             }
             $localFilePath = public_path().'/storage/'.$photographer->profile_picture;
-            if (file_exists($localFilePath)){
-                unlink($localFilePath);
+            if ($photographer->profile_picture != null){
+                if (file_exists($localFilePath)){
+                    unlink($localFilePath);
+                }
             }
             $photographer->profile_picture = 'photographers/profile/'.$validatedData['profile_picture']->hashName();
         }
@@ -71,8 +73,10 @@ class PhotographerController extends Controller
             return abort(404, "Photographer not found");
         }
         $localFilePath = public_path().'/storage/'.$photographer->profile_picture;
-        if (file_exists($localFilePath)){
-            unlink($localFilePath);
+        if ($photographer->profile_picture != null){
+            if (file_exists($localFilePath)){
+                unlink($localFilePath);
+            }
         }
 
         $photographer->delete();

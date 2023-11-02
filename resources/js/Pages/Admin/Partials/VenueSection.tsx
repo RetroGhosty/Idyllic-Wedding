@@ -4,11 +4,11 @@ import { router } from '@inertiajs/react'
 
 const VenueSection = ({className, venues}: any) => {
     const navigateTo = (venue_id: any) => {
-        router.get(route('admin.venue.view', {venue_id:venue_id}))
+        router.get(route('admin.venue.view', {venue_id:venue_id}), {preserveScroll: true})
     }
 
     const deleteFunction = (venue_id: any) => {
-      router.delete(route('admin.venue.delete', {venue_id:venue_id}))
+      router.delete(route('admin.venue.delete', {venue_id:venue_id}), {preserveScroll: true})
     }
   return (
     <div className={className}>

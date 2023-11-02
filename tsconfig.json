@@ -14,7 +14,8 @@
         "noImplicitAny": false,
         "paths": {
             "@/*": ["./resources/js/*"]
-        }
+        },
+        "skipLibCheck": true
     },
-    "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
+    "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts", "resources/js/"]
 }

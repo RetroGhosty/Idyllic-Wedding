@@ -13,11 +13,9 @@ class AdminController extends Controller
 {
     //
     public function index(){
-        $users = DB::table("users")->select('id', 'first_name', 'last_name', 'email', 'email_verified_at', 'user_level', 'status')->where("user_level", "!=", "admin")->get();
         $venues = Venue::all();
         $photographers = Photographer::all();
         $payload = [
-            "users" => $users,
             "venues" => $venues,
             "photographers" => $photographers
         ];
