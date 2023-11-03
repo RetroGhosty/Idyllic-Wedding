@@ -32,7 +32,7 @@ const ReservationTable = ({reservations}: any) => {
         }),
         columnHelper.accessor('event_date', {
             header: 'Event Date',
-            cell: (info) => {return format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}
+            cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
         }),
         columnHelper.accessor('status', {
             header: 'Status',

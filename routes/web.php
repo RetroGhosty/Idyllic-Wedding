@@ -9,7 +9,11 @@ use App\Http\Controllers\VenueShowcasePhotoController;
 use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminReservationController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\OurVenueController;
+use App\Http\Controllers\PublicVenueController;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueLandingPhotoController;
 use App\Models\Reservation;
@@ -35,12 +39,18 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('landing-page');
 
-Route::get("/About", [AboutController::class, 'about'])->name('about.home');
+// Guest Pages
+Route::get("/about", [AboutController::class, 'about'])->name('about.home');
+Route::get("/highlights", [HighlightController::class, 'view'])->name('highlights.home');
+Route::get("/venues", [PublicVenueController::class, 'view'])->name('venues.home');
+Route::get("/venues", [PublicVenueController::class, 'view'])->name('venues.home');
+Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home');
 
-Route::get("/OurVenue", [OurVenueController::class, 'Venue'])->name('OurVenue.home');
+Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
 
+// Admin Protected Pages
 Route::middleware(['auth', 'verified'])->group(function(){
     Route::get("/dashboard", [AdminReservationController::class, 'viewReservation'])->name('dashboard');
 });
@@ -49,9 +59,6 @@ Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-// Admin Protected Pages
 Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');

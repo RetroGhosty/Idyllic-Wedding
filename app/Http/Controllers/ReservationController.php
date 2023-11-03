@@ -28,6 +28,11 @@ class ReservationController extends Controller
                 'payment_method' => $reservation->payment_method,
             ]);
         }
+
+        if ($request->status == ReservationStatusEnum::CANCELLED->value){
+            $reservation->status = ReservationStatusEnum::CANCELLED;
+            $reservation->save();
+        }
         $reservation->refresh();
         return to_route('dashboard');
     }
