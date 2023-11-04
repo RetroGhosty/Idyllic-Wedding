@@ -13,7 +13,6 @@ class Reservation extends Model
     protected $fillable = [
         'venue_id',
         'customer_id',
-        'venue_id',
         'total_price',
         'event_date',
         'status',

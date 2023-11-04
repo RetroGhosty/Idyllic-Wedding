@@ -27,6 +27,8 @@ export interface IReservation{
     payment_proof: string,
     status: string,
 }
+
+
 export interface PullUsersArr extends Array<PullUsers>{}
 export interface ReservationArr extends Array<IReservation>{}
 

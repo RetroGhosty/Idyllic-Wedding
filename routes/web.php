@@ -45,7 +45,7 @@ Route::get('/', function () {
 Route::get("/about", [AboutController::class, 'about'])->name('about.home');
 Route::get("/highlights", [HighlightController::class, 'view'])->name('highlights.home');
 Route::get("/venues", [PublicVenueController::class, 'view'])->name('venues.home');
-Route::get("/venues", [PublicVenueController::class, 'view'])->name('venues.home');
+Route::get("/venues/{venue_name}", [PublicVenueController::class, 'view_single'])->name('venues.view_single');
 Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home');
 
 Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');

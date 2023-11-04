@@ -1,7 +1,7 @@
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import NavLink from '@/Components/NavLink';
 import NavBar from './Guest/Partial/NavBar';
+import Footer from './Guest/Partial/Footer';
 
 export default function Welcome({ auth }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
     return (
@@ -13,6 +13,7 @@ export default function Welcome({ auth }: PageProps<{ laravelVersion: string, ph
                 <div className='min-h-screen max-w-7xl pt-4  md:pt-9 mx-auto px-4 sm:px-6 lg:px-8l'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam enim non dolore tempora commodi sunt eos sit officia atque nulla quia eius ullam ipsa aliquid qui doloribus, repellendus molestiae tenetur totam cum dolorum. Earum numquam sit soluta quam neque.
                 </div>
+                <Footer/>
             </div>
         </>
     );

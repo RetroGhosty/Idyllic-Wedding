@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignId('customer_id')->nullable()->constrained('Unregistered_users', 'id')->onDelete('SET NULL');
-            $table->foreignId('venue_id')->nullable()->constrained('Venues', 'id')->onDelete('no action');
+            $table->foreignId('venue_id')->nullable()->constrained('Venues', 'id')->onDelete('SET NULL');
             $table->foreignId('photographer_id')->nullable()->constrained('Photographers', 'id')->onDelete('SET NULL');
             $table->foreignUlid('reservation_id')->nullable()->constrained('Reservations', 'id')->onDelete('SET NULL');
             $table->integer('transaction_amount');
