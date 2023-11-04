@@ -14,8 +14,8 @@ const Venues = ({auth, venues}: any) => {
         <Head title="Venues" />
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <NavBar user={auth.user}/>
-            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-slate-200 h-14'>
-                <div className="max-w-6xl mx-auto w-full text-xl">
+            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#a4ac86] h-24'>
+                <div className="max-w-6xl mx-auto w-full text-3xl font-black tracking-widest">
                 <Breadcrumb>
                     <BreadcrumbItem>
                         <BreadcrumbLink href={route('venues.home')}>Venues</BreadcrumbLink>
