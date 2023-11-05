@@ -13,7 +13,6 @@ class Transaction extends Model
     protected $fillable = [
         'customer_id',
         'venue_id',
-        'photographer_id',
         'reservation_id',
         'transaction_amount',
         'transaction_status',
@@ -26,9 +25,7 @@ class Transaction extends Model
     public function venue(): HasOne{
         return $this->hasOne(Venue::class, 'id', 'venue_id');
     }
-    public function photographer(): HasOne{
-        return $this->hasOne(Photographer::class, 'id', 'photographer_id');
-    }
+
     public function reservation(): HasOne{
         return $this->hasOne(Reservation::class, 'id', 'reservation_id');
     }

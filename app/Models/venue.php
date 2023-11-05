@@ -26,9 +26,6 @@ class Venue extends Model
         return $this->hasMany(VenueShowcasePhoto::class);
     }
     
-    public function photographers(): HasMany{
-        return $this->hasMany(Photographer::class);
-    }
 
     public function available_reservation(): HasMany{
         return $this->hasMany(Reservation::class);

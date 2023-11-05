@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminProfileUserUpdateRequest;
-use App\Models\Photographer;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +13,8 @@ class AdminController extends Controller
     //
     public function index(){
         $venues = Venue::all();
-        $photographers = Photographer::all();
         $payload = [
             "venues" => $venues,
-            "photographers" => $photographers
         ];
         return Inertia::render("Admin/Dashboard", $payload);
     }

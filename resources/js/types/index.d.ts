@@ -20,7 +20,6 @@ export interface IReservation{
     id: string,
     customer_id: number,
     venue_id: number,
-    photographer_id: number,
     total_price: number,
     event_date: string,
     payment_method: string,

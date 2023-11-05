@@ -21,7 +21,6 @@ class ReservationFactory extends Factory
             
             'customer_id' => fake()->numberBetween(1, 10),
             'venue_id' => fake()->numberBetween(1, 10),
-            'photographer_id' => fake()->numberBetween(1, 10),
             'total_price' => fake()->numberBetween(1000, 10000),
             'event_date' => fake()->date(),
             'payment_method' => fake()->randomElement([PaymentMethodEnum::GCASH, PaymentMethodEnum::COD, PaymentMethodEnum::PAYMAYA]),

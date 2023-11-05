@@ -22,7 +22,6 @@ class ReservationController extends Controller
                 'venue_id' => $reservation->venue_id,
                 'photo_id' => $reservation->photo_id,
                 'reservation_id' => $reservation->id,
-                'photographer_id' => $reservation->photographer_id,
                 'transaction_amount' => $reservation->total_price,
                 'transaction_status' => ReservationStatusEnum::APPROVED,
                 'payment_method' => $reservation->payment_method,

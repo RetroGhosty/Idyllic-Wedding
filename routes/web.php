@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
-use App\Http\Controllers\PhotographerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VenueShowcasePhotoController;
@@ -69,11 +68,6 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get('/admin/venue/{venue_id}', [VenueController::class,'editView'])->name('admin.venue.view');
     Route::patch('/admin/venue/{venue_id}', [VenueController::class,'edit'])->name('admin.venue.update');
     Route::delete('/admin/venue/{venue_id}', [VenueController::class,'delete'])->name('admin.venue.delete');
-    Route::get('/admin/photographer', [PhotographerController::class,'createView'])->name('admin.photographer.createView');
-    Route::post('/admin/photographer', [PhotographerController::class,'createPhotographer'])->name('admin.photographer.createPhotographer');
-    Route::get('/admin/photographer/{photographer_id}', [PhotographerController::class,'view'])->name('admin.photographer.view');
-    Route::post('/admin/photographer/{photographer_id}', [PhotographerController::class,'update'])->name('admin.photographer.update');
-    Route::delete('/admin/photographer/{photographer_id}', [PhotographerController::class,'delete'])->name('admin.photographer.delete');
     Route::delete('/admin/landingphoto', [VenueLandingPhotoController::class,'delete'])->name('admin.landingphoto.delete');
     Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');
     Route::patch('/admin/reservation/edit/{reservation_id}', [ReservationController::class,'editStatus'])->name('admin.reservation.editStatus');

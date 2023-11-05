@@ -6,7 +6,6 @@ namespace Database\Seeders;
 
 use App\Models\Shop;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\App;
 use App\choices\UserAccountLevel;
 
 class DatabaseSeeder extends Seeder
@@ -22,8 +21,6 @@ class DatabaseSeeder extends Seeder
             "user_level" => UserAccountLevel::ADMIN,
         ]);
         
-        \App\Models\Venue::factory(10)->create();
-        \App\Models\Photographer::factory(10)->create();
         \App\Models\UnregisteredUser::factory(10)->create();
         \App\Models\Reservation::factory(10)->create();
 
