@@ -5,14 +5,19 @@ import NavBar from './Partial/NavBar'
 import Footer from './Partial/Footer'
 import { Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from '@chakra-ui/react'
 import PrimaryButton from '@/Components/PrimaryButton'
+import ContactInfoForm from './BookingPartials/ContactInfoForm'
+import VenueBookingForm from './BookingPartials/VenueBookingForm'
+import PaymentForm from './BookingPartials/PaymentForm'
+import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
 
 type Props = {}
 
-const Booking = ({auth}: PageProps) => {
+const Booking = ({auth, venues}: PageProps) => {
   const steps = [
-    {title: 'Step 1', description: 'Contact Info'},
-    {title: 'Step 2', description: 'Book a venue'},
-    {title: 'Step 3', description: 'Payment'},
+    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm/>},
+    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues}/>},
+    {title: 'Step 3', description: 'Payment', component: <PaymentForm/>},
+    {title: 'Step 4', description: 'Awaiting for confirmation', component: <AwaitingConfirm/>},
   ]
 
   const {activeStep} = useSteps({
@@ -24,7 +29,8 @@ const Booking = ({auth}: PageProps) => {
   const [localActiveStep, setLocalActiveStep] = React.useState(0)
   
   const increaseStep = () => {
-    if (localActiveStep > (steps.length - 1)){
+    if (localActiveStep > (steps.length - 2)){
+      
       return false
     }
     setLocalActiveStep(localActiveStep + 1)
@@ -36,7 +42,13 @@ const Booking = ({auth}: PageProps) => {
     setLocalActiveStep(localActiveStep - 1)
   }
 
-
+  const handleFormSteps = () => {
+    if ((activeStep + localActiveStep) < 0 || (activeStep + localActiveStep) > (steps.length - 1)){
+      return steps[(activeStep + localActiveStep) - 1].component
+    } else{
+      return steps[activeStep + localActiveStep].component
+    }
+  }
   return (
     <>
         <Head title="Booking" />
@@ -67,7 +79,7 @@ const Booking = ({auth}: PageProps) => {
               </Stepper>
               </div>
               <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo suscipit animi eius iste laboriosam laborum blanditiis magni adipisci aspernatur vero?
+                {handleFormSteps()}
               </div>
               
               <div className='flex flex-row justify-between'>
@@ -75,8 +87,6 @@ const Booking = ({auth}: PageProps) => {
                 <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
               </div>
             </div>
-
-            
             <Footer/>
         </div>
     </>

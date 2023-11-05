@@ -1,13 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\Models\Venue;
 use Inertia\Inertia;
 
 class BookingController extends Controller
 {
     public function view(){
-        return Inertia::render('Guest/Booking');
+        $venues = Venue::all('id', 'venue_name', 'limit', 'price');
+        $payload = [
+            'venues' => $venues,
+        ];
+        return Inertia::render('Guest/Booking', $payload);
     }
 }
