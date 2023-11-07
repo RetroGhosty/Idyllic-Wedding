@@ -23,7 +23,7 @@ const Venues = ({auth, venues}: any) => {
                 </Breadcrumb>
                 </div>
             </div>
-            <div className='min-h-screen max-w-7xl pt-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
+            <div className='min-h-screen max-w-7xl py-5 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-[3rem]">
                   {venues.map((venue: any, id: number) => (
                     <div key={id} onClick={() => navigate(venue['venue_name'])} className="border-4 border-[#4c601b] hover:scale-105 p-5 ease-out duration-300 relative">

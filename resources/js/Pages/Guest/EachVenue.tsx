@@ -18,7 +18,7 @@ const EachVenue = ({auth, venue, landing_photo, showcase_photo}: any) => {
                     {`${venue['venue_name']} Venue`}
                 </div>
             </div>
-            <div className='min-h-screen  w-full max-w-7xl pt-4 md:py-9 mx-auto px-4 space-y-12 sm:px-6 lg:px-8l'>
+            <div className='min-h-screen  w-full max-w-7xl py-5 md:py-9 mx-auto px-4 space-y-12 sm:px-6 lg:px-8l'>
                 <p>{venue['description']}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 space-y-5 md:space-y-0 md:space-x-10 text-white">
                     <div className="bg-[#333533] p-8 flex flex-col items-center space-y-5">

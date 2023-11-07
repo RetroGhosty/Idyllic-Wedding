@@ -48,6 +48,7 @@ Route::get("/venues/{venue_name}", [PublicVenueController::class, 'view_single']
 Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home');
 
 Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
+Route::post("/booking/contact", [BookingController::class, 'contactInfo'])->name('booking.contactinfo');
 
 // Admin Protected Pages
 Route::middleware(['auth', 'verified'])->group(function(){

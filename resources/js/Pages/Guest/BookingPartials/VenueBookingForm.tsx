@@ -1,10 +1,11 @@
 import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
 import { Select } from '@chakra-ui/react'
 import { useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 
-const VenueBookingForm = ({venues}:any) => {
+const VenueBookingForm = ({venues, increaseStep, decreaseStep}:any) => {
     const {data, setData, errors} = useForm<any>({
         venue_id: '',
     })
@@ -37,6 +38,10 @@ const VenueBookingForm = ({venues}:any) => {
             <div>
               <div className='text-base'>Limit: {venues[currentVenue]['limit']}</div>
               <div className='text-base'>Price: P{venues[currentVenue]['price']}.00</div>
+            </div>
+            <div className='flex flex-row justify-between'>
+                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
+                <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
             </div>
           </div>
       </motion.form>

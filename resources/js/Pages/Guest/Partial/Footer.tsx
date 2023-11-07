@@ -19,7 +19,7 @@ const Footer = () => {
 
                 </div>
                 <div className='flex flex-col space-y-2'>
-                    <span>Copyright © Idyllic Weddings - Dates and Reservations</span>
+                    <span>Copyright © Idyllic Weddings - Date and Venue Reservations</span>
                     <span>All Rights Reserved.</span>
                 </div>
             </div>

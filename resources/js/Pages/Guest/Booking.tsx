@@ -5,26 +5,26 @@ import NavBar from './Partial/NavBar'
 import Footer from './Partial/Footer'
 import { Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from '@chakra-ui/react'
 import PrimaryButton from '@/Components/PrimaryButton'
-import ContactInfoForm from './BookingPartials/ContactInfoForm'
 import VenueBookingForm from './BookingPartials/VenueBookingForm'
 import PaymentForm from './BookingPartials/PaymentForm'
 import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
-
-type Props = {}
+import ContactInfoForm from './BookingPartials/ContactInfoForm'
+import { IoPlaySkipForwardCircleOutline } from 'react-icons/io5'
 
 const Booking = ({auth, venues}: PageProps) => {
-  const steps = [
-    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm/>},
-    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues}/>},
-    {title: 'Step 3', description: 'Payment', component: <PaymentForm/>},
-    {title: 'Step 4', description: 'Awaiting for confirmation', component: <AwaitingConfirm/>},
-  ]
+  
+
+  const [steps, setSteps] = React.useState<any>([
+    {title: 'Step 1', description: 'Contact Info'},
+    {title: 'Step 2', description: 'Book a venue'},
+    {title: 'Step 3', description: 'Payment'},
+    {title: 'Step 4', description: 'Awaiting for confirmation'},
+  ])
 
   const {activeStep} = useSteps({
     index: 0,
     count: steps.length,
   })
-
 
   const [localActiveStep, setLocalActiveStep] = React.useState(0)
   
@@ -42,13 +42,24 @@ const Booking = ({auth, venues}: PageProps) => {
     setLocalActiveStep(localActiveStep - 1)
   }
 
-  const handleFormSteps = () => {
-    if ((activeStep + localActiveStep) < 0 || (activeStep + localActiveStep) > (steps.length - 1)){
-      return steps[(activeStep + localActiveStep) - 1].component
-    } else{
-      return steps[activeStep + localActiveStep].component
+  const stepComponenets = [
+    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm venues={venues} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 3', description: 'Payment', component: <PaymentForm increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 4', description: 'Awaiting for confirmation', component: <AwaitingConfirm />},
+  ]
+
+  const handleFormSteps = (stepIntent: string) => {
+    if (stepIntent === 'next'){
+        return stepComponenets[(activeStep + localActiveStep)].component
     }
-  }
+    if (stepIntent === 'back'){
+      return stepComponenets[activeStep + localActiveStep].component
+    }
+  }  
+
+
+
   return (
     <>
         <Head title="Booking" />
@@ -56,9 +67,9 @@ const Booking = ({auth, venues}: PageProps) => {
             
             <NavBar user={auth.user}/>
             <div className='min-h-screen max-w-7xl pt-4 w-full md:py-9 mx-auto px-4 sm:px-6 lg:px-8l flex flex-col space-y-10'>
-              <div>
-                <Stepper size='lg' index={activeStep + localActiveStep}>
-                {steps.map((step, index) => (
+              <div className='md:hidden'>
+                <Stepper size='lg' orientation='vertical' index={activeStep + localActiveStep}>
+                {steps.map((step: any, index: number) => (
                   <Step key={index}>
                     <StepIndicator>
                       <StepStatus
@@ -72,25 +83,42 @@ const Booking = ({auth, venues}: PageProps) => {
                       <StepTitle>{step.title}</StepTitle>
                       <StepDescription>{step.description}</StepDescription>
                     </Box>
+                    <StepSeparator />
+                  </Step>
+                ))}
+              </Stepper>
+              </div>
+              <div className='hidden md:inline'>
+                <Stepper size='lg' index={activeStep + localActiveStep}>
+                {steps.map((step: any, index: number) => (
+                  <Step key={index}>
+                    <StepIndicator>
+                      <StepStatus
+                        complete={<StepIcon />}
+                        incomplete={<StepNumber />}
+                        active={<StepNumber />}
+                      />
+                    </StepIndicator>
 
+                    <Box flexShrink='0'>
+                      <StepTitle>{step.title}</StepTitle>
+                      <StepDescription>{step.description}</StepDescription>
+                    </Box>
                     <StepSeparator />
                   </Step>
                 ))}
               </Stepper>
               </div>
               <div>
-                {handleFormSteps()}
+                {handleFormSteps('next')}
               </div>
               
-              <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
-                <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
-              </div>
             </div>
             <Footer/>
         </div>
     </>
   )
 }
+
 
 export default Booking

@@ -1,22 +1,33 @@
 import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import { FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
-import { useForm } from '@inertiajs/react'
+import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 
-type Props = {}
 
-const ContactInfoForm = (props: Props) => {
-    const {data, setData, errors} = useForm<any>({
+const ContactInfoForm = ({venues, increaseStep, decreaseStep}: any) => {
+    const {data, setData, errors, setError, post} = useForm<any>({
         email: '',
         phone_number: '',
         first_name: '',
         last_name: ''
     })
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+        router.post(route('booking.contactinfo'), data, {
+            preserveScroll: true,
+            onSuccess: () => increaseStep(),
+            onError: (errors: any) => {
+                setError(errors)
+            }
+        })
+    } 
+
   return (
     <AnimatePresence>
-        <motion.form className='flex flex-col space-y-7'
+        <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
         initial={{ opacity: 0, x: 300 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -200 }}
@@ -42,6 +53,9 @@ const ContactInfoForm = (props: Props) => {
                 <TextInput autoComplete="off"  id='last_name' type="text" value={data.last_name} onChange={(e) => setData('last_name', e.target.value)} />
                 {errors.last_name ? errors.last_name : null}
             </div>       
+            <div className='flex flex-row justify-end'>
+                <PrimaryButton type='submit'>Next</PrimaryButton>
+            </div>
         </motion.form>
     </AnimatePresence>
   )

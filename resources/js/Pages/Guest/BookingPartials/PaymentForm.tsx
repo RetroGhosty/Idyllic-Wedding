@@ -1,11 +1,12 @@
 import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
 import { Select } from '@chakra-ui/react'
 import { useForm } from '@inertiajs/react'
 import { motion } from 'framer-motion'
 
 
 
-const PaymentForm = () => {
+const PaymentForm = ({increaseStep, decreaseStep}: any) => {
 
     interface IPayment{
         venue_id: string,
@@ -51,6 +52,10 @@ const PaymentForm = () => {
              <InputLabel htmlFor="payment_proof">Payment Proof</InputLabel>
             <input autoComplete="off"  id='payment_proof' type="file" onChange={(e) => handleFile(e, 'payment_proof', 'File')} accept='image/jpeg, image/png, image/jpg'/>
             {errors.payment_proof ? errors.payment_proof : null}
+        </div>
+        <div className='flex flex-row justify-between'>
+                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
+                <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
         </div>
                       
     </motion.form>
