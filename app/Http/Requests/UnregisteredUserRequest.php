@@ -20,4 +20,15 @@ class UnregisteredUserRequest extends FormRequest
             'last_name' => ['required'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Email is required',
+            'email.email' => 'Email must be a valid email address',
+            'phone_number.required' => 'Phone number is required',
+            'first_name.required' => 'First name is required',
+            'last_name.required' => 'Last name is required',
+        ];
+    }
 }

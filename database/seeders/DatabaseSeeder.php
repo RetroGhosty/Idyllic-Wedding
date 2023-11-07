@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            "email" => "davilajohn810@gmail.com",
-            "password"=> bcrypt("123"),
-            "user_level" => UserAccountLevel::ADMIN,
-        ]);
+        // \App\Models\User::factory()->create([
+        //     "email" => "davilajohn810@gmail.com",
+        //     "password"=> bcrypt("123"),
+        //     "user_level" => UserAccountLevel::ADMIN,
+        // ]);
         
-        \App\Models\UnregisteredUser::factory(10)->create();
+        // \App\Models\UnregisteredUser::factory(10)->create();
         \App\Models\Reservation::factory(10)->create();
 
     }

@@ -4,17 +4,39 @@ import { Select } from '@chakra-ui/react'
 import { useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
+import { add, addDays, addMonths, format } from 'date-fns'
+import DatePicker from "react-datepicker";
+import "../../../../css/react-datepicker.css"
+import { parse } from 'date-fns'
 
-const VenueBookingForm = ({venues, increaseStep, decreaseStep}:any) => {
+const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any) => {
     const {data, setData, errors} = useForm<any>({
-        venue_id: '',
+        venue_id: 0,
+        dateSelected: addDays(new Date(), 4),
     })
-
+    
+    const changeExcludedDates = () => {
+      reservations.map((reservation: any) => {
+        if (reservation['venue_id'] === venues[data.venue_id]['id']){
+          excludedDates.push(parse(reservation['event_date'], 'yyyy-MM-dd', new Date()))
+        }
+      })
+    }
+    const excludedDates: any[] = []
     const [currentVenue, setCurrentVenue] = React.useState(0)
     const handleVenueChange = (e: any) => {
       setData('venue_id', e.target.value)
       setCurrentVenue(e.target.value)
+      changeExcludedDates()
     }
+    const dateChange = (date) => {
+      setData('dateSelected', date)
+    }
+    changeExcludedDates()
+
+    
+
+
 
   return (
     <AnimatePresence>
@@ -33,9 +55,20 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep}:any) => {
               </Select>
               {errors.venue_id ? errors.venue_id : null}
           </div>              
-          <div className='flex flex-col'>
-            <span className='text-xl font-black'>Details</span>
+          <div className='flex flex-col space-y-4'>
             <div>
+              <span className='text-xl font-black'>
+                  <DatePicker 
+                  onChange={dateChange}
+                  minDate={addDays(new Date(), 3)}
+                  maxDate={addMonths(new Date(), 3)}
+                  excludeDates={excludedDates}
+                  selected={data['dateSelected']}
+                  />
+              </span>
+            </div>
+            <div>
+              <span className='text-xl font-black'>Details</span>
               <div className='text-base'>Limit: {venues[currentVenue]['limit']}</div>
               <div className='text-base'>Price: P{venues[currentVenue]['price']}.00</div>
             </div>

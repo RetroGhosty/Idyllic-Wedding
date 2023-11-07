@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;

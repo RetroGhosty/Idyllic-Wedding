@@ -1,18 +1,17 @@
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
-import { FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
-import React from 'react'
 
 
-const ContactInfoForm = ({venues, increaseStep, decreaseStep}: any) => {
+const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
     const {data, setData, errors, setError, post} = useForm<any>({
-        email: '',
-        phone_number: '',
-        first_name: '',
-        last_name: ''
+        email: session ? session['email'] : "",
+        phone_number: session ? session['phone_number'] : "",
+        first_name: session ? session['first_name'] : "",
+        last_name: session ? session['last_name'] : "",
+
     })
     const handleSubmit = (e: any) => {
         e.preventDefault()

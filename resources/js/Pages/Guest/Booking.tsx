@@ -11,9 +11,8 @@ import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
 import ContactInfoForm from './BookingPartials/ContactInfoForm'
 import { IoPlaySkipForwardCircleOutline } from 'react-icons/io5'
 
-const Booking = ({auth, venues}: PageProps) => {
+const Booking = ({auth, venues, session, reservations}: PageProps) => {
   
-
   const [steps, setSteps] = React.useState<any>([
     {title: 'Step 1', description: 'Contact Info'},
     {title: 'Step 2', description: 'Book a venue'},
@@ -43,8 +42,8 @@ const Booking = ({auth, venues}: PageProps) => {
   }
 
   const stepComponenets = [
-    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm venues={venues} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
-    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm venues={venues} session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues} reservations={reservations} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
     {title: 'Step 3', description: 'Payment', component: <PaymentForm increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
     {title: 'Step 4', description: 'Awaiting for confirmation', component: <AwaitingConfirm />},
   ]

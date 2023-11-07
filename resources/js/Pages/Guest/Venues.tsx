@@ -9,6 +9,7 @@ const Venues = ({auth, venues}: any) => {
   const navigate = (venue_name: string) => {
     router.get(route('venues.view_single', venue_name))
   }
+
   return (
     <>
         <Head title="Venues" />
