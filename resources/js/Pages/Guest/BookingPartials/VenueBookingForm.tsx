@@ -14,13 +14,15 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any
         venue_id: 0,
         dateSelected: addDays(new Date(), 4),
     })
-    
     const changeExcludedDates = () => {
-      reservations.map((reservation: any) => {
-        if (reservation['venue_id'] === venues[data.venue_id]['id']){
-          excludedDates.push(parse(reservation['event_date'], 'yyyy-MM-dd', new Date()))
-        }
-      })
+      if (reservations['venue_id'] !== undefined && venues !== null){
+        debugger;
+        reservations.map((reservation: any) => {
+          if (reservation['venue_id'] === venues[data.venue_id]['id']){
+            excludedDates.push(parse(reservation['event_date'], 'yyyy-MM-dd', new Date()))
+          }
+        })
+      }
     }
     const excludedDates: any[] = []
     const [currentVenue, setCurrentVenue] = React.useState(0)
@@ -69,8 +71,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any
             </div>
             <div>
               <span className='text-xl font-black'>Details</span>
-              <div className='text-base'>Limit: {venues[currentVenue]['limit']}</div>
-              <div className='text-base'>Price: P{venues[currentVenue]['price']}.00</div>
+              <div className='text-base'>Limit: {JSON.stringify(venues[currentVenue]) !== "{}" ? venues[currentVenue]['limit'] : null}</div>
+              <div className='text-base'>Price: P{JSON.stringify(venues) !== "{}" ? venues[currentVenue]['price'] : null}.00</div>
             </div>
             <div className='flex flex-row justify-between'>
                 <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>

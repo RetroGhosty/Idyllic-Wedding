@@ -6,12 +6,13 @@ use App\Models\Reservation;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
     public function view(Request $request){
         $venues = Venue::all('id', 'venue_name', 'limit', 'price');
-        $reservations = Reservation::all('id', 'venue_id', 'event_date');
+        $reservations = DB::table('reservations')->where('status', '!=', 'cancelled')->get(['id', 'venue_id', 'event_date']);
 
         $payload = [
             'venues' => $venues,
