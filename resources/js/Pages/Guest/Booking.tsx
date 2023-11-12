@@ -28,9 +28,13 @@ const Booking = ({auth, venues, session, transactions}: PageProps) => {
 
   React.useEffect(() => {
     if (session !== null){
-      setLocalActiveStep(2)
+      if (session['id'] === undefined){
+        setLocalActiveStep(1)
+      } else{
+        setLocalActiveStep(2)
+      }
     }
-  }, [])
+  }, [session])
 
 
   const increaseStep = () => {

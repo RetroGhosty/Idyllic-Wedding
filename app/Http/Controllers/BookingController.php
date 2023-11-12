@@ -31,15 +31,8 @@ class BookingController extends Controller
     public function emailCheck(EmailCheckerRequest $request) {
         $validatedData = $request -> validated();
         
+        
         $fetchedEmail = DB::table("unregistered_users")->where("email", "=", $request->email)->first();
-        $fetchedUnregisteredUser = UnregisteredUser::find($fetchedEmail->id);
-        $fetchedTransaction = $fetchedUnregisteredUser->transaction;
-        if ($fetchedTransaction->count()  > 0 ){
-            dd($fetchedUnregisteredUser->transaction[0]);
-        } else{
-            dd("no transaction");
-        }
-
         if($fetchedEmail == null){
             $request->session()->put('contact_info', $validatedData);
         } else {
@@ -114,7 +107,12 @@ class BookingController extends Controller
                 'reference_number' => $transaction->id,
                 'statement_descriptor' => 'Laravel Paymongo Library',
             ]);
+            $transaction->update([
+                'paymongo_session_id' => $checkout->id,
+            ]);
+            $transaction->save();
             $request -> session() -> put('checkout_id', $checkout->id);
+    
             return Inertia::location($checkout->checkout_url);
         } catch (Exception $e) {
 

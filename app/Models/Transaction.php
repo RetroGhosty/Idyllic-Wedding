@@ -11,12 +11,13 @@ class Transaction extends Model
 {
     use HasFactory, HasUlids;
     protected $fillable = [
-        'transaction_amount', //pagkatapos ng success
-        'payment_method', //pagkatapos ng success
-        'customer_id', //kukunin
-        'venue_id', //kukunin
-        'event_date', // kukunin
-        'transaction_status', //pagkatapos ng success
+        'transaction_amount',
+        'paymongo_session_id',
+        'payment_method',
+        'customer_id', 
+        'venue_id', 
+        'event_date',
+        'transaction_status', 
     ];
 
     public function customer(): HasOne{
