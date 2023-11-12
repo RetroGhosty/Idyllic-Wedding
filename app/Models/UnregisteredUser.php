@@ -16,7 +16,7 @@ class UnregisteredUser extends Model
         'last_name',
     ];
 
-    public function reservation(): HasMany {
-        return $this->hasMany(Reservation::class);
+    public function transaction(): HasMany {
+        return $this->hasMany(Transaction::class, 'customer_id');
     }
 }

@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 
 const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
+
+    
     const {data, setData, errors, setError, post} = useForm<any>({
         email: session ? session['email'] : "",
         phone_number: session ? session['phone_number'] : "",
@@ -15,13 +17,25 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
     })
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        router.post(route('booking.contactinfo'), data, {
-            preserveScroll: true,
-            onSuccess: () => increaseStep(),
-            onError: (errors: any) => {
-                setError(errors)
-            }
-        })
+        if (session['id'] === undefined){
+            console.log("not executed")
+            router.post(route('booking.contactinfo'), data, {
+                preserveScroll: true,
+                onSuccess: () => increaseStep(),
+                onError: (errors: any) => {
+                    setError(errors)
+                }
+            })
+        } else{
+            console.log(session['id'])
+            router.patch(route("booking.contactInfoUpdate", session['id']), data, {
+                preserveScroll: true,
+                onSuccess: () => increaseStep(),
+                onError: (errors: any) => {
+                    setError(errors)
+                }
+            })
+        }
     } 
 
   return (
@@ -52,7 +66,8 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 <TextInput autoComplete="off"  id='last_name' type="text" value={data.last_name} onChange={(e) => setData('last_name', e.target.value)} />
                 {errors.last_name ? errors.last_name : null}
             </div>       
-            <div className='flex flex-row justify-end'>
+            <div className='flex flex-row justify-between'>
+                <PrimaryButton onClick={() => {decreaseStep()}} type='button'>Back</PrimaryButton>
                 <PrimaryButton type='submit'>Next</PrimaryButton>
             </div>
         </motion.form>

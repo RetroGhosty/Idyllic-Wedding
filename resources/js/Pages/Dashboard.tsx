@@ -1,9 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { IReservation, PageProps, ReservationArr } from '@/types';
+import { ITransaction, PageProps, TransactionArr } from '@/types';
 import ReservationTable from '@/Components/Reservation/ReservationTable';
 
-export default function Dashboard({ auth, reservations }: any,) {
+export default function Dashboard({ auth, transactions }: any,) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -17,7 +17,7 @@ export default function Dashboard({ auth, reservations }: any,) {
                         <div className="p-6 text-gray-900">You're logged in!</div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <ReservationTable reservations={reservations}/>
+                        <ReservationTable transactions={transactions}/>
                     </div>
                 </div>
             </div>

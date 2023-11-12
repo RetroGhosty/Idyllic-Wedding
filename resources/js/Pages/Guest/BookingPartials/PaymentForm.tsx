@@ -15,7 +15,7 @@ const PaymentForm = ({increaseStep, decreaseStep}: any) => {
         payment_proof?: File | undefined
     }
 
-    const {data, setData, errors} = useForm<any>({
+    const {data, setData, post, errors} = useForm<any>({
         venue_id: '',
         payment_method: '',
         payment_type: '',
@@ -26,8 +26,18 @@ const PaymentForm = ({increaseStep, decreaseStep}: any) => {
         if (fileType !== 'FileList' && fileType !== 'File') throw new Error('fileType must be File or FileList')
         setData(formModel, file.files[0])
     }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+        post(route('booking.BookingPaymentSession'), {
+          preserveScroll: true,
+          // onSuccess: () => {}
+          // onError: () => {}
+        })
+      }
+
   return (
-    <motion.form className='flex flex-col space-y-7'
+    <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
     initial={{ opacity: 0, x: 200 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: -200 }}>
@@ -54,8 +64,8 @@ const PaymentForm = ({increaseStep, decreaseStep}: any) => {
             {errors.payment_proof ? errors.payment_proof : null}
         </div>
         <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
-                <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
+                <PrimaryButton onClick={() => {decreaseStep()}} type='button'>Back</PrimaryButton>
+                <PrimaryButton type='submit'>Next</PrimaryButton>
         </div>
                       
     </motion.form>

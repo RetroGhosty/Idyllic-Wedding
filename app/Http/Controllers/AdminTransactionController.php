@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-class AdminReservationController extends Controller
+class AdminTransactionController extends Controller
 {
     public function viewReservation(){
-        $reservations = DB::table('reservations')->where('status', "=", 'pending')->get();
+        $transactions = DB::table('transactions')->where('transaction_status', "=", 'paid')->get();
         $payload = [
-            'reservations' => $reservations,
+            'transactions' => $transactions,
         ];
         return Inertia::render("Dashboard", $payload);
     }

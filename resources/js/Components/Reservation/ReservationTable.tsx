@@ -1,24 +1,27 @@
-import { IReservation } from '@/types'
+import { ITransaction } from '@/types'
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
 import { createColumnHelper, getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table'
 import {parse, format} from 'date-fns'
-const ReservationTable = ({reservations}: any) => {
-    const changeStatus = (reservation_id, statusValue) => {
+import DangerButton from '../DangerButton'
+const ReservationTable = ({transactions}: any) => {
+    const changeStatus = (transaction_id, statusValue) => {
         const payload = {
-            id:reservation_id,
+            id:transaction_id,
             status: statusValue,
         }
-        router.patch(route('admin.reservation.editStatus', {reservation_id: reservation_id}), payload, {preserveScroll: true})
+        router.patch(route('admin.reservation.editStatus', {transaction_id: transaction_id}), payload, {preserveScroll: true})
     }
 
-    const columnHelper = createColumnHelper<IReservation>()
+
+
+    const columnHelper = createColumnHelper<ITransaction>()
     const columns = [
         columnHelper.accessor('id', {
             header: 'ID',
             cell: (info) => <div className='text-xs'>{info.getValue()}</div>,
         }),
-        columnHelper.accessor('total_price', {
+        columnHelper.accessor('transaction_amount', {
             header: 'Total Price',
             cell: (info) => <div>P{info.getValue()}.00</div>,
         }),
@@ -26,34 +29,35 @@ const ReservationTable = ({reservations}: any) => {
             header: 'Payment Method',
             cell: (info) => <div>{info.getValue()}</div>
         }),
-        columnHelper.accessor('payment_proof', {
-            header: 'Payment Proof',
-            cell: (info) => <div>{info.getValue()}</div>
-        }),
         columnHelper.accessor('event_date', {
             header: 'Event Date',
             cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
         }),
-        columnHelper.accessor('status', {
+        columnHelper.accessor('transaction_status', {
             header: 'Status',
+            cell: (info) => <div>{info.getValue()}</div>
+        }),
+        columnHelper.accessor('status', {
+            header: 'Actions',
             cell: (info) => 
-            <select name="status" value={info.getValue()} onChange={(e) => changeStatus(info.row.original['id'], e.target.value)}>
-                <option value="pending">Pending</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="approved">Approved</option>
-            </select>
+            <DangerButton>Refund</DangerButton>
+            // <select name="status" value={info.getValue()} onChange={(e) => changeStatus(info.row.original['id'], e.target.value)}>
+            //     <option value="pending">Pending</option>
+            //     <option value="cancelled">Cancelled</option>
+            //     <option value="approved">Approved</option>
+            // </select>
         })
     ]
 
     const reactTable = useReactTable({
         columns,
-        data: reservations,
+        data: transactions,
         getCoreRowModel: getCoreRowModel()
     })
 
     return (
         <div className='p-6'>
-            <h1 className='text-lg font-bold mb-2'>Reservations</h1>
+            <h1 className='text-lg font-bold mb-2'>Transactions</h1>
             <TableContainer w="100%">
                 <Table variant='striped' size='sm'>
                     <Thead>
