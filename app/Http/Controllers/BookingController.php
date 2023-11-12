@@ -13,8 +13,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Redirect;
 use Luigel\Paymongo\Facades\Paymongo;
 
 class BookingController extends Controller

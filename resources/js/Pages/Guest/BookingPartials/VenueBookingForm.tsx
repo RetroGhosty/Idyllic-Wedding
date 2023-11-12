@@ -15,8 +15,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         venue_id: 0,
         dateSelected: addDays(new Date(), 4),
     })
-    
     const changeExcludedDates = () => {
+<<<<<<< HEAD
       transactions.map((transaction: any) => {
         if (venues.length === 0){
           return false
@@ -25,6 +25,16 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
           excludedDates.push(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()))
         }
       })
+=======
+      if (reservations['venue_id'] !== undefined && venues !== null){
+        debugger;
+        reservations.map((reservation: any) => {
+          if (reservation['venue_id'] === venues[data.venue_id]['id']){
+            excludedDates.push(parse(reservation['event_date'], 'yyyy-MM-dd', new Date()))
+          }
+        })
+      }
+>>>>>>> 0f7aa259078b4966cfc587d3f22bc4838b4dad35
     }
     const excludedDates: any[] = []
     const [currentVenue, setCurrentVenue] = React.useState(0)
@@ -108,6 +118,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               </span>
             </div>
             <div>
+<<<<<<< HEAD
               {venues.length !== 0 ? 
               <>
                 <span className='text-xl font-black'>Details</span>
@@ -119,6 +130,11 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                 <span className='text-xl font-black'>No venue</span>
               </>
               }
+=======
+              <span className='text-xl font-black'>Details</span>
+              <div className='text-base'>Limit: {JSON.stringify(venues[currentVenue]) !== "{}" ? venues[currentVenue]['limit'] : null}</div>
+              <div className='text-base'>Price: P{JSON.stringify(venues) !== "{}" ? venues[currentVenue]['price'] : null}.00</div>
+>>>>>>> 0f7aa259078b4966cfc587d3f22bc4838b4dad35
             </div>
             <div className='flex flex-row justify-between'>
                 <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
