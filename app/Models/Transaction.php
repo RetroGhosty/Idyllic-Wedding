@@ -11,12 +11,12 @@ class Transaction extends Model
 {
     use HasFactory, HasUlids;
     protected $fillable = [
-        'customer_id',
-        'venue_id',
-        'reservation_id',
-        'transaction_amount',
-        'transaction_status',
-        'payment_method',
+        'transaction_amount', //pagkatapos ng success
+        'payment_method', //pagkatapos ng success
+        'customer_id', //kukunin
+        'venue_id', //kukunin
+        'event_date', // kukunin
+        'transaction_status', //pagkatapos ng success
     ];
 
     public function customer(): HasOne{
@@ -26,7 +26,4 @@ class Transaction extends Model
         return $this->hasOne(Venue::class, 'id', 'venue_id');
     }
 
-    public function reservation(): HasOne{
-        return $this->hasOne(Reservation::class, 'id', 'reservation_id');
-    }
 }

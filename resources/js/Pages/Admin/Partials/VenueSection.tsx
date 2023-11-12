@@ -42,7 +42,7 @@ const VenueSection = ({className, venues}: any) => {
                   </div>
                 </td>
               </tr>
-            )) : <span className='font-bold'>No users found in database</span>}
+            )) : <span className='font-bold'>No venues found</span>}
           </tbody>
         </table>
     </div>

@@ -1,28 +1,30 @@
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { Select } from '@chakra-ui/react'
-import { useForm } from '@inertiajs/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
+import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
-import { add, addDays, addMonths, format } from 'date-fns'
+import { add, addDays, addMonths, format, parse } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
-import { parse } from 'date-fns'
 
-const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any) => {
-    const {data, setData, errors} = useForm<any>({
+const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
+
+    const {data, setData, errors, setError} = useForm<any>({
+        user_id: session['id'],
         venue_id: 0,
         dateSelected: addDays(new Date(), 4),
     })
+    
     const changeExcludedDates = () => {
-      if (reservations['venue_id'] !== undefined && venues !== null){
-        debugger;
-        reservations.map((reservation: any) => {
-          if (reservation['venue_id'] === venues[data.venue_id]['id']){
-            excludedDates.push(parse(reservation['event_date'], 'yyyy-MM-dd', new Date()))
-          }
-        })
-      }
+      transactions.map((transaction: any) => {
+        if (venues.length === 0){
+          return false
+        }
+        if (transaction['venue_id'] === venues[data.venue_id]['id']){
+          excludedDates.push(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()))
+        }
+      })
     }
     const excludedDates: any[] = []
     const [currentVenue, setCurrentVenue] = React.useState(0)
@@ -35,19 +37,54 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any
       setData('dateSelected', date)
     }
     changeExcludedDates()
+  
+    const handleSubmit = (e: any) => {
+      e.preventDefault()
+      const payload = {
+        'user_id': session['id'],
+        'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
+        'dateSelected': data['dateSelected']
 
+      }
+      router.post(route('booking.BookingPaymentSession'), payload, {
+        preserveScroll: true,
+        onSuccess: () => {
+          increaseStep()
+        },
+        onError: (error: any) => {
+          setError(error)
+        }
+      })
+    }
+
+  
+    const { isOpen: isVisible, isOpen, onClose, onOpen } = useDisclosure({defaultIsOpen: false})
+    React.useEffect(() => {
+      if (errors['api_status'] !== undefined){
+        onOpen()
+      }
+    }, [errors])
     
-
-
 
   return (
     <AnimatePresence>
-      <motion.form className='flex flex-col space-y-7'
+      
+      <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
       initial={{ opacity: 0, x: 200 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -200 }}
       >
           <div className='font-black text-2xl'>Venue Booking</div>
+          {isVisible ? 
+          <Alert status='error'>
+            <AlertIcon/>
+            <Box className='w-full'>
+              <AlertTitle>Booking Unsuccessful</AlertTitle>
+              <AlertDescription>{errors['api_status']}</AlertDescription>
+            </Box>
+            <CloseButton alignSelf='flex-start' position='relative' right={-1} top={-1} onClick={onClose}></CloseButton>
+          </Alert>
+          : null}
           <div className='flex flex-col'>
               <InputLabel htmlFor="venue_id" value='Venue'/> 
               <Select autoComplete="off" id='venue_id' value={data.venue_id} onChange={handleVenueChange}>
@@ -61,6 +98,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any
             <div>
               <span className='text-xl font-black'>
                   <DatePicker 
+                  id='datePicker'
                   onChange={dateChange}
                   minDate={addDays(new Date(), 3)}
                   maxDate={addMonths(new Date(), 3)}
@@ -70,13 +108,21 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, reservations}:any
               </span>
             </div>
             <div>
-              <span className='text-xl font-black'>Details</span>
-              <div className='text-base'>Limit: {JSON.stringify(venues[currentVenue]) !== "{}" ? venues[currentVenue]['limit'] : null}</div>
-              <div className='text-base'>Price: P{JSON.stringify(venues) !== "{}" ? venues[currentVenue]['price'] : null}.00</div>
+              {venues.length !== 0 ? 
+              <>
+                <span className='text-xl font-black'>Details</span>
+                <div className='text-base'>Limit: {venues[currentVenue]['limit']}</div>
+                <div className='text-base'>Price: P{venues[currentVenue]['price']}.00</div>
+              </>
+              : 
+              <>
+                <span className='text-xl font-black'>No venue</span>
+              </>
+              }
             </div>
             <div className='flex flex-row justify-between'>
                 <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
-                <PrimaryButton onClick={() => {increaseStep()}}>Next</PrimaryButton>
+                <PrimaryButton type='submit'>Next</PrimaryButton>
             </div>
           </div>
       </motion.form>

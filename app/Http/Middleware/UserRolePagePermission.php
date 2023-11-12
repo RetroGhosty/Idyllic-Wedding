@@ -20,7 +20,7 @@ class UserRolePagePermission
         if (Auth::check() && Auth::user()->user_level == UserAccountLevel::from($roleLevel)) {
             return $next($request);
         } else{
-            return abort(404);
+            return to_route('profile.edit');
         }
     }
 }

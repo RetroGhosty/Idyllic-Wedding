@@ -2,7 +2,7 @@
 
 namespace App\choices;
 
-enum ReservationStatusEnum:string{
+enum TransactionStatusEnum:string{
     case PENDING = "pending";
     case APPROVED = "approved";
     case CANCELLED = "cancelled";

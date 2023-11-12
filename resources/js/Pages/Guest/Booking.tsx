@@ -9,15 +9,13 @@ import VenueBookingForm from './BookingPartials/VenueBookingForm'
 import PaymentForm from './BookingPartials/PaymentForm'
 import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
 import ContactInfoForm from './BookingPartials/ContactInfoForm'
-import { IoPlaySkipForwardCircleOutline } from 'react-icons/io5'
+import EmailForm from './BookingPartials/EmailForm'
 
-const Booking = ({auth, venues, session, reservations}: PageProps) => {
-  
+const Booking = ({auth, venues, session, transactions}: PageProps) => {
   const [steps, setSteps] = React.useState<any>([
-    {title: 'Step 1', description: 'Contact Info'},
-    {title: 'Step 2', description: 'Book a venue'},
-    {title: 'Step 3', description: 'Payment'},
-    {title: 'Step 4', description: 'Awaiting for confirmation'},
+    {title: 'Step 1', description: 'Email'},
+    {title: 'Step 2', description: 'Contact Info'},
+    {title: 'Step 3', description: 'Book a venue'}
   ])
 
   const {activeStep} = useSteps({
@@ -27,9 +25,16 @@ const Booking = ({auth, venues, session, reservations}: PageProps) => {
 
   const [localActiveStep, setLocalActiveStep] = React.useState(0)
   
+
+  React.useEffect(() => {
+    if (session !== null){
+      setLocalActiveStep(2)
+    }
+  }, [])
+
+
   const increaseStep = () => {
     if (localActiveStep > (steps.length - 2)){
-      
       return false
     }
     setLocalActiveStep(localActiveStep + 1)
@@ -42,15 +47,16 @@ const Booking = ({auth, venues, session, reservations}: PageProps) => {
   }
 
   const stepComponenets = [
-    {title: 'Step 1', description: 'Contact Info', component: <ContactInfoForm venues={venues} session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
-    {title: 'Step 2', description: 'Book a venue', component: <VenueBookingForm venues={venues} reservations={reservations} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
-    {title: 'Step 3', description: 'Payment', component: <PaymentForm increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
-    {title: 'Step 4', description: 'Awaiting for confirmation', component: <AwaitingConfirm />},
+    {title: 'Step 1', description: 'Email', component: <EmailForm session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 2', description: 'Contact Info', component: <ContactInfoForm venues={venues} session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
+    {title: 'Step 3', description: 'Book a venue', component: <VenueBookingForm venues={venues} session={session} transactions={transactions} increaseStep={increaseStep} decreaseStep={decreaseStep}/>}
   ]
 
   const handleFormSteps = (stepIntent: string) => {
+
     if (stepIntent === 'next'){
-        return stepComponenets[(activeStep + localActiveStep)].component
+      // return stepComponenets[3].component
+      return stepComponenets[(activeStep + localActiveStep)].component
     }
     if (stepIntent === 'back'){
       return stepComponenets[activeStep + localActiveStep].component

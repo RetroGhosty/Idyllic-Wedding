@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->integer('transaction_amount')->nullable();
+            $table->string('payment_method')->nullable();
             $table->foreignId('customer_id')->nullable()->constrained('Unregistered_users', 'id')->onDelete('SET NULL');
             $table->foreignId('venue_id')->nullable()->constrained('Venues', 'id')->onDelete('SET NULL');
-            $table->foreignUlid('reservation_id')->nullable()->constrained('Reservations', 'id')->onDelete('SET NULL');
-            $table->integer('transaction_amount');
+            $table->date('event_date');
             $table->string('transaction_status');
-            $table->string('payment_method');
             $table->timestamps();
         });
     }

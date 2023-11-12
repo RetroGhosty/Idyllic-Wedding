@@ -3,19 +3,16 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VenueShowcasePhotoController;
-use App\Http\Controllers\VenueVendorController;
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AdminReservationController;
+use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HighlightController;
-use App\Http\Controllers\OurVenueController;
 use App\Http\Controllers\PublicVenueController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueLandingPhotoController;
-use App\Models\Reservation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,11 +45,16 @@ Route::get("/venues/{venue_name}", [PublicVenueController::class, 'view_single']
 Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home');
 
 Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
+Route::post("/booking/email", [BookingController::class, 'emailCheck'])->name('booking.emailCheck');
 Route::post("/booking/contact", [BookingController::class, 'contactInfo'])->name('booking.contactinfo');
+Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
+Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
+Route::get("/booking/payment/success", [BookingController::class, "venueBookingSuccess"])->name('booking.venueBookingSuccess');
+Route::get("/booking/payment/cancel", [BookingController::class, "paymentCancel"])->name('booking.paymentCancel');
 
 // Admin Protected Pages
 Route::middleware(['auth', 'verified'])->group(function(){
-    Route::get("/dashboard", [AdminReservationController::class, 'viewReservation'])->name('dashboard');
+    
 });
 Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -71,7 +73,8 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::delete('/admin/venue/{venue_id}', [VenueController::class,'delete'])->name('admin.venue.delete');
     Route::delete('/admin/landingphoto', [VenueLandingPhotoController::class,'delete'])->name('admin.landingphoto.delete');
     Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');
-    Route::patch('/admin/reservation/edit/{reservation_id}', [ReservationController::class,'editStatus'])->name('admin.reservation.editStatus');
+    Route::patch('/admin/reservation/edit/{transaction_id}', [TransactionController::class,'editStatus'])->name('admin.reservation.editStatus');
+    Route::get("/dashboard", [AdminTransactionController::class, 'viewReservation'])->name('dashboard');
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

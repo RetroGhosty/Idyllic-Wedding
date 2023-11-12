@@ -16,27 +16,27 @@ export interface PullUsers{
     user_level: string;
 }
 
-export interface IReservation{
+export interface ITransaction{
     id: string,
     customer_id: number,
     venue_id: number,
-    total_price: number,
     event_date: string,
+    transaction_amount: number,
+    transaction_status: string,
     payment_method: string,
-    payment_proof: string,
     status: string,
 }
 
 
 export interface PullUsersArr extends Array<PullUsers>{}
-export interface ReservationArr extends Array<IReservation>{}
+export interface TransactionArr extends Array<ITransaction>{}
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
     };
 
-    reservations: ReservationArr, 
+    transactions: TransactionArr, 
     users:PullUsersArr;
     
 };
