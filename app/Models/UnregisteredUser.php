@@ -13,6 +13,7 @@ class UnregisteredUser extends Model
         'email',
         'phone_number',
         'first_name',
+        
         'last_name',
     ];
 

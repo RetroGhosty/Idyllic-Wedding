@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'user-level' => \App\Http\Middleware\UserRolePagePermission::class,
         'shop-creator' => \App\Http\Middleware\MakeShop::class,
         'check-disabled' => \App\Http\Middleware\IsAccountDisabled::class,
+        'booking-exist' => \App\Http\Middleware\BookingExistMiddleware::class,
     ];
 }

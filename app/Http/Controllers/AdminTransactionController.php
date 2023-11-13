@@ -16,3 +16,4 @@ class AdminTransactionController extends Controller
         return Inertia::render("Dashboard", $payload);
     }
 }
+https://www.youtube.com/watch?v=pmanD_s7G3U

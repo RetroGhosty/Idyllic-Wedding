@@ -47,10 +47,13 @@ Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home
 Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
 Route::post("/booking/email", [BookingController::class, 'emailCheck'])->name('booking.emailCheck');
 Route::post("/booking/contact", [BookingController::class, 'contactInfo'])->name('booking.contactinfo');
-Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
-Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
 Route::get("/booking/payment/success", [BookingController::class, "venueBookingSuccess"])->name('booking.venueBookingSuccess');
 Route::get("/booking/payment/cancel", [BookingController::class, "paymentCancel"])->name('booking.paymentCancel');
+
+Route::middleware(['booking-exist'])->group(function(){
+    Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
+    Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
+});
 
 // Admin Protected Pages
 Route::middleware(['auth', 'verified'])->group(function(){
