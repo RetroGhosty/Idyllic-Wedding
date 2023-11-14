@@ -16,10 +16,14 @@ class DoesDateIsReserved implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $fetchAllBooking = DB::table('transactions')->where('event_date', '>=', Carbon::now()->subMonths(3))->where('event_date', '>=', date('Y-m-d'))->latest('updated_at')->get();
+        $fetchAllBooking = DB::table('transactions')->latest('updated_at')->get();
         $customerDesireDate = Carbon::parse($value)->format('Y-m-d');
         for ($i=0; $i < count($fetchAllBooking); $i++) { 
             if ($fetchAllBooking[$i]->event_date == $customerDesireDate){
+                $payload = [
+                    '$customerDesireDate' => $customerDesireDate,
+                    '$fetchAllBooking[$i]->event_date' => $fetchAllBooking[$i]->event_date,
+                ];
                 $fail("Date is already reserved");
             }
         }

@@ -52,15 +52,9 @@ Route::get("/booking", [BookingController::class, 'view'])->name('booking.home')
 
 
 
-Route::middleware(['paid-booking'])->group(function(){
-    Route::get("/booking/view", [BookingController::class, "customerViewBooking"])->name('booking.customerViewBooking');
-});
-
-Route::middleware(['booking-exist'])->group(function(){
-    Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
-    Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
-});
-
+Route::get("/booking/view/{reference_id}", [BookingController::class, "customerViewBooking"])->name('booking.customerViewBooking');
+Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
+Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->middleware('booking-exist')->name('booking.BookingPaymentSession');
 
 
 // Admin Protected Pages
