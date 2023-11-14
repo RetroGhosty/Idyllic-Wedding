@@ -9,7 +9,6 @@ import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
-    console.log(session)
     const {data, setData, errors, setError} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
@@ -106,6 +105,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                   />
               </span>
             </div>
+            {errors.dateSelected ? errors.dateSelected : null}
             <div>
               {venues.length !== 0 ? 
               <>
