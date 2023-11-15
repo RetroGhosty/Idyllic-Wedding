@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\choices\TransactionStatusEnum;
+use App\Http\Requests\BookingPaymentSessionRequest;
 use App\Http\Requests\BookingRequest;
 use App\Http\Requests\EmailCheckerRequest;
 use App\Http\Requests\UnregisteredUserRequest;
@@ -23,6 +24,7 @@ use Luigel\Paymongo\Facades\Paymongo;
 class BookingController extends Controller
 {
     public function view(Request $request){
+
         $venues = Venue::all('id', 'venue_name', 'limit', 'price');
         $transactions = DB::table('transactions')->where('transaction_status', '!=', TransactionStatusEnum::CANCELLED)->get();
         $payload = [
@@ -31,12 +33,11 @@ class BookingController extends Controller
             'transactions' => $transactions,
         ];
         return Inertia::render('Guest/Booking', $payload);
+
     }
 
     public function emailCheck(EmailCheckerRequest $request) {
         $validatedData = $request -> validated();
-        
-        
         $fetchedEmail = DB::table("unregistered_users")->where("email", "=", $request->email)->first();
         if($fetchedEmail == null){
             $request->session()->put('contact_info', $validatedData);
@@ -66,22 +67,21 @@ class BookingController extends Controller
         $request -> session() -> put('contact_info', $fetchedUser);
     }
 
-
-    public function BookingPaymentSession(Request $request){
+    public function BookingPaymentSession(BookingPaymentSessionRequest $request){
         $paymongoSecretKey = base64_encode(env('PAYMONGO_SECRET_KEY'));
         $paymongoPublicKey = base64_encode(env('PAYMONGO_PUBLIC_KEY'));
         $fetchedUser = UnregisteredUser::find($request->user_id);
-        
         $fetchedVenue = Venue::find($request->venue_id);
-        $dateSelected= Carbon::parse($request->dateSelected)->format('Y-m-d');
+        $dateSelected= Carbon::parse($request->dateSelected)->timezone('Asia/Manila')->format('Y-m-d');
+    
+        $transaction = Transaction::create([
+            'customer_id' => $fetchedUser->id,
+            'venue_id' => $fetchedVenue->id,
+            'event_date' => $dateSelected,
+            'transaction_amount' => $fetchedVenue->price,
+            'transaction_status' => TransactionStatusEnum::PENDING,
+        ]);
         try {
-            $transaction = Transaction::create([
-                'customer_id' => $fetchedUser->id,
-                'venue_id' => $fetchedVenue->id,
-                'event_date' => $dateSelected,
-                'transaction_amount' => $fetchedVenue->price,
-                'transaction_status' => TransactionStatusEnum::PENDING,
-            ]);
             $checkout = Paymongo::checkout()->create([
                 'livemode' => true,
                 "send_email_receipt" => true,
@@ -120,7 +120,7 @@ class BookingController extends Controller
     
             return Inertia::location($checkout->checkout_url);
         } catch (Exception $e) {
-
+            $transaction->delete();
             // For Development, comment out
             return redirect()->back()->withErrors([
                 'api_status' => strval($e->getMessage())
@@ -140,9 +140,6 @@ class BookingController extends Controller
         }
     }
 
-    // TODO:
-    // 1. Check if payment is already existing
-
     public function venueBookingSuccess(Request $request){
         $checkout_id = $request->session()->get('checkout_id');
         $checkout = Paymongo::checkout()->find($checkout_id);
@@ -156,14 +153,37 @@ class BookingController extends Controller
             $transaction->save();
             $transaction->refresh();
         } 
-        return to_route('booking.home');
+        return to_route('booking.customerViewBooking', $transaction->id);
     }
     public function paymentCancel(Request $request){
-        $checkout_id = $request->session()->get('checkout_id');
-        $checkout = Paymongo::checkout()->find($checkout_id);
-        $transaction = Transaction::find($checkout->reference_number);
-        $transaction->delete();
-        return to_route('booking.home');
+        try {
+            $checkout_id = $request->session()->get('checkout_id');
+            $checkout = Paymongo::checkout()->find($checkout_id);
+            $transaction = Transaction::find($checkout->reference_number);
+            $transaction->delete();
+            return to_route('booking.home');
+        } catch (\Throwable $th) {
+            $request->session()->forget('checkout_id');
+            return to_route('booking.home');
+        }
     }
 
+
+    // Controller for customers to view their bookings
+    public function customerViewBooking(Request $request, $reference_id){
+        $fetchedTransaction = Transaction::find($reference_id);
+
+        if ($fetchedTransaction == null){
+            return abort(404);
+        }
+
+        $fetchedVenue = Venue::find($fetchedTransaction->venue_id);
+        $landingPhoto = $fetchedVenue->landing_photo;
+        $payload = [
+            'transaction' => $fetchedTransaction,
+            'venue' => $fetchedVenue,
+            'landing_photo' => $landingPhoto->photo_url
+        ];
+        return Inertia::render('Customer/ViewBooking', $payload);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\UnregisteredUser;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Luigel\Paymongo\Facades\Paymongo;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +25,14 @@ class BookingExistMiddleware
                 session()->forget('contact_info');
                 return to_route('booking.home');
             }
-            $fetchedTransaction = $fetchedUnregisteredUser->transaction;
-            if ($fetchedTransaction->count()  > 0 ){
-                if ($fetchedTransaction[0]->transaction_status == "pending"){
-                    $checkoutLink = Paymongo::checkout()->find($fetchedTransaction[0]->paymongo_session_id);
+            $fetchedTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUnregisteredUser->id)->where('event_date', '>=', date('Y-m-d'))->latest('updated_at')->first();
+            if ($fetchedTransaction != null ){
+                if ($fetchedTransaction->transaction_status == "paid"){
+                    
+                    return to_route('booking.customerViewBooking', $fetchedTransaction->id);
+                }
+                if ($fetchedTransaction->transaction_status == "pending"){
+                    $checkoutLink = Paymongo::checkout()->find($fetchedTransaction->paymongo_session_id);
                     return Inertia::location($checkoutLink->checkout_url);
                 }
             } else{

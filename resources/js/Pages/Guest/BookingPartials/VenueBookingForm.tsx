@@ -9,7 +9,6 @@ import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
-    console.log(session)
     const {data, setData, errors, setError} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
@@ -43,9 +42,10 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       const payload = {
         'user_id': session['id'],
         'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
-        'dateSelected': data['dateSelected']
+        'dateSelected': format(data['dateSelected'], 'yyyy-MM-dd')
 
       }
+      console.log(payload['dateSelected'])
       router.post(route('booking.BookingPaymentSession'), payload, {
         preserveScroll: true,
         onSuccess: () => {
@@ -107,6 +107,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                   />
               </span>
             </div>
+            {errors.dateSelected ? errors.dateSelected : null}
             <div>
               {venues.length !== 0 ? 
               <>

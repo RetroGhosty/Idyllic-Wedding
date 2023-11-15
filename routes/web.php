@@ -44,16 +44,18 @@ Route::get("/venues", [PublicVenueController::class, 'view'])->name('venues.home
 Route::get("/venues/{venue_name}", [PublicVenueController::class, 'view_single'])->name('venues.view_single');
 Route::get("/contacts", [ContactController::class, 'view'])->name('contacts.home');
 
-Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
 Route::post("/booking/email", [BookingController::class, 'emailCheck'])->name('booking.emailCheck');
 Route::post("/booking/contact", [BookingController::class, 'contactInfo'])->name('booking.contactinfo');
 Route::get("/booking/payment/success", [BookingController::class, "venueBookingSuccess"])->name('booking.venueBookingSuccess');
 Route::get("/booking/payment/cancel", [BookingController::class, "paymentCancel"])->name('booking.paymentCancel');
+Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
 
-Route::middleware(['booking-exist'])->group(function(){
-    Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
-    Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
-});
+
+
+Route::get("/booking/view/{reference_id}", [BookingController::class, "customerViewBooking"])->name('booking.customerViewBooking');
+Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactInfoUpdate'])->name('booking.contactInfoUpdate');
+Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->middleware('booking-exist')->name('booking.BookingPaymentSession');
+
 
 // Admin Protected Pages
 Route::middleware(['auth', 'verified'])->group(function(){

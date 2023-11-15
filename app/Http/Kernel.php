@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'shop-creator' => \App\Http\Middleware\MakeShop::class,
         'check-disabled' => \App\Http\Middleware\IsAccountDisabled::class,
         'booking-exist' => \App\Http\Middleware\BookingExistMiddleware::class,
+        'paid-booking' => \App\Http\Middleware\PaidBookingMiddleware::class,
     ];
 }
