@@ -14,40 +14,25 @@ use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-<<<<<<< HEAD
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Redirect;
-=======
->>>>>>> ad2f1dcc2e79709555efcdd3ab64b332e9837e73
 use Luigel\Paymongo\Facades\Paymongo;
 
 class BookingController extends Controller
 {
     public function view(Request $request){
-        try {
-            $fetchedUnregisteredUser = UnregisteredUser::find(session()->get('contact_info')->id);
-            $fetchedTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUnregisteredUser->id)->where('event_date', '>=', date('Y-m-d'))->latest('updated_at')->first();
-            if ($fetchedTransaction != null){
-                return to_route('booking.customerViewBooking');
-            };
-        } catch (\Throwable $th) {
-            $venues = Venue::all('id', 'venue_name', 'limit', 'price');
-            $transactions = DB::table('transactions')->where('transaction_status', '!=', TransactionStatusEnum::CANCELLED)->get();
-            $payload = [
-                'venues' => $venues,
-                'session' => $request->session()->get('contact_info'),
-                'transactions' => $transactions,
-            ];
-            return Inertia::render('Guest/Booking', $payload);
-        }
 
+        $venues = Venue::all('id', 'venue_name', 'limit', 'price');
+        $transactions = DB::table('transactions')->where('transaction_status', '!=', TransactionStatusEnum::CANCELLED)->get();
+        $payload = [
+            'venues' => $venues,
+            'session' => $request->session()->get('contact_info'),
+            'transactions' => $transactions,
+        ];
+        return Inertia::render('Guest/Booking', $payload);
 
     }
 
     public function emailCheck(EmailCheckerRequest $request) {
         $validatedData = $request -> validated();
-        
-        
         $fetchedEmail = DB::table("unregistered_users")->where("email", "=", $request->email)->first();
         if($fetchedEmail == null){
             $request->session()->put('contact_info', $validatedData);
@@ -82,7 +67,8 @@ class BookingController extends Controller
         $paymongoPublicKey = base64_encode(env('PAYMONGO_PUBLIC_KEY'));
         $fetchedUser = UnregisteredUser::find($request->user_id);
         $fetchedVenue = Venue::find($request->venue_id);
-        $dateSelected= Carbon::parse($request->dateSelected)->format('Y-m-d');
+        $dateSelected= Carbon::parse($request->dateSelected)->timezone('Asia/Manila')->format('Y-m-d');
+    
         $transaction = Transaction::create([
             'customer_id' => $fetchedUser->id,
             'venue_id' => $fetchedVenue->id,
@@ -162,21 +148,30 @@ class BookingController extends Controller
             $transaction->save();
             $transaction->refresh();
         } 
-        return to_route('booking.customerViewBooking');
+        return to_route('booking.customerViewBooking', $transaction->id);
     }
     public function paymentCancel(Request $request){
-        $checkout_id = $request->session()->get('checkout_id');
-        $checkout = Paymongo::checkout()->find($checkout_id);
-        $transaction = Transaction::find($checkout->reference_number);
-        $transaction->delete();
-        return to_route('booking.home');
+        try {
+            $checkout_id = $request->session()->get('checkout_id');
+            $checkout = Paymongo::checkout()->find($checkout_id);
+            $transaction = Transaction::find($checkout->reference_number);
+            $transaction->delete();
+            return to_route('booking.home');
+        } catch (\Throwable $th) {
+            $request->session()->forget('checkout_id');
+            return to_route('booking.home');
+        }
     }
 
 
     // Controller for customers to view their bookings
-    public function customerViewBooking(Request $request){
-        $fetchedUnregisteredUser = UnregisteredUser::find(session()->get('contact_info')->id);
-        $fetchedTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUnregisteredUser->id)->where('event_date', '>=', date('Y-m-d'))->latest('updated_at')->first();
+    public function customerViewBooking(Request $request, $reference_id){
+        $fetchedTransaction = Transaction::find($reference_id);
+
+        if ($fetchedTransaction == null){
+            return abort(404);
+        }
+
         $fetchedVenue = Venue::find($fetchedTransaction->venue_id);
         $landingPhoto = $fetchedVenue->landing_photo;
         $payload = [
