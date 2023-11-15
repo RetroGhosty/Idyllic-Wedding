@@ -4,6 +4,7 @@ import Footer from "./Partial/Footer"
 import {MdReduceCapacity} from 'react-icons/md'
 import {GiMoneyStack} from 'react-icons/gi'
 import { Image } from "@chakra-ui/react"
+import HeaderPopUp from "@/Components/HeaderPopUp"
 
 const EachVenue = ({auth, venue, landing_photo, showcase_photo}: any) => {
     
@@ -11,6 +12,7 @@ const EachVenue = ({auth, venue, landing_photo, showcase_photo}: any) => {
     <>
         <Head title={`${venue['venue_name']} Venue`} />
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
+            <HeaderPopUp/>
             <NavBar user={auth.user}/>
             <div className='w-full h-96' style={{backgroundImage: `url(/storage/${landing_photo['photo_url']})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed'}}/>        
             <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#a4ac86] h-24 sticky top-0'>

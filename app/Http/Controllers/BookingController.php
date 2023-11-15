@@ -27,6 +27,7 @@ class BookingController extends Controller
             'session' => $request->session()->get('contact_info'),
             'transactions' => $transactions,
         ];
+        
         return Inertia::render('Guest/Booking', $payload);
 
     }
@@ -43,8 +44,11 @@ class BookingController extends Controller
             $latestTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUser->id)->latest('event_date')->where('transaction_status', '=', 'paid')->whereDate('event_date', '>', Carbon::now()->format('Y-m-d'))->first();
             if ($latestTransaction != null){
                 $request->session()->put('contact_info', $fetchedEmail);
+                $request->session()->put('latest_transaction', $latestTransaction);
                 return to_route('booking.customerViewBooking', $latestTransaction->id);
             } else{
+                
+                session()->forget('latest_transaction');
                 $request->session()->put('contact_info', $fetchedEmail);
             }
         }

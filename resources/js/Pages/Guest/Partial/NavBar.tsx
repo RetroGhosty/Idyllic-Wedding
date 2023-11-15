@@ -3,12 +3,14 @@ import NavLink from '@/Components/NavLink'
 import { Link } from '@inertiajs/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, useDisclosure } from '@chakra-ui/react'
+import HeaderPopUp from '@/Components/HeaderPopUp'
 
 const NavBar = ({user}: any) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
 
 
   return (
+    <>
     <nav className="bg-slate-100 border-b border-gray-200">
         <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 md:h-32">
@@ -92,6 +94,7 @@ const NavBar = ({user}: any) => {
 
         </Drawer>
     </nav>
+    </>
   )
 }
 

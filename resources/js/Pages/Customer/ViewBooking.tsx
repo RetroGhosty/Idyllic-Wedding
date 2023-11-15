@@ -56,7 +56,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                         </div>
                         <ul className='text-2xl'>
                             <li className='flex flex-col md:flex-row md:space-x-3'>
-                                <span>Remaining days until the event: </span>
+                                <span>Event on: </span>
                                 <span className='font-black'>
                                     {format(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}
                                 </span>

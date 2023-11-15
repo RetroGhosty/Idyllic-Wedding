@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { ITransaction, PageProps, TransactionArr } from '@/types';
 import ReservationTable from '@/Components/Reservation/ReservationTable';
+import HeaderPopUp from '@/Components/HeaderPopUp';
 
 export default function Dashboard({ auth, transactions }: any,) {
     return (
@@ -9,6 +10,7 @@ export default function Dashboard({ auth, transactions }: any,) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
+            
             <Head title="Dashboard" />
 
             <div className="py-12">

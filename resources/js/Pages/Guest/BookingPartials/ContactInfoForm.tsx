@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
 
-    
     const {data, setData, errors, setError, post} = useForm<any>({
         email: session ? session['email'] : "",
         phone_number: session ? session['phone_number'] : "",

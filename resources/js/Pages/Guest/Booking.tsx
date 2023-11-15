@@ -10,6 +10,7 @@ import PaymentForm from './BookingPartials/PaymentForm'
 import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
 import ContactInfoForm from './BookingPartials/ContactInfoForm'
 import EmailForm from './BookingPartials/EmailForm'
+import HeaderPopUp from '@/Components/HeaderPopUp'
 
 const Booking = ({auth, venues, session, transactions}: PageProps) => {
   const [steps, setSteps] = React.useState<any>([

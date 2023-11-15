@@ -12,14 +12,14 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
     const {data, setData, errors, setError} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
-        dateSelected: undefined,
+        dateSelected: null,
     })
     const changeExcludedDates = () => {
       transactions.map((transaction: any) => {
         if (venues.length === 0){
           return false
         }
-        
+
         if (transaction['venue_id'] === venues[data.venue_id]['id']){
           const initialDate = parse(transaction['event_date'], 'yyyy-MM-dd', new Date())
           const startDate = subDays(initialDate, 7)
