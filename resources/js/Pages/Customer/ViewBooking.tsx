@@ -22,7 +22,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
             <NavBar user={auth.user}/>
             <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#a4ac86] h-16 md:h-32'>
                 <div className="max-w-6xl mx-auto w-full text-xl md:text-3xl font-black tracking-widest text-center">
-                    Thank you for booking with us!
+                    Thank you for booking in us!
                 </div>
             </div>
             <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#e07145] h-16 md:h-24'>

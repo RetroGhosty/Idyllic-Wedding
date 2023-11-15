@@ -29,7 +29,7 @@ class BookingExistMiddleware
             if ($fetchedTransaction != null ){
                 if ($fetchedTransaction->transaction_status == "paid"){
                     
-                    return to_route('booking.customerViewBooking', $fetchedTransaction->id);
+                    return to_route('booking.customerViewBooking');
                 }
                 if ($fetchedTransaction->transaction_status == "pending"){
                     $checkoutLink = Paymongo::checkout()->find($fetchedTransaction->paymongo_session_id);

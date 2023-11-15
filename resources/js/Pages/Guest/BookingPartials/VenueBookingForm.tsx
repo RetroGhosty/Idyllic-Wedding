@@ -42,10 +42,9 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       const payload = {
         'user_id': session['id'],
         'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
-        'dateSelected': format(data['dateSelected'], 'yyyy-MM-dd')
+        'dateSelected': data['dateSelected']
 
       }
-      console.log(payload['dateSelected'])
       router.post(route('booking.BookingPaymentSession'), payload, {
         preserveScroll: true,
         onSuccess: () => {
