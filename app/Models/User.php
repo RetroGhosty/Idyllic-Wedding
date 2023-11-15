@@ -58,6 +58,7 @@ class User extends Authenticatable
         return $this->hasOne(Venue::class, 'Venue_owner');
     }
     public function transactions(): HasMany {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, 'customer_id');
     }
+
 }

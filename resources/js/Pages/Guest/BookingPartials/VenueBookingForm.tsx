@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Selec
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
-import { add, addDays, addMonths, format, parse } from 'date-fns'
+import { add, addDays, addMonths, format, parse, subDays } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 
@@ -12,16 +12,18 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
     const {data, setData, errors, setError} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
-        dateSelected: addDays(new Date(), 4),
+        dateSelected: undefined,
     })
-    
     const changeExcludedDates = () => {
       transactions.map((transaction: any) => {
         if (venues.length === 0){
           return false
         }
         if (transaction['venue_id'] === venues[data.venue_id]['id']){
-          excludedDates.push(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()))
+          const initialDate = parse(transaction['event_date'], 'yyyy-MM-dd', new Date())
+          const startDate = subDays(initialDate, 7)
+          const endDate = initialDate
+          excludedDates.push({start: startDate, end: endDate})
         }
       })
     }
@@ -42,7 +44,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       const payload = {
         'user_id': session['id'],
         'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
-        'dateSelected': data['dateSelected']
+        'dateSelected': format(data['dateSelected'], 'yyyy-MM-dd')
 
       }
       router.post(route('booking.BookingPaymentSession'), payload, {
@@ -101,7 +103,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                   onChange={dateChange}
                   minDate={addDays(new Date(), 3)}
                   maxDate={addMonths(new Date(), 3)}
-                  excludeDates={excludedDates}
+                  excludeDateIntervals={excludedDates}
                   selected={data['dateSelected']}
                   />
               </span>

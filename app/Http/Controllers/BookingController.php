@@ -33,13 +33,21 @@ class BookingController extends Controller
 
     public function emailCheck(EmailCheckerRequest $request) {
         $validatedData = $request -> validated();
+        
         $fetchedEmail = DB::table("unregistered_users")->where("email", "=", $request->email)->first();
         if($fetchedEmail == null){
             $request->session()->put('contact_info', $validatedData);
         } else {
-            $request->session()->put('contact_info', $fetchedEmail);
-        }
+            $fetchedUser = UnregisteredUser::find($fetchedEmail->id);
 
+            $latestTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUser->id)->latest('event_date')->where('transaction_status', '=', 'paid')->whereDate('event_date', '>', Carbon::now()->format('Y-m-d'))->first();
+            if ($latestTransaction != null){
+                $request->session()->put('contact_info', $fetchedEmail);
+                return to_route('booking.customerViewBooking', $latestTransaction->id);
+            } else{
+                $request->session()->put('contact_info', $fetchedEmail);
+            }
+        }
     }
 
     public function contactInfo(UnregisteredUserRequest $request){
