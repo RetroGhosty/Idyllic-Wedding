@@ -124,6 +124,7 @@ class BookingController extends Controller
             ]);
             $transaction->save();
             $request -> session() -> put('checkout_id', $checkout->id);
+            $request->session()->put('latest_transaction', $transaction);
     
             return Inertia::location($checkout->checkout_url);
         } catch (Exception $e) {

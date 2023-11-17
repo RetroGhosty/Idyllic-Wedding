@@ -6,7 +6,6 @@ import React from "react"
 const HeaderPopUp = () => {
     const {latestTransaction} = usePage().props
     const {isOpen, onOpen, onClose, onToggle} = useDisclosure()
-    console.log(latestTransaction)
     React.useEffect(() => {
         if(latestTransaction !== null){
             onOpen()

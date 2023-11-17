@@ -7,6 +7,10 @@ import React from 'react'
 import { add, addDays, addMonths, format, parse, subDays } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
+import { FaArrowLeft } from "react-icons/fa";
+
+
+
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
     const {data, setData, errors, setError} = useForm<any>({
@@ -123,8 +127,11 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               </>
               }
             </div>
-            <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
+            <div className='flex flex-row justify-between items-center'>
+                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out' onClick={() => {decreaseStep()}}>
+                  <FaArrowLeft className="text-xl"/>
+                  <span>Return to step 2</span>
+                </div>
                 <PrimaryButton type='submit'>Next</PrimaryButton>
             </div>
           </div>

@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { FaArrowLeft } from 'react-icons/fa'
 
 
 const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
@@ -65,8 +66,11 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 <TextInput autoComplete="off"  id='last_name' type="text" value={data.last_name} onChange={(e) => setData('last_name', e.target.value)} />
                 {errors.last_name ? errors.last_name : null}
             </div>       
-            <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}} type='button'>Back</PrimaryButton>
+            <div className='flex flex-row justify-between items-center'>
+                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out' onClick={() => {decreaseStep()}}>
+                  <FaArrowLeft className="text-xl"/>
+                  <span>Return to step 1</span>
+                </div>
                 <PrimaryButton type='submit'>Next</PrimaryButton>
             </div>
         </motion.form>

@@ -12,8 +12,16 @@ const AboutUs = ({auth}: PageProps) => {
             
             <HeaderPopUp/>
             <NavBar user={auth.user}/>  
-            <div className='min-h-screen py-5 max-w-7xl md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
-                About Us
+            <div className='min-h-screen py-5 max-w-7xl md:py-9 mx-auto px-4 sm:px-6 lg:px-8l w-full'>
+              <img src="http://localhost:8000/kap.jfif" alt=""/>
+              <div className='rounded-md p-5 bg-black/[.4] min-h-screen flex flex-col items-center '>
+                  <div>
+                    <span className='font-bold text-2xl'>Welcome to</span>
+                  </div>
+                  <div>
+                    
+                  </div>
+              </div>
             </div>
             <Footer/>
         </div>
