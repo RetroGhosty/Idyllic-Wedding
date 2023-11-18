@@ -1,6 +1,6 @@
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CircularProgress, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
@@ -8,6 +8,7 @@ import { add, addDays, addMonths, format, parse, subDays } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 import { FaArrowLeft } from "react-icons/fa";
+import { ClearProgressReload, CreateProgressReload } from './FormHelper/ProgressHelper'
 
 
 
@@ -18,6 +19,9 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         venue_id: 0,
         dateSelected: null,
     })
+
+    const [reloadState, setReloadState] = React.useState(false)
+
     const changeExcludedDates = () => {
       transactions.map((transaction: any) => {
         if (venues.length === 0){
@@ -59,7 +63,10 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         },
         onError: (error: any) => {
           setError(error)
-        }
+        },
+        onStart: () => {CreateProgressReload(setReloadState)},
+        onFinish: () => {ClearProgressReload(setReloadState)},
+
       })
     }
 
@@ -75,12 +82,12 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
   return (
     <AnimatePresence>
       
-      <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
+      <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7 my-4'
       initial={{ opacity: 0, x: 200 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -200 }}
       >
-          <div className='font-black text-2xl'>Venue Booking</div>
+
           {isVisible ? 
           <Alert status='error'>
             <AlertIcon/>
@@ -96,12 +103,13 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               <Select autoComplete="off" id='venue_id' value={data.venue_id} onChange={handleVenueChange}>
                   {venues.map((venue: any, index: number) => (
                     <option key={index} value={index}>{venue['venue_name']}</option>
-                  ))}
+                    ))}
               </Select>
               {errors.venue_id ? errors.venue_id : null}
           </div>              
           <div className='flex flex-col space-y-4'>
             <div>
+              <InputLabel htmlFor="datePicker" value='Booking'/> 
               <span className='text-xl font-black'>
                   <DatePicker 
                   id='datePicker'
@@ -127,12 +135,16 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               </>
               }
             </div>
-            <div className='flex flex-row justify-between items-center'>
-                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out' onClick={() => {decreaseStep()}}>
+            <div className='flex flex-col md:flex-row justify-between space-y-3 md:space-y-0 md:items-center'>
+                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out select-none' onClick={() => {decreaseStep()}}>
                   <FaArrowLeft className="text-xl"/>
                   <span>Return to step 2</span>
                 </div>
-                <PrimaryButton type='submit'>Next</PrimaryButton>
+                
+                <div className='flex md:flex-row space-x-4 items-center'>
+                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
+                </div>
             </div>
           </div>
       </motion.form>

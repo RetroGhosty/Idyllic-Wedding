@@ -3,6 +3,9 @@ import PrimaryButton from "@/Components/PrimaryButton"
 import TextInput from "@/Components/TextInput"
 import { router, useForm } from "@inertiajs/react"
 import { AnimatePresence, motion } from "framer-motion"
+import React from "react"
+import { ClearProgressReload, CreateProgressReload } from "./FormHelper/ProgressHelper"
+import { CircularProgress } from "@chakra-ui/react"
 
 const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
 
@@ -11,6 +14,8 @@ const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
         email: session ? session['email'] : ''
     })
 
+    const [reloadState, setReloadState] = React.useState(false)
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
         router.post(route('booking.emailCheck'), data, {
@@ -18,13 +23,15 @@ const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
             onSuccess: () => increaseStep(),
             onError: (errors: any) => {
                 setError(errors)
-            }
+            },
+            onStart: () => {CreateProgressReload(setReloadState)},
+            onFinish: () => {ClearProgressReload(setReloadState)}
         })
     }
 
   return (
     <AnimatePresence>
-        <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
+        <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7 my-4'
         initial={{ opacity: 0, x: 300 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -200 }}
@@ -36,8 +43,11 @@ const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
                 {errors.email ? errors.email : null}
             </div>               
      
-            <div className='flex flex-row justify-end'>
-                <PrimaryButton type='submit'>Next</PrimaryButton>
+            <div className='flex flex-row  items-center md:flex-row space-y-3 md:space-y-0'>
+                <div className='flex md:flex-row space-x-4 items-center'>
+                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
+                </div>
             </div>
         </motion.form>
     </AnimatePresence>

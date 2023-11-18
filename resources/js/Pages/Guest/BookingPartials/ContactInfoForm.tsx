@@ -4,21 +4,25 @@ import TextInput from '@/Components/TextInput'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FaArrowLeft } from 'react-icons/fa'
+import React from 'react'
+import { ClearProgressReload, CreateProgressReload } from './FormHelper/ProgressHelper'
+import { CircularProgress } from '@chakra-ui/react'
 
 
 const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
 
-    const {data, setData, errors, setError, post} = useForm<any>({
+    const {data, setData, errors, setError, post, } = useForm<any>({
         email: session ? session['email'] : "",
         phone_number: session ? session['phone_number'] : "",
         first_name: session ? session['first_name'] : "",
         last_name: session ? session['last_name'] : "",
-
     })
+
+    const [reloadState, setReloadState] = React.useState(false)
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (session['id'] === undefined){
-            console.log("not executed")
             router.post(route('booking.contactinfo'), data, {
                 preserveScroll: true,
                 onSuccess: () => increaseStep(),
@@ -27,20 +31,21 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 }
             })
         } else{
-            console.log(session['id'])
             router.patch(route("booking.contactInfoUpdate", session['id']), data, {
                 preserveScroll: true,
                 onSuccess: () => increaseStep(),
                 onError: (errors: any) => {
                     setError(errors)
-                }
+                },
+                onStart: () => {CreateProgressReload(setReloadState)},
+                onFinish: () => {ClearProgressReload(setReloadState)}
             })
         }
     } 
 
   return (
     <AnimatePresence>
-        <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
+        <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7 my-4'
         initial={{ opacity: 0, x: 300 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -200 }}
@@ -66,12 +71,15 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 <TextInput autoComplete="off"  id='last_name' type="text" value={data.last_name} onChange={(e) => setData('last_name', e.target.value)} />
                 {errors.last_name ? errors.last_name : null}
             </div>       
-            <div className='flex flex-row justify-between items-center'>
-                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out' onClick={() => {decreaseStep()}}>
+            <div className='flex flex-col md:flex-row justify-between space-y-3 md:space-y-0 md:items-center'>
+                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out select-none' onClick={() => {decreaseStep()}}>
                   <FaArrowLeft className="text-xl"/>
                   <span>Return to step 1</span>
                 </div>
-                <PrimaryButton type='submit'>Next</PrimaryButton>
+                <div className='flex md:flex-row space-x-4 items-center'>
+                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
+                </div>
             </div>
         </motion.form>
     </AnimatePresence>

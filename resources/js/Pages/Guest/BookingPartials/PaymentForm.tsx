@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import { Select } from '@chakra-ui/react'
 import { useForm } from '@inertiajs/react'
 import { motion } from 'framer-motion'
+import React from 'react'
 
 
 
@@ -14,6 +15,7 @@ const PaymentForm = ({increaseStep, decreaseStep}: any) => {
         payment_type: string,
         payment_proof?: File | undefined
     }
+    const [reloadState, setReloadState] = React.useState(false)
 
     const {data, setData, post, errors} = useForm<any>({
         venue_id: '',
@@ -64,8 +66,8 @@ const PaymentForm = ({increaseStep, decreaseStep}: any) => {
             {errors.payment_proof ? errors.payment_proof : null}
         </div>
         <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}} type='button'>Back</PrimaryButton>
-                <PrimaryButton type='submit'>Next</PrimaryButton>
+            <PrimaryButton onClick={() => {decreaseStep()}} type='button'>Back</PrimaryButton>
+            <PrimaryButton type='submit'>Next</PrimaryButton>
         </div>
                       
     </motion.form>
