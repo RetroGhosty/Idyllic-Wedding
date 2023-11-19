@@ -14,7 +14,7 @@ import { ClearProgressReload, CreateProgressReload } from './FormHelper/Progress
 
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
-    const {data, setData, errors, setError} = useForm<any>({
+    const {data, setData, errors, setError, clearErrors} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
         dateSelected: null,
@@ -64,7 +64,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         onError: (error: any) => {
           setError(error)
         },
-        onStart: () => {CreateProgressReload(setReloadState)},
+        onStart: () => {CreateProgressReload(setReloadState), clearErrors()},
         onFinish: () => {ClearProgressReload(setReloadState)},
 
       })

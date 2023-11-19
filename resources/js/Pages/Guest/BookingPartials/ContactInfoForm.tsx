@@ -11,7 +11,7 @@ import { CircularProgress } from '@chakra-ui/react'
 
 const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => {
 
-    const {data, setData, errors, setError, post, } = useForm<any>({
+    const {data, setData, errors, setError, post, clearErrors} = useForm<any>({
         email: session ? session['email'] : "",
         phone_number: session ? session['phone_number'] : "",
         first_name: session ? session['first_name'] : "",
@@ -25,6 +25,7 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
         if (session['id'] === undefined){
             router.post(route('booking.contactinfo'), data, {
                 preserveScroll: true,
+                onStart: () => {clearErrors()},
                 onSuccess: () => increaseStep(),
                 onError: (errors: any) => {
                     setError(errors)
@@ -37,7 +38,7 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 onError: (errors: any) => {
                     setError(errors)
                 },
-                onStart: () => {CreateProgressReload(setReloadState)},
+                onStart: () => {CreateProgressReload(setReloadState), clearErrors()},
                 onFinish: () => {ClearProgressReload(setReloadState)}
             })
         }
@@ -53,12 +54,12 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
             <div className='font-black text-2xl'>Contact Info</div>
             <div className='flex flex-col'>
                 <InputLabel htmlFor="email" value='Email'/> 
-                <TextInput autoComplete="off"  id='email' type="text" value={data.email} onChange={(e) => setData('email', e.target.value)} />
+                <TextInput autoComplete="off"  id='email' type="text" value={data.email} onChange={(e) => setData('email', e.target.value)} disabled/>
                 {errors.email ? errors.email : null}
             </div>               
             <div className='flex flex-col'>
-                <InputLabel htmlFor="phone_number" value='Phone Number'/> 
-                <TextInput autoComplete="off"  id='phone_number' type="text" value={data.phone_number} onChange={(e) => setData('phone_number', e.target.value)} />
+                <InputLabel htmlFor="phone_number" value='Phone Number ex: 9191219212'/> 
+                <TextInput autoComplete="off"  id='phone_number' type="text" placeholder='9191219212' value={data.phone_number} onChange={(e) => setData('phone_number', e.target.value)} />
                 {errors.phone_number ? errors.phone_number : null}
             </div>       
             <div className='flex flex-col'>

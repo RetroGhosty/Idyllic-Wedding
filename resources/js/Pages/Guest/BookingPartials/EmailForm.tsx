@@ -10,7 +10,7 @@ import { CircularProgress } from "@chakra-ui/react"
 const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
 
 
-    const {data, setData, errors, setError, post} = useForm<any>({
+    const {data, setData, errors, setError, post, clearErrors} = useForm<any>({
         email: session ? session['email'] : ''
     })
 
@@ -24,7 +24,7 @@ const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
             onError: (errors: any) => {
                 setError(errors)
             },
-            onStart: () => {CreateProgressReload(setReloadState)},
+            onStart: () => {CreateProgressReload(setReloadState), clearErrors()},
             onFinish: () => {ClearProgressReload(setReloadState)}
         })
     }
@@ -45,7 +45,7 @@ const EmailForm = ({increaseStep, decreaseStep, session}:any) => {
      
             <div className='flex flex-row  items-center md:flex-row space-y-3 md:space-y-0'>
                 <div className='flex md:flex-row space-x-4 items-center'>
-                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  <PrimaryButton type='submit' disabled={reloadState ? true : false}>Next</PrimaryButton>
                   {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
                 </div>
             </div>
