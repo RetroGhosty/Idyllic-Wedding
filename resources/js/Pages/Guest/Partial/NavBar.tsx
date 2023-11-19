@@ -4,6 +4,7 @@ import { Link } from '@inertiajs/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, useDisclosure } from '@chakra-ui/react'
 import HeaderPopUp from '@/Components/HeaderPopUp'
+import PhoneNavLink from '@/Components/PhoneNavLink'
 
 const NavBar = ({user, backgroundColor}: any) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -71,21 +72,21 @@ const NavBar = ({user, backgroundColor}: any) => {
             <DrawerContent>
                 <DrawerHeader>        
                     {user ? 
-                    <NavLink className='text-black sm:flex sm:text-sm md:text-sm border-b-0' href={route('dashboard')} active={route().current('register')}>
+                    <PhoneNavLink className='text-black sm:flex sm:text-sm md:text-sm border-b-0' href={route('dashboard')} active={route().current('register')}>
                         DASHBOARD
-                    </NavLink>
+                    </PhoneNavLink>
 
                     : 
-                    <NavLink className='text-black sm:flex sm:text-sm md:text-base border-b-0' href={route('booking.home')} active={route().current('booking.*')}>Book Now</NavLink>
+                    <PhoneNavLink className='text-black sm:flex sm:text-sm md:text-base border-b-0' href={route('booking.home')} active={route().current('booking.*')}>Book Now</PhoneNavLink>
                     
                     }            
                 </DrawerHeader>
                 <DrawerBody className='flex flex-col space-y-3'>
-                    <NavLink className='text-black border-b-0' href={route('landing-page')} active={route().current('landing-page')}>Home</NavLink>
-                    <NavLink className='text-black border-b-0' href={route('about.home')} active={route().current('about.*')}>About us</NavLink>
-                    <NavLink className='text-black border-b-0' href={route('highlights.home')} active={route().current('highlights.*')}>Highlights</NavLink>
-                    <NavLink className='text-black border-b-0' href={route('venues.home')} active={route().current('venues.*')}>Venues</NavLink>
-                    <NavLink className='text-black border-b-0' href={route('contacts.home')} active={route().current('contacts.*')}>Contacts</NavLink>
+                    <PhoneNavLink className='text-black border-b-0' href={route('landing-page')} active={route().current('landing-page')}>Home</PhoneNavLink>
+                    <PhoneNavLink className='text-black border-b-0' href={route('about.home')} active={route().current('about.*')}>About us</PhoneNavLink>
+                    <PhoneNavLink className='text-black border-b-0' href={route('highlights.home')} active={route().current('highlights.*')}>Highlights</PhoneNavLink>
+                    <PhoneNavLink className='text-black border-b-0' href={route('venues.home')} active={route().current('venues.*')}>Venues</PhoneNavLink>
+                    <PhoneNavLink className='text-black border-b-0' href={route('contacts.home')} active={route().current('contacts.*')}>Contacts</PhoneNavLink>
                 </DrawerBody>
                 <DrawerFooter>
                     @ Idyllic Weddings
