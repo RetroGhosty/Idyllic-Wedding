@@ -20,7 +20,7 @@ const Venues = ({auth, venues}: any) => {
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <HeaderPopUp/>
             <NavBar user={auth.user}/>
-            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#a4ac86] h-24'>
+            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#463f3a] text-white h-24'>
                 <div className="max-w-6xl mx-auto w-full text-3xl font-black tracking-widest">
                 <Breadcrumb>
                     <BreadcrumbItem>
@@ -32,11 +32,14 @@ const Venues = ({auth, venues}: any) => {
             <div className='min-h-screen w-full max-w-7xl py-5 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
                 <div className="flex flex-col space-y-6">
                   {venues.map((venue: any, id: number) => (
-                    <div key={id} className="bg-[#eae2b7] md:bg-[#F4F3EE] rounded md:border-t-2 md:border-[#023047] select-none">
-                      <div  onClick={() => navigate(venue['venue_name'])} className="md:hover:scale-105 overflow-hidden md:h-60 p-5 ease-out duration-300 relative flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-start">
-                        <div className="md:basis-1/2 relative overflow-hidden h-44 w-full md:h-full">
+                    <div key={id} className="rounded select-none">
+                      <div  onClick={() => navigate(venue['venue_name'])} className="md:hover:scale-105 overflow-hidden md:h-60 p-5 ease-out duration-300 relative flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-starts md:bg-[#edf2f4] rounded-xl shadow-xl">
+                        <div className="hidden md:block md:w-[400px]">
+                          <div className="md:basis-1/2 overflow-hidden h-44 md:h-full absolute top-0 left-0 w-[300px]">
                           <Img src={`storage/${venue['photo_url']}`} className="w-full h-full object-cover"/>
                         </div>
+                        </div>
+           
                         <div className="w-full h-full flex flex-col justify-between">
                           <div>
                             <div>

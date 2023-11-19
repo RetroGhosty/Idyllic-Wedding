@@ -3,8 +3,38 @@ import { PageProps } from '@/types';
 import NavBar from './Guest/Partial/NavBar';
 import Footer from './Guest/Partial/Footer';
 import HeaderPopUp from '@/Components/HeaderPopUp';
+import { FaFacebookSquare,  } from "react-icons/fa";
+import { BsMessenger } from "react-icons/bs";
+import { FaYoutube } from "react-icons/fa";
+import { motion } from 'framer-motion';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { backendUrl } from '@/Helper/Backendhelper';
 
-export default function Welcome({ auth }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
+
+
+
+export default function Welcome({ auth, venues }: any) {
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 2
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+    console.log(venues)
     return (
         <>
             <Head title="Home" />
@@ -12,14 +42,18 @@ export default function Welcome({ auth }: PageProps<{ laravelVersion: string, ph
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative aspect-video w-full min-h-[60vh] md:min-h-[0] md:max-h-[70vh]'>
-                        <img src="http://localhost:8000/hero-image.png" className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
-                        <div className='grid grid-cols-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l relative'>
+                    <div className='relative w-full min-h-[10vh] sm:min-h-[60vh] md:h-[60vh] md:max-h-[70vh]'>
+                        <div className='mix-blend-multiply'>
+                            <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
+                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[35%] z-[11]'/>
+                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[90%] z-[9]'/>
+                        </div>
+
+                        <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l relative'>
                             <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
                                 <h1 className='text-xl md:text-4xl tracking-widest font-black text-white'>Idyllic Wedding</h1>
                                 <div>
-                                    <p className='text-base md:text-xl text-white'>Your idyllic love story begins here.</p>
-                                    <p className='text-base md:text-xl text-white'>Discover enchanting venues, personalized services, and seamless planning for your special day.</p>
+                                    <p className='text-base md:text-xl text-white'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
                                 </div>
                                 <button type='button' className='bg-[#0066FF] text-base md:text-xl px-2 py-1 md:px-5 md:py-2 font-black text-white' 
                                 onClick={() => router.get(route('booking.home'))}
@@ -27,11 +61,85 @@ export default function Welcome({ auth }: PageProps<{ laravelVersion: string, ph
                                     Book now
                                 </button>
                             </div>
+                            <div className='col-start-1 col-end-7 flex flex-row items-end justify-center text-4xl space-x-7 text-[#e56b6f]'>
+                                <motion.div whileHover={{scale: 1.3}}>
+                                    <FaFacebookSquare/>
+                                </motion.div>
+                                <motion.div whileHover={{scale: 1.3}}>
+                                    <FaYoutube/>
+                                </motion.div>
+                                <motion.div whileHover={{scale: 1.3}}>
+                                    <BsMessenger/>
+                                </motion.div>
+
+                            </div>
+                            
                         </div>
                     </div>
-                    <div className='bg-white text-black relative z-20'>
-                        <div className='max-w-7xl py-4 md:py-24 mx-auto px-4 sm:px-6 lg:px-8l'>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt architecto nesciunt molestiae eligendi velit, atque iste minima facilis nisi nam nostrum minus nemo numquam dolor eos iusto a error alias vel dolorem quibusdam. Neque corporis cupiditate velit doloremque, atque veniam unde beatae obcaecati, nostrum pariatur officia dolorum. Sapiente ipsam ducimus ad et! Eius reprehenderit recusandae accusantium aliquam quam. Sed quaerat perferendis inventore. Voluptatum error doloremque eos! Dolore ut quis nobis nemo cumque quisquam temporibus eaque, facilis quibusdam ab consectetur cum, perferendis obcaecati autem? Nihil possimus aliquid reprehenderit dicta suscipit, quos velit soluta vero blanditiis. Deleniti qui voluptatibus fugit, quo est quam voluptates porro modi eius facilis, mollitia ex molestiae magnam fugiat perferendis perspiciatis natus iure numquam harum excepturi tempora voluptate nisi nostrum odit. Non ipsam sit ex harum esse omnis labore, nulla dolorum? Expedita ea dolor perspiciatis quidem odio delectus voluptates, porro error distinctio atque, magnam pariatur ducimus rem neque. Repudiandae recusandae facere velit quam, eligendi impedit nobis enim optio? Ipsum ex iusto facilis alias repellendus aliquam nobis distinctio non velit unde dolor, deserunt eligendi iste doloremque consequatur voluptas? Consequuntur modi repudiandae tenetur consequatur. Labore modi recusandae quasi ratione, minima quaerat rerum mollitia. Odit omnis tempore culpa, ratione perspiciatis officia.
+                    <div className='text-black relative z-20'>
+                        <div className='max-w-7xl py-4 md:py-12 mx-auto px-4 sm:px-6 lg:px-8l'>
+                            <div className='relative grid grid-cols-1 mb-5 md:mb-0 md:grid-cols-2 w=full min-h-[20vh] gap-10'>
+                                <div className='flex flex-col justify-between space-y-5'>
+                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                                        <h1 className='text-base md:text-2xl tracking-widest'>Romantic Setting</h1>
+                                        <p>Exchange vows in a picturesque venue surrounded by lush landscapes and blooming flowers. Our idyllic wedding reservation ensures a romantic atmosphere that will make your special day truly unforgettable.</p>
+                                    </div>
+                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                                        <h1 className='text-base md:text-2xl  tracking-widest'>Effortless Planning</h1>
+                                        <p>Simplify your wedding preparations with our efficient services. From organizing the ceremony to coordinating with vendors, we handle the details, allowing you to focus on the joy of the occasion. Enjoy a stress-free journey to your dream wedding!</p>
+                                    </div>
+                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                                        <h1 className='text-base md:text-2xl  tracking-widest'>Seamless Experience</h1>
+                                        <p>Experience a seamless and delightful wedding celebration with our meticulous attention to detail. Our team is dedicated to ensuring every moment of your special day flows smoothly, creating cherished memories that last a lifetime.</p>
+                                    </div>
+                                </div>
+                                <div className='hidden md:flex flex-col justify-center items-center w-full h-full'>
+                                    <div className='relative flex aspect-square w-[350px]'>
+                                        <img className='absolute bottom-10 right-10 aspect-square h-full z-10 rounded' src={`${backendUrl}/image1.png`}/>
+                                        <div className='relative top-10 left-10 aspect-square h-full z-10'>
+                                            <img className='absolute rounded' src={`${backendUrl}/image2.png`}/>
+                                            <div className='absolute rounded bg-white -z-[1] bottom-2 right-2 w-full h-full'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='max-w-7xl py-4 md:py-12 mx-auto px-4 sm:px-6 lg:px-8l'>
+                            <h1 className='text-xl md:text-4xl font-bold mb-6'>Available Venues</h1>
+                            <Carousel
+                                additionalTransfrom={0}
+                                arrows
+                                autoPlaySpeed={3000}
+                                containerClass="container-with-dots min-h-[40vh]"
+                                dotListClass=""
+                                draggable
+                                focusOnSelect={false}
+                                infinite
+                                itemClass="select-none"
+                                keyBoardControl
+                                minimumTouchDrag={80}
+                                pauseOnHover
+                                renderArrowsWhenDisabled={false}
+                                renderButtonGroupOutside={false}
+                                renderDotsOutside={false}
+                                showDots={true}
+                                responsive={responsive}>
+
+                                {venues.map((venue: any, index: number) => (
+                                    <div key={index} className='rounded w-full h-[40vh] p-6'>
+                                        <div  onClick={() => {router.get(route('venues.view_single', venue['venue_name']))}} className='text-white w-full h-full flex items-center justify-center relative'>
+                                            <img className='object-cover w-full h-full rounded-lg' src={`http://localhost:8000/storage/${venue['photo_url']}`}/>
+                                            <motion.div initial={{opacity:0, backgroundColor: 'black'}} whileHover={{opacity: 0.7}} className='absolute h-full w-full bg-opacity-10 rounded-lg flex items-center justify-center'>
+                                                <div className='text-2xl'>
+                                                    {venue['venue_name']}
+                                                </div>
+                                            </motion.div>
+                                        </div>
+                                    </div>
+                                
+                                ))}
+                            </Carousel>;
                         </div>
                     </div>
                 </div>
