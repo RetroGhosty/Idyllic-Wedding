@@ -15,7 +15,6 @@ class UnregisteredUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $email = DB::table('unregistered_users')->where('email', '=', $this->session()->get('contact_info')->email)->first();
         return [
             'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/'],
             'phone_number' => ['required', 'regex:/^0?\d{10}$/'],
