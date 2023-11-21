@@ -67,24 +67,30 @@ class AdminTransactionController extends Controller
         if ($transaction->payment_id == null){
             return abort(404);
         }
-        
-        $refund = Paymongo::refund()->find(Refund::where('transaction_id', $transaction_id)->first()->refund_id);
 
-        $refundDetails = [
-            'id' => $refund->id,
-            'amount' => $refund->amount,
-            'reason' => $refund->reason,
-            'status' => $refund->status,
-            'available_at' => $refund->available_at,
-            'created_at' => $refund->created_at,
-            'updated_at' => $refund->updated_at,
-            'refunded_at' => $refund->refunded_at,
-        ];
-        $payload = [
-            'transaction' => $transaction,
-            'refund' => $refundDetails,
-        ];
-        return Inertia::render("Admin/TransactionRefund", $payload);
+        try {
+            //code...
+            $refund = Paymongo::refund()->find(Refund::where('transaction_id', $transaction_id)->first()->refund_id);
+    
+            $refundDetails = [
+                'id' => $refund->id,
+                'amount' => $refund->amount,
+                'reason' => $refund->reason,
+                'status' => $refund->status,
+                'available_at' => $refund->available_at,
+                'created_at' => $refund->created_at,
+                'updated_at' => $refund->updated_at,
+                'refunded_at' => $refund->refunded_at,
+            ];
+            $payload = [
+                'transaction' => $transaction,
+                'refund' => $refundDetails,
+            ];
+            return Inertia::render("Admin/TransactionRefund", $payload);
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
+        
     }
 
 }
