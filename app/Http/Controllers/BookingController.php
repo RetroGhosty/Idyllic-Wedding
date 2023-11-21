@@ -148,20 +148,29 @@ class BookingController extends Controller
         }
     }
 
+    // TODO:
+    // 1. Do something went wrong page
+    // 2. Do not found page
     public function venueBookingSuccess(Request $request){
-        $checkout_id = $request->session()->get('checkout_id');
-        $checkout = Paymongo::checkout()->find($checkout_id);
-        $transaction = Transaction::find($checkout->reference_number);
-        if ($checkout->payments[0]['attributes']['status'] === 'paid'){
+        try {
+            //code...
+            $checkout_id = $request->session()->get('checkout_id');
+            $checkout = Paymongo::checkout()->find($checkout_id);
             $transaction = Transaction::find($checkout->reference_number);
-            $transaction->update([
-                'payment_method' => $checkout->payments[0]['attributes']['source']['type'],
-                'transaction_status' => $checkout->payments[0]['attributes']['status'],
-            ]);
-            $transaction->save();
-            $transaction->refresh();
-        } 
-        return to_route('booking.customerViewBooking', $transaction->id);
+            if ($checkout->payments[0]['attributes']['status'] === 'paid'){
+                $transaction = Transaction::find($checkout->reference_number);
+                $transaction->update([
+                    'payment_method' => $checkout->payments[0]['attributes']['source']['type'],
+                    'transaction_status' => $checkout->payments[0]['attributes']['status'],
+                    'payment_id' => $checkout->payments[0]['id'],
+                ]);
+                $transaction->save();
+                $transaction->refresh();
+            } 
+            return to_route('booking.customerViewBooking', $transaction->id);
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
     }
     public function paymentCancel(Request $request){
         try {

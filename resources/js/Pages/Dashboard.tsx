@@ -3,8 +3,9 @@ import { Head } from '@inertiajs/react';
 import { ITransaction, PageProps, TransactionArr } from '@/types';
 import ReservationTable from '@/Components/Reservation/ReservationTable';
 import HeaderPopUp from '@/Components/HeaderPopUp';
+import RefundTable from '@/Components/Reservation/RefundTable';
 
-export default function Dashboard({ auth, transactions }: any,) {
+export default function Dashboard({ auth, transactions, refundRequests }: any,) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -20,6 +21,9 @@ export default function Dashboard({ auth, transactions }: any,) {
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <ReservationTable transactions={transactions}/>
+                    </div>
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <RefundTable refundRequests={refundRequests}/>
                     </div>
                 </div>
             </div>

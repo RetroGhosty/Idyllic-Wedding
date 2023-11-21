@@ -5,15 +5,9 @@ import { createColumnHelper, getCoreRowModel, useReactTable, flexRender } from '
 import {parse, format} from 'date-fns'
 import DangerButton from '../DangerButton'
 const ReservationTable = ({transactions}: any) => {
-    const changeStatus = (transaction_id, statusValue) => {
-        const payload = {
-            id:transaction_id,
-            status: statusValue,
-        }
-        router.patch(route('admin.reservation.editStatus', {transaction_id: transaction_id}), payload, {preserveScroll: true})
+    const refundTransaction = (transaction_id) => {
+        router.post(route('admin.transaction.requestRefund', {transaction_id: transaction_id}), {preserveScroll: true})
     }
-
-
 
     const columnHelper = createColumnHelper<ITransaction>()
     const columns = [
@@ -40,12 +34,7 @@ const ReservationTable = ({transactions}: any) => {
         columnHelper.accessor('status', {
             header: 'Actions',
             cell: (info) => 
-            <DangerButton>Refund</DangerButton>
-            // <select name="status" value={info.getValue()} onChange={(e) => changeStatus(info.row.original['id'], e.target.value)}>
-            //     <option value="pending">Pending</option>
-            //     <option value="cancelled">Cancelled</option>
-            //     <option value="approved">Approved</option>
-            // </select>
+            <DangerButton onClick={() => refundTransaction(info.row.original['id'])}>Refund</DangerButton>
         })
     ]
 

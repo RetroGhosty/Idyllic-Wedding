@@ -13,6 +13,7 @@ class Transaction extends Model
     protected $fillable = [
         'transaction_amount',
         'paymongo_session_id',
+        'payment_id',
         'payment_method',
         'customer_id', 
         'venue_id', 
@@ -27,4 +28,7 @@ class Transaction extends Model
         return $this->hasOne(Venue::class, 'id', 'venue_id');
     }
 
+    public function refund(): HasOne{
+        return $this->hasOne(Refund::class, 'id');
+    }
 }

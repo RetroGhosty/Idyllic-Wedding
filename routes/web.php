@@ -90,6 +90,8 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::delete('/admin/showcasephoto', [VenueShowcasePhotoController::class,'delete'])->name('admin.showcasephoto.delete');
     Route::patch('/admin/reservation/edit/{transaction_id}', [TransactionController::class,'editStatus'])->name('admin.reservation.editStatus');
     Route::get("/dashboard", [AdminTransactionController::class, 'viewReservation'])->name('dashboard');
+    Route::post("/dashboard/refund/{transaction_id}", [AdminTransactionController::class, 'requestRefund'])->name('admin.transaction.requestRefund');
+    Route::get("/refund/{transaction_id}", [AdminTransactionController::class, 'viewRefundInfo'])->name('dashboard.transaction.viewRefundInfo');
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

@@ -13,11 +13,14 @@ class UnregisteredUser extends Model
         'email',
         'phone_number',
         'first_name',
-        
         'last_name',
     ];
 
     public function transaction(): HasMany {
         return $this->hasMany(Transaction::class, 'customer_id');
+    }
+
+    public function refund(): HasMany {
+        return $this->hasMany(Refund::class, 'customer_id');
     }
 }
