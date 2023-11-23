@@ -18,8 +18,8 @@ class VenuePostRequest extends FormRequest
         return [
             'venue_name' => ['required'],
             'description' => ['required'],
-            'limit' => ['numeric', 'required', 'min:10'],
-            'price' => ['numeric', 'required', 'min:0'],
+            'limit' => ['numeric', 'required', 'min:10', 'max:1000'],
+            'price' => ['numeric', 'required', 'min:0', 'max:20000'],
             'header_image' => ['required', 'image', new DoesVenueHeaderImgAlreadyExist('post', null)],
             'sub_images' => ['required', 'array', new VenueShowcasePhotoMaximumLimit('post', null)],
             'sub_images.*' => ['required', 'image'],

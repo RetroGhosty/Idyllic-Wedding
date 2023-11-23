@@ -42,7 +42,7 @@ export default function Welcome({ auth, venues }: any) {
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full min-h-[10vh] sm:min-h-[60vh] md:h-[60vh] md:max-h-[70vh]'>
+                    <div className='relative w-full min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
                             <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[35%] z-[11]'/>
@@ -51,27 +51,26 @@ export default function Welcome({ auth, venues }: any) {
 
                         <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l relative'>
                             <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
-                                <h1 className='text-xl md:text-4xl tracking-widest font-black text-white'>Idyllic Wedding</h1>
+                                <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Wedding</h1>
                                 <div>
                                     <p className='text-base md:text-xl text-white'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
                                 </div>
-                                <button type='button' className='bg-[#0066FF] text-base md:text-xl px-2 py-1 md:px-5 md:py-2 font-black text-white' 
+                                <button type='button' className='bg-[#0066FF] text-base md:text-xl px-8 py-1 md:px-12 md:py-2 font-black text-white' 
                                 onClick={() => router.get(route('booking.home'))}
                                 >
                                     Book now
                                 </button>
-                            </div>
-                            <div className='col-start-1 col-end-7 flex flex-row items-end justify-center text-4xl space-x-7 text-[#e56b6f]'>
-                                <motion.div whileHover={{scale: 1.3}}>
-                                    <FaFacebookSquare/>
-                                </motion.div>
-                                <motion.div whileHover={{scale: 1.3}}>
-                                    <FaYoutube/>
-                                </motion.div>
-                                <motion.div whileHover={{scale: 1.3}}>
-                                    <BsMessenger/>
-                                </motion.div>
-
+                                <div className='col-start-1 col-end-7 flex flex-row items-end justify-center text-3xl space-x-1 md:space-x-3 text-white'>
+                                    <motion.div whileHover={{scale: 1.3, color: '#4064AC'}}>
+                                        <FaFacebookSquare/>
+                                    </motion.div>
+                                    <motion.div whileHover={{scale: 1.3, color: '#4064AC'}}>
+                                        <BsMessenger/>
+                                    </motion.div>
+                                    <motion.div whileHover={{scale: 1.3, color: '#e56b6f'}}>
+                                        <FaYoutube/>
+                                    </motion.div>
+                                </div>
                             </div>
                             
                         </div>
@@ -111,7 +110,7 @@ export default function Welcome({ auth, venues }: any) {
                                 additionalTransfrom={0}
                                 arrows
                                 autoPlaySpeed={3000}
-                                containerClass="container-with-dots min-h-[40vh]"
+                                containerClass="container-with-dots max-h-[450px]"
                                 dotListClass=""
                                 draggable
                                 focusOnSelect={false}
