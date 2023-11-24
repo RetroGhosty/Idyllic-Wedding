@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\choices\TransactionStatusEnum;
+use App\Models\EmailInquiry;
 use App\Models\Refund;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -15,9 +16,13 @@ class AdminTransactionController extends Controller
     public function viewReservation(){
         $transactions = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PAID)->get();
         $refundRequests = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PENDING_REFUND)->get();
+        $emailCountInquiries = EmailInquiry::all()->count();
+        $latestEmailInquiries = EmailInquiry::orderBy('created_at', 'desc')->take(5)->get();
         $payload = [
             'transactions' => $transactions,
             'refundRequests' => $refundRequests,
+            'emailCountInquiries' => $emailCountInquiries,
+            'latestEmailInquiries' => $latestEmailInquiries
         ];
         return Inertia::render("Dashboard", $payload);
     }

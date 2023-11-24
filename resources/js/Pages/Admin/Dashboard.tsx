@@ -40,7 +40,9 @@ const Dashboard = ({auth, users, venues, success, error}:any) => {
       <Head title="Dashboard" />
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col space-y-10">
+
           <VenueSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" venues={venues}/>
+
         </div>
       </div>
     </AuthenticatedLayout>
