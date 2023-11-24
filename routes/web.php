@@ -8,6 +8,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmailInquiryController;
 use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\PublicVenueController;
 use App\Http\Controllers\TransactionController;
@@ -58,6 +59,8 @@ Route::post("/booking/contact", [BookingController::class, 'contactInfo'])->name
 Route::get("/booking/payment/success", [BookingController::class, "venueBookingSuccess"])->name('booking.venueBookingSuccess');
 Route::get("/booking/payment/cancel", [BookingController::class, "paymentCancel"])->name('booking.paymentCancel');
 Route::get("/booking", [BookingController::class, 'view'])->name('booking.home');
+
+Route::post('/contact', [EmailInquiryController::class, 'makeInquiry'])->name('contacts.makeInquiry');
 
 
 

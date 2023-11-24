@@ -59,7 +59,7 @@ class VenueController extends Controller
         }
         $venue->save();
         $venue->refresh();
-        return to_route("admin.venue.view", $venue->id);
+        return to_route("admin.dashboard", $venue->id)->with('success', 'Venue created successfully');
     }
 
     public function editView($venue_id)
@@ -119,12 +119,16 @@ class VenueController extends Controller
 
     public function delete($venue_id)
     {
-        $this->authorize('delete', auth()->user());
-        $venue = Venue::find($venue_id);
-        if ($venue == null) {
-            return abort(404, "Venue not found");
+        try {
+            $this->authorize('delete', auth()->user());
+            $venue = Venue::find($venue_id);
+            if ($venue == null) {
+                return abort(404, "Venue not found");
+            }
+            $venue->delete();
+            return to_route('admin.dashboard')->with('success', 'Venue deleted successfully');
+        } catch (\Throwable $th) {
+            return to_route('admin.dashboard')->with('error', 'Something went wrong');
         }
-        $venue->delete();
-        return to_route('admin.dashboard');
     }
 }

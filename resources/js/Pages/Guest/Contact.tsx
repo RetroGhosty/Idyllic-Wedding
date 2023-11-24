@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import React from 'react'
 import NavBar from './Partial/NavBar'
 import { PageProps } from '@/types'
@@ -6,14 +6,43 @@ import Footer from './Partial/Footer'
 import HeaderPopUp from '@/Components/HeaderPopUp'
 import {IoLogoFacebook } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa";
-// import { RiMessengerFill } from "react-icons/ri";
 import { FaInstagram } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 import { FaLocationPin } from "react-icons/fa6";
-
-type Props = {}
+import { Transition } from '@headlessui/react'
+import { useToast } from '@chakra-ui/react'
 
 const Contact = ({auth}: PageProps) => {
+
+  const {data, setData, errors, post, reset, recentlySuccessful} = useForm<any>({
+    full_name: '',
+    email: '',
+    message: '',
+  })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    post(route("contacts.makeInquiry"), {preserveScroll: true})
+  }
+
+  const toast = useToast()
+
+  React.useEffect(() => {
+    if(recentlySuccessful){
+      reset()
+      toast({
+        title: "Successfully Sent",
+        description: "Your inquiry has been sent",
+        position: "bottom-right",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }, [recentlySuccessful])
+
+
+
   return (
     <>
         <Head title="Contact" />
@@ -65,15 +94,38 @@ const Contact = ({auth}: PageProps) => {
                     </div>
                   </div>
                   <span className='flex justify-center md:hidden bg-gray-500 w-full h-1 mt-7 text-white'>.</span>
-                  <form method='' className='relative -bottom-10 md:-bottom-28'>
-                  <label className='flex text-sm md:text-2xl mb-3'>You Can Email Us:</label>
-                  <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Fullname</span>
-                    <input type="text" placeholder='ex.Juan Dela Cruz' className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] rounded-md' />
-                    <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Email</span>
-                    <input type="text" placeholder='ex.Juandelacruz@gmail.com' className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] rounded-md' />
-                    <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Message</span>
-                    <input type="text" placeholder='Message' className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] md:pb-[200px] rounded-md' />
+                  <form onSubmit={handleSubmit} className='relative -bottom-10 md:-bottom-28'>
+                    <label className='flex text-sm md:text-2xl mb-3'>You Can Email Us:</label>
+                    <div>
+                      <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Fullname</span>
+                      <input type="text" value={data.full_name} onChange={(e) => setData('full_name', e.target.value)} placeholder='ex.Juan Dela Cruz' className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] rounded-md' />
+                       {errors.full_name ?
+                       <div className='text-red-600'>
+                         {errors.full_name}
+                       </div>
+                       : null}
+
+                    </div>
+                    <div>
+                      <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Email</span>
+                      <input type="text" placeholder='ex.Juandelacruz@gmail.com' value={data.email} onChange={(e) => setData('email', e.target.value)} className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] rounded-md' />
+                       {errors.email ?
+                       <div className='text-red-600'>
+                         {errors.email ? errors.email : null}
+                       </div>
+                       : null}
+                    </div>
+                    <div>
+                      <span className="block text-sm md:text-md font-medium text-slate-700 p-1">Message</span>
+                      <input type="text" placeholder='Message' value={data.message} onChange={(e) => setData('message', e.target.value)} className='border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 w-full md:w-[500px] md:pb-[200px] rounded-md' />
+                      {errors.message ?
+                      <div className='text-red-600'>
+                        {errors.message ? errors.message : null}
+                      </div>
+                      : null}
+                    </div>
                     <button type="submit" className='absolute right-0 block bg-gray-900 hover:bg-gray-800 p-2 px-6 mt-2 rounded-md text-white'>Send</button>
+
                   </form>
                   </div>
                 </div>

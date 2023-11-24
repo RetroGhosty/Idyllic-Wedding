@@ -1,15 +1,25 @@
 import DangerButton from '@/Components/DangerButton'
 import PrimaryButton from '@/Components/PrimaryButton'
+import { useToast } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
+import React from 'react'
 
 const VenueSection = ({className, venues}: any) => {
+  const [recentlySuccessful, setRecentlySuccessful] = React.useState(false)
     const navigateTo = (venue_id: any) => {
         router.get(route('admin.venue.view', {venue_id:venue_id}), {preserveScroll: true})
     }
 
     const deleteFunction = (venue_id: any) => {
-      router.delete(route('admin.venue.delete', {venue_id:venue_id}), {preserveScroll: true})
+      router.delete(route('admin.venue.delete', {venue_id:venue_id}), {
+        preserveScroll: true,
+        onSuccess: () => {
+          setRecentlySuccessful(true)
+        
+        }
+      })
     }
+
   return (
     <div className={className}>
     <div className='flex flex-row items-center justify-between mb-4'>

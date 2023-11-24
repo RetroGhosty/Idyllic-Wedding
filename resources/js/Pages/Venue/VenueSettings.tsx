@@ -6,10 +6,13 @@ import { Head, router, useForm, Link } from '@inertiajs/react'
 import {AiFillCloseSquare} from 'react-icons/ai'
 import {BsBoxArrowUpRight} from 'react-icons/bs'
 import React from 'react'
+import { useToast } from '@chakra-ui/react'
 
 
 const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
+
     
+
 
     interface IVEnue{
         venue_name: string,
@@ -20,7 +23,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
         sub_images?: FileList | undefined,
     }
 
-    const {data, setData, patch, errors, setError, setDefaults, clearErrors, wasSuccessful, processing } = useForm<any>({
+    const {data, setData, patch, errors, setError, setDefaults, clearErrors, processing } = useForm<any>({
         venue_name: venue['venue_name'],
         description: venue['description'],
         limit: venue['limit'],
@@ -30,6 +33,25 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
     })
 
     const [isSubmitted, setIsSubmitted] = React.useState(false)
+    const toast = useToast()
+
+    const [wasSuccessful, setWasSuccessful] = React.useState(false)
+
+    React.useEffect(() => {
+        if (wasSuccessful){
+            toast({
+                title: "Venue",
+                description: `Successfully modified`,
+                position: "bottom-right",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              })
+        }
+        return () => {
+            setWasSuccessful(false)
+        }
+    }, [wasSuccessful])
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
@@ -56,6 +78,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
             clearErrors()
             setData('header_image', undefined)
             setData('sub_images', undefined)
+            setWasSuccessful(true)
         }})
     }
 
@@ -95,7 +118,6 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
         <Head title="Admin | Edit User" />
         <div className="py-12">
             <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
-                {Object.keys(errors).length === 0 && isSubmitted === true ? "User profile successfully modified" : null}
                 <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
                     <div className='flex flex-col'>
                         <InputLabel htmlFor="header_image">Header Image</InputLabel>

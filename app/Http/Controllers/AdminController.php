@@ -15,6 +15,8 @@ class AdminController extends Controller
         $venues = Venue::all();
         $payload = [
             "venues" => $venues,
+            'success' => session('success'),
+            'error' => session('error'),
         ];
         return Inertia::render("Admin/Dashboard", $payload);
     }
