@@ -110,7 +110,8 @@ export default function Welcome({ auth, venues }: any) {
                             <Carousel
                                 additionalTransfrom={0}
                                 arrows
-                                autoPlaySpeed={3000}
+                                autoPlaySpeed={2500}
+                                autoPlay={true}
                                 containerClass="container-with-dots min-h-[40vh]"
                                 dotListClass=""
                                 draggable
