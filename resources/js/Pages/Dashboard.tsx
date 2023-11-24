@@ -31,7 +31,7 @@ export default function Dashboard({ auth, transactions, refundRequests, emailCou
                     <div className='bg-white overflow-hidden shadow-sm sm:rounded-lg p-5 col-span-2 w-full'>
                         <div className='flex flex-col'>
                             <div className='flex flex-row justify-between items-start mb-5'>
-                                <h1 className='font-black text-xl'>LATEST MESSAGES</h1>
+                                <h1 className='font-black text-xl'>LATEST INQUIRY</h1>
                                 <SecondaryButton>View more</SecondaryButton>
                             </div>
                             <div className='flex flex-col space-y-6'>
