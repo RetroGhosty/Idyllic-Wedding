@@ -60,7 +60,7 @@ const Contact = ({auth}: PageProps) => {
               
               backgroundImage: 'url(http://localhost:8000/contact-2.jpg)'
             }}>
-              </div>
+            </div>
             <div className='min-h-screen pt-4 md:py-9 mx-auto lg:px-8l space-y-5'>                            
                 <div className=' relative h-[300px] md:h-[400px] flex items-center justify-center'>
                   <span className='text-3xl md:text-6xl text-white font-black'>Contact Us</span> 
@@ -123,8 +123,8 @@ const Contact = ({auth}: PageProps) => {
                         {errors.message ? errors.message : null}
                       </div>
                       : null}
-                    </div>
                     <button type="submit" className='absolute right-0 block bg-gray-900 hover:bg-gray-800 p-2 px-6 mt-2 rounded-md text-white'>Send</button>
+                    </div>
 
                   </form>
                   </div>
