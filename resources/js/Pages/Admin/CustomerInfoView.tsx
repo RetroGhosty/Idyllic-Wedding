@@ -9,11 +9,38 @@ import InputLabel from '@/Components/InputLabel'
 import TextInput from '@/Components/TextInput'
 import PrimaryButton from '@/Components/PrimaryButton'
 import { FaArrowLeft } from 'react-icons/fa6'
-import { CircularProgress } from '@chakra-ui/react'
+import { CircularProgress, useToast } from '@chakra-ui/react'
 
 
-const CustomerInfoView = ({auth, customer}: any) => {
-    console.log(customer)
+const CustomerInfoView = ({auth, customer, success, error}: any) => {
+  const toast = useToast()
+  React.useEffect(() => {
+      console.log(success)
+      if(success !== null){
+        toast({
+          title: "Success",
+          description: `${success}`,
+          position: "bottom-right",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+      if (error !== null){
+        toast({
+          title: "Failed",
+          description: "Something went wrong",
+          position: "bottom-right",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+      return () => {
+          success = null
+          error = null
+      }
+    }, [success, error, customer])
     const {data, setData, patch, errors, setError, setDefaults, clearErrors, processing } = useForm<any>({
         email: customer['email'],
         phone_number: customer['phone_number'],

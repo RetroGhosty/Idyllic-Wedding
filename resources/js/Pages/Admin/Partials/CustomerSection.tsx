@@ -3,16 +3,15 @@ import Dropdown from '@/Components/Dropdown'
 import { IndeterminateCheckbox } from '@/Components/IndeterminateCheckbox'
 import PrimaryButton from '@/Components/PrimaryButton'
 import { ICustomers } from '@/types'
-import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useToast } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
 import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
-import { format, parseISO } from 'date-fns'
+import { format, parseISO, set } from 'date-fns'
 import React from 'react'
 
 
-const CustomerSection = ({className, customers, tableHeight}: any) => {
+const CustomerSection = ({className, customers, tableHeight, success, error}: any) => {
     const columnHelper = createColumnHelper<ICustomers>()
-
     const [rowSelection, setRowSelection] = React.useState<any>({})
     const [sorting, setSorting] = React.useState<any>([])
     const [filtering, setFiltering] = React.useState<any>('')
@@ -117,11 +116,8 @@ const CustomerSection = ({className, customers, tableHeight}: any) => {
         <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Customer Details</h1>
        
         <TableContainer w="100%" className='flex flex-col space-y-3 p-2'>
-            <div className='w-full flex flex-col items-start'>
-                <label htmlFor="searchBar">Search</label> 
-                <Input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
-            </div>
-            <div className='w-full flex flex-col items-start'>
+            <div className='w-full flex flex-row space-x-3 items-center'>
+                <Input type="text" placeholder='Search' value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
                 <DangerButton onClick={() => deleteFunction(reactTable.getSelectedRowModel().flatRows)}  disabled={isRowSelectionEmpty()}>Delete</DangerButton>
             </div>
 

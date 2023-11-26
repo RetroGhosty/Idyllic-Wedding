@@ -15,7 +15,9 @@ class UnregisteredUserController extends Controller
             return abort(404);
         }
         $payload = [
-            'customer' => $customer
+            'customer' => $customer,
+            'success' => $request->session()->get('success'),
+            'error' => $request->session()->get('error')
         ];
         return Inertia::render('Admin/CustomerInfoView', $payload);
     }
@@ -32,7 +34,7 @@ class UnregisteredUserController extends Controller
         $payload = [
             'customers' => $customer
         ];
-        return to_route('admin.dashboard')->with('success', 'Customer '. '['.$customer->id.'] '. $customer->fullName.' has been updated successfully');
+        return back()->with('success', 'Customer '. '['.$customer->id.'] '. $customer->fullName.' has been updated successfully');
     }
 
 

@@ -1,13 +1,20 @@
 import { ITransaction } from '@/types'
-import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useToast } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
 import { createColumnHelper, getCoreRowModel, useReactTable, flexRender, getSortedRowModel, getPaginationRowModel, getFilteredRowModel } from '@tanstack/react-table'
 import {parse, format} from 'date-fns'
 import DangerButton from '../DangerButton'
 import React from 'react'
+import PrimaryButton from '../PrimaryButton'
 const ReservationTable = ({transactions, tableHeight, className}: any) => {
+
     const refundTransaction = (transaction_id) => {
-        router.post(route('admin.transaction.requestRefund', {transaction_id: transaction_id}), {preserveScroll: true})
+        router.post(route('admin.transaction.requestRefund', {transaction_id: transaction_id}))
+    }
+
+    const viewTransaction = (transaction_id:any ) => {
+        console.log(transaction_id)
+        router.get(route('admin.transaction.viewTransaction', transaction_id))
     }
 
     const columnHelper = createColumnHelper<ITransaction>()
@@ -38,7 +45,8 @@ const ReservationTable = ({transactions, tableHeight, className}: any) => {
         columnHelper.accessor('status', {
             header: 'Actions',
             cell: (info) => 
-            <DangerButton onClick={() => refundTransaction(info.row.original['id'])}>Refund</DangerButton>
+            <PrimaryButton onClick={() => viewTransaction(info.row.original['id'])}>EDIT</PrimaryButton>
+            // <DangerButton onClick={() => refundTransaction(info.row.original['id'])}>Refund</DangerButton>
         })
     ]
 
@@ -66,8 +74,7 @@ const ReservationTable = ({transactions, tableHeight, className}: any) => {
             <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Transactions</h1>
             <TableContainer w="100%" className='flex flex-col space-y-5 p-2'>
                 <div className='w-full flex flex-col items-start'>
-                    <label htmlFor="searchBar">Search</label> 
-                    <Input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
+                    <Input type="text" value={filtering} placeholder='Search' onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
                 </div>
                 <div className={`min-h-[${tableHeight}]`}>
                     <Table variant='simple' size='sm'>

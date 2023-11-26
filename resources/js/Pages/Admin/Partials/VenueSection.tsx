@@ -81,8 +81,7 @@ const VenueSection = ({className, venues, tableHeight}: any) => {
       </div>
       <TableContainer w="100%" className='flex flex-col space-y-5 p-2 '>
             <div className='w-full flex flex-col items-start'>
-                <label htmlFor="searchBar">Search</label> 
-                <Input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
+                <Input type="text" placeholder='Search' value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
             </div>
             <div className={`min-h-[${tableHeight}]`}>
                 <Table variant='simple' size='sm'>

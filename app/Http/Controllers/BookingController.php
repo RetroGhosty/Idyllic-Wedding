@@ -90,7 +90,7 @@ class BookingController extends Controller
         ]);
         try {
             $checkout = Paymongo::checkout()->create([
-                'livemode' => true,
+                'livemode' => false,
                 "send_email_receipt" => true,
                 'success_url' => 'http://localhost:8000/booking/payment/success',
                 'cancel_url' => 'http://localhost:8000/booking/payment/cancel',

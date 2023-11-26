@@ -63,8 +63,7 @@ const RefundTable = ({refundRequests, tableHeight, className}: any) => {
         <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Refunds</h1>
         <TableContainer w="100%" className='flex flex-col space-y-5 p-2'>
             <div className='w-full flex flex-col items-start'>
-                <label htmlFor="searchBar">Search</label> 
-                <Input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
+                <Input type="text" placeholder='Search' value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
             </div>
             <div className={`min-h-[${tableHeight}]`}>
                 <Table variant='simple' size='sm'>

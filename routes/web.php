@@ -98,6 +98,10 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get("/admin/customer/{customer_id}", [UnregisteredUserController::class, 'viewCustomer'])->name('admin.customer.viewCustomer');
     Route::patch("/admin/customer/{customer_id}", [UnregisteredUserController::class, 'editCustomer'])->name('admin.customer.editCustomer');
 
+    Route::get("/admin/transaction/{transaction_id}", [TransactionController::class, 'viewTransaction'])->name('admin.transaction.viewTransaction');
+
+    
+
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');
