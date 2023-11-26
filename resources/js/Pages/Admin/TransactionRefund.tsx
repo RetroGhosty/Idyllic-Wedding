@@ -17,7 +17,7 @@ const TransactionRefund = ({auth, refund, transaction}: any) => {
             : 
             <span className="text-md font-black bg-[#8ac926] p-2 rounded-xl">Refunded</span>
             }
-            <motion.div whileHover={{scale: 1.08}} className='flex flex-row space-x-4 text-red-700 font-black select-none' onClick={() => {router.get(route('dashboard'))}}>
+            <motion.div whileHover={{scale: 1.08}} className='flex flex-row space-x-4 text-red-700 font-black select-none' onClick={() => {router.get(route('admin.dashboard'))}}>
               <FaArrowLeft className="text-xl"/>
               <span>Return to dashboard</span>
             </motion.div>

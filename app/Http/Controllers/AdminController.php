@@ -3,20 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminProfileUserUpdateRequest;
+use App\Models\UnregisteredUser;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\choices\TransactionStatusEnum;
 
 class AdminController extends Controller
 {
-    //
     public function index(){
         $venues = Venue::all();
+        $customers = UnregisteredUser::all();
+        $transactions = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PAID)->get();
+        $refundRequests = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PENDING_REFUND)->get();
         $payload = [
+            'transactions' => $transactions,
+            'refundRequests' => $refundRequests,
             "venues" => $venues,
             'success' => session('success'),
             'error' => session('error'),
+            'customers' => $customers,
         ];
         return Inertia::render("Admin/Dashboard", $payload);
     }

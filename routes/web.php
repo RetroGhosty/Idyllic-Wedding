@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnregisteredUserController;
 use App\Http\Controllers\VenueShowcasePhotoController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminTransactionController;
@@ -69,10 +70,6 @@ Route::patch("/booking/contact/{user_id}", [BookingController::class, 'contactIn
 Route::post("/booking/payment", [BookingController::class, "BookingPaymentSession"])->name('booking.BookingPaymentSession');
 
 
-// Admin Protected Pages
-Route::middleware(['auth', 'verified'])->group(function(){
-    
-});
 Route::middleware(['auth', 'check-disabled'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
     ->name('profile.edit');
@@ -95,6 +92,12 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get("/dashboard", [AdminTransactionController::class, 'viewReservation'])->name('dashboard');
     Route::post("/dashboard/refund/{transaction_id}", [AdminTransactionController::class, 'requestRefund'])->name('admin.transaction.requestRefund');
     Route::get("/refund/{transaction_id}", [AdminTransactionController::class, 'viewRefundInfo'])->name('dashboard.transaction.viewRefundInfo');
+    Route::delete("/admin/customer/delete", [UnregisteredUserController::class, 'deleteBatch'])->name('admin.customer.deleteBatch');
+    Route::get("/admin/inbox", [EmailInquiryController::class, 'viewInquiries'])->name('inbox.view');
+
+    Route::get("/admin/customer/{customer_id}", [UnregisteredUserController::class, 'viewCustomer'])->name('admin.customer.viewCustomer');
+    Route::patch("/admin/customer/{customer_id}", [UnregisteredUserController::class, 'editCustomer'])->name('admin.customer.editCustomer');
+
 });    
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

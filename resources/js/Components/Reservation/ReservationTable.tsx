@@ -1,15 +1,19 @@
 import { ITransaction } from '@/types'
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
-import { createColumnHelper, getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table'
+import { createColumnHelper, getCoreRowModel, useReactTable, flexRender, getSortedRowModel, getPaginationRowModel, getFilteredRowModel } from '@tanstack/react-table'
 import {parse, format} from 'date-fns'
 import DangerButton from '../DangerButton'
-const ReservationTable = ({transactions}: any) => {
+import React from 'react'
+const ReservationTable = ({transactions, tableHeight, className}: any) => {
     const refundTransaction = (transaction_id) => {
         router.post(route('admin.transaction.requestRefund', {transaction_id: transaction_id}), {preserveScroll: true})
     }
 
     const columnHelper = createColumnHelper<ITransaction>()
+    const [rowSelection, setRowSelection] = React.useState<any>({})
+    const [sorting, setSorting] = React.useState<any>([])
+    const [filtering, setFiltering] = React.useState<any>('')
     const columns = [
         columnHelper.accessor('id', {
             header: 'ID',
@@ -39,40 +43,130 @@ const ReservationTable = ({transactions}: any) => {
     ]
 
     const reactTable = useReactTable({
-        columns,
         data: transactions,
-        getCoreRowModel: getCoreRowModel()
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        state: {
+            sorting: sorting,
+            globalFilter: filtering,
+            rowSelection: rowSelection
+        },
+        enableRowSelection: true,
+        onRowSelectionChange: setRowSelection,
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setFiltering,
+        
     })
 
     return (
-        <div className='p-6'>
-            <h1 className='text-lg font-bold mb-2'>Transactions</h1>
-            <TableContainer w="100%">
-                <Table variant='striped' size='sm'>
-                    <Thead>
-                        {reactTable.getHeaderGroups().map((headerGroup)=> (
-                            <Tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => (
-                                    <Th key={header.id}>{flexRender(header.column.columnDef.header, header.getContext())}
-                                    </Th>
-                                ))}
+        <div className={className}>
+            <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Transactions</h1>
+            <TableContainer w="100%" className='flex flex-col space-y-5 p-2'>
+                <div className='w-full flex flex-col items-start'>
+                    <label htmlFor="searchBar">Search</label> 
+                    <Input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
+                </div>
+                <div className={`min-h-[${tableHeight}]`}>
+                    <Table variant='simple' size='sm'>
+                        <Thead>
+                            {reactTable.getHeaderGroups().map((headerGroup)=> (
+                                <Tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => (
+                                        <Th key={header.id} 
+                                        onClick={header.column.getToggleSortingHandler()}
+                                        cursor='pointer'
+                                        >
+
+                                            {flexRender(header.column.columnDef.header, header.getContext())}
+                                        </Th>
+                                    ))}
+                                </Tr>
+                            ))}
+                        </Thead>
+                        <Tbody>
+                        {reactTable.getRowModel().rows.map(row => (
+                            <Tr key={row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <Td key={cell.id} >
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </Td>
+                            ))}
                             </Tr>
                         ))}
-                    </Thead>
-                    <Tbody>
-                    {reactTable.getRowModel().rows.map(row => (
-                        <Tr key={row.id}>
-                        {row.getVisibleCells().map(cell => (
-                            <Td key={cell.id} >
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </Td>
+                        </Tbody>
+                    </Table>
+                </div>
+                <div className='flex flex-row space-x-5'>
+                <div className="flex flex-row items-center justify-between w-full">
+                    <div className='flex flex-row space-x-6'>
+                        <span className="flex items-center gap-1">
+                        Go to page:
+                        <input
+                            type="number"
+                            defaultValue={reactTable.getState().pagination.pageIndex + 1}
+                            onChange={e => {
+                            const page = e.target.value ? Number(e.target.value) - 1 : 0
+                            reactTable.setPageIndex(page)
+                            }}
+                            className="border p-1 rounded w-24"
+                        />
+                        </span>
+                        <Select
+                        value={reactTable.getState().pagination.pageSize}
+                        onChange={e => {
+                            reactTable.setPageSize(Number(e.target.value))
+                        }}
+                        >
+                        {[10, 20, 30, 40, 50].map(pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                            Show {pageSize}
+                            </option>
                         ))}
-                        </Tr>
-                    ))}
-                    </Tbody>
-                </Table>
+                        </Select>
+                        <span className="flex items-center gap-1">
+                        <div>Page</div>
+                        <strong>
+                            {reactTable.getState().pagination.pageIndex + 1} of{' '}
+                            {reactTable.getPageCount()}
+                        </strong>
+                        </span>
+                    </div>
+                    <div className='flex flex-row space-x-4'>
+                        <button
+                        className="border rounded p-1"
+                        onClick={() => reactTable.setPageIndex(0)}
+                        disabled={!reactTable.getCanPreviousPage()}
+                        >
+                        {'<<'}
+                        </button>
+                        <button
+                        className="border rounded p-1"
+                        onClick={() => reactTable.previousPage()}
+                        disabled={!reactTable.getCanPreviousPage()}
+                        >
+                        {'<'}
+                        </button>
+                        <button
+                        className="border rounded p-1"
+                        onClick={() => reactTable.nextPage()}
+                        disabled={!reactTable.getCanNextPage()}
+                        >
+                        {'>'}
+                        </button>
+                        <button
+                        className="border rounded p-1"
+                        onClick={() => reactTable.setPageIndex(reactTable.getPageCount() - 1)}
+                        disabled={!reactTable.getCanNextPage()}
+                        >
+                        {'>>'}
+                        </button>
+                    </div>
+                </div>
+                </div>
             </TableContainer>
-      
         </div>
     )
 }

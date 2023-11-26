@@ -67,7 +67,7 @@ class AdminTransactionController extends Controller
             return abort(404);
         }
         if ($transaction->transaction_status == TransactionStatusEnum::PENDING_REFUND || $transaction->transaction_status == TransactionStatusEnum::REFUNDED){
-            return to_route('dashboard');
+            return to_route('admin.dashboard');
         }
         if ($transaction->payment_id == null){
             return abort(404);

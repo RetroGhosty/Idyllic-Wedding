@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VenuePostRequest;
 use App\Http\Requests\VenueRequest;
-use App\Models\User;
 use App\Models\Venue;
 use App\Models\VenueLandingPhoto;
 use App\Models\VenueShowcasePhoto;

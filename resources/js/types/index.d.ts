@@ -27,9 +27,28 @@ export interface ITransaction{
     status: string,
 }
 
+export interface ICustomers{
+    id: number,
+    fullName: string,
+    email: string,
+    phone_number: string,
+    status: string,
+    created_at: string,
+    updated_at: string,
+}
+
+export interface IVenues{
+    id: number,
+    venue_name: string,
+    description: string,
+    price: string,
+    limit: number,
+}
+
 
 export interface PullUsersArr extends Array<PullUsers>{}
 export interface TransactionArr extends Array<ITransaction>{}
+export interface CustomersArr extends Array<ICustomers>{}
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {

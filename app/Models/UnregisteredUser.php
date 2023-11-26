@@ -16,6 +16,10 @@ class UnregisteredUser extends Model
         'last_name',
     ];
 
+    protected $appends = [
+        'fullName',
+    ];
+
     public function transaction(): HasMany {
         return $this->hasMany(Transaction::class, 'customer_id');
     }
@@ -23,4 +27,8 @@ class UnregisteredUser extends Model
     public function refund(): HasMany {
         return $this->hasMany(Refund::class, 'customer_id');
     }
+
+    public function getFullNameAttribute(): string {
+        return $this->first_name . ' ' . $this->last_name;
+    }  
 }
