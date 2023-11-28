@@ -58,9 +58,9 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
                 {errors.email ? errors.email : null}
             </div>               
             <div className='flex flex-col'>
-                <InputLabel htmlFor="phone_number" value='Phone Number ex: 9191219212'/> 
-                <TextInput autoComplete="off"  id='phone_number' type="text" placeholder='9191219212' value={data.phone_number} onChange={(e) => setData('phone_number', e.target.value)} />
-                {errors.phone_number ? errors.phone_number : null}
+                <InputLabel htmlFor="email" value='Phone Number ex: 9191219212'/> 
+                <TextInput autoComplete="off"  id='email' type="text" placeholder='9191219212' value={data.email} onChange={(e) => setData('email', e.target.value)} />
+                {errors.email ? errors.email : null}
             </div>       
             <div className='flex flex-col'>
                 <InputLabel htmlFor="first_name" value='First Name'/> 

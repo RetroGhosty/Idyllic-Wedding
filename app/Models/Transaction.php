@@ -17,7 +17,8 @@ class Transaction extends Model
         'payment_method',
         'customer_id', 
         'venue_id', 
-        'event_date',
+        'start_date',
+        'end_date',
         'transaction_status', 
     ];
 

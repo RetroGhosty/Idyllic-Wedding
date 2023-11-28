@@ -34,8 +34,12 @@ const ReservationTable = ({transactions, tableHeight, className}: any) => {
             header: 'Payment Method',
             cell: (info) => <div>{info.getValue()}</div>
         }),
-        columnHelper.accessor('event_date', {
-            header: 'Event Date',
+        columnHelper.accessor('start_date', {
+            header: 'Start Date',
+            cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
+        }),
+        columnHelper.accessor('end_date', {
+            header: 'End Date',
             cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
         }),
         columnHelper.accessor('transaction_status', {

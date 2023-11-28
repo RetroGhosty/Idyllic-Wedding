@@ -100,6 +100,8 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
 
     Route::get("/admin/transaction/{transaction_id}", [TransactionController::class, 'viewTransaction'])->name('admin.transaction.viewTransaction');
 
+    Route::patch("/admin/transaction/{transaction_id}", [TransactionController::class, 'editVenueTransactionDetails'])->name('admin.transaction.editVenueTransactionDetails');
+
     
 
 });    

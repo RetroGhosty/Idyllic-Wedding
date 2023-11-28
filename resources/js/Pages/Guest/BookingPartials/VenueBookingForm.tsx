@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CircularProgress, 
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
-import { add, addDays, addMonths, format, parse, subDays } from 'date-fns'
+import { add, addDays, addMonths, addWeeks, endOfWeek, format, parse, startOfWeek, subDays } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 import { FaArrowLeft } from "react-icons/fa";
@@ -29,9 +29,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         }
 
         if (transaction['venue_id'] === venues[data.venue_id]['id']){
-          const initialDate = parse(transaction['event_date'], 'yyyy-MM-dd', new Date())
-          const startDate = subDays(initialDate, 7)
-          const endDate = initialDate
+          const startDate = parse(transaction['start_date'], 'yyyy-MM-dd', new Date())
+          const endDate = parse(transaction['end_date'], 'yyyy-MM-dd', new Date())
           excludedDates.push({start: startDate, end: endDate})
         }
       })
@@ -43,7 +42,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       setCurrentVenue(e.target.value)
       changeExcludedDates()
     }
-    const dateChange = (date) => {
+    const dateChange = (date: any) => {
       setData('dateSelected', date)
     }
     changeExcludedDates()
@@ -53,7 +52,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       const payload = {
         'user_id': session['id'],
         'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
-        'dateSelected': format(data['dateSelected'], 'yyyy-MM-dd')
+        'start_date': format(startOfWeek(data['dateSelected']), 'yyyy-MM-dd'),
+        'end_date': format(endOfWeek(data['dateSelected']), 'yyyy-MM-dd'),
 
       }
       router.post(route('booking.BookingPaymentSession'), payload, {
@@ -114,10 +114,17 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                   <DatePicker 
                   id='datePicker'
                   onChange={dateChange}
-                  minDate={addDays(new Date(), 3)}
+                  minDate={addWeeks(new Date(), 2)}
                   maxDate={addMonths(new Date(), 3)}
+                  wrapperClassName='w-full'
+                  className='w-full rounded text-center'
                   excludeDateIntervals={excludedDates}
                   selected={data['dateSelected']}
+                  placeholderText="Select a date"
+                  dateFormat="I/R"
+                  showWeekPicker
+                  showWeekNumbers
+                  withPortal
                   />
               </span>
             </div>

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('payment_id')->nullable();
             $table->foreignId('customer_id')->nullable()->constrained('Unregistered_users', 'id')->onDelete('SET NULL');
             $table->foreignId('venue_id')->nullable()->constrained('Venues', 'id')->onDelete('SET NULL');
-            $table->date('event_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->string('transaction_status');
             $table->timestamps();
         });

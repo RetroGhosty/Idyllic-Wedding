@@ -6,7 +6,7 @@ import Footer from '../Guest/Partial/Footer'
 import { add, differenceInDays, intervalToDuration, format, parse } from 'date-fns'
 
 const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
-    const eventDate = new Date(transaction['event_date'])
+    const eventDate = new Date(transaction['start_date'])
 
     const [approximateDate, setApproximateDate] = React.useState(intervalToDuration({start: new Date(), end: eventDate}))
     React.useEffect(()=> {
@@ -58,7 +58,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                             <li className='flex flex-col md:flex-row md:space-x-3'>
                                 <span>Event on: </span>
                                 <span className='font-black'>
-                                    {format(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}
+                                    {`${format(parse(transaction['start_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')} to ${format(parse(transaction['end_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}`}
                                 </span>
                             </li>
                             <li className='flex flex-col md:flex-row md:space-x-3'>
