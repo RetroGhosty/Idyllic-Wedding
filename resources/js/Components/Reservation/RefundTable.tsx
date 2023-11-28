@@ -27,7 +27,11 @@ const RefundTable = ({refundRequests, tableHeight, className}: any) => {
           header: 'Payment Method',
           cell: (info) => <div>{info.getValue()}</div>
       }),
-      columnHelper.accessor('event_date', {
+      columnHelper.accessor('start_date', {
+          header: 'Event Date',
+          cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
+      }),
+      columnHelper.accessor('end_date', {
           header: 'Event Date',
           cell: (info) => {return <div>{format(parse(info.getValue(), 'yyyy-MM-dd', new Date()), "MMM. dd, yyyy")}</div>}
       }),

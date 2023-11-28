@@ -49,8 +49,10 @@ const ReservationTable = ({transactions, tableHeight, className}: any) => {
         columnHelper.accessor('status', {
             header: 'Actions',
             cell: (info) => 
-            <PrimaryButton onClick={() => viewTransaction(info.row.original['id'])}>EDIT</PrimaryButton>
-            // <DangerButton onClick={() => refundTransaction(info.row.original['id'])}>Refund</DangerButton>
+            <div className='flex flex-row space-x-1'>
+                <PrimaryButton onClick={() => viewTransaction(info.row.original['id'])}>EDIT</PrimaryButton>
+                <DangerButton onClick={() => refundTransaction(info.row.original['id'])}>Refund</DangerButton>
+            </div>
         })
     ]
 

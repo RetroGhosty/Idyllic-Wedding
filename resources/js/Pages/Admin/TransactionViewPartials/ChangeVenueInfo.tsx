@@ -22,7 +22,7 @@ const ChangeVenueInfo = ({users, transaction, allTransaction, allVenue, transact
     if (wasSuccessful){
         toast({
             title: "Success",
-            description: "Customer information updated",
+            description: "Transaction details updated successfully",
             position: "bottom-right",
             status: "success",
             duration: 3000,
