@@ -25,7 +25,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                 {user ?
                 <>
                 <div className='flex space-x-reverse'>
-                        <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-xl">
+                        <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-2xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>

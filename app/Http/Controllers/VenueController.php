@@ -113,7 +113,7 @@ class VenueController extends Controller
         }
         $venue->save();
         $venue->refresh();
-        return to_route("admin.venue.view", $venue->id);
+        return to_route("admin.dashboard")->with("success", "Venue has been changed.");
     }
 
     public function delete($venue_id)

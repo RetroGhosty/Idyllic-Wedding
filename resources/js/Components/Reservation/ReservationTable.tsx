@@ -77,7 +77,7 @@ const ReservationTable = ({transactions, tableHeight, className}: any) => {
 
     return (
         <div className={className}>
-            <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Transactions</h1>
+            <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Transactions/Booking</h1>
             <TableContainer w="100%" className='flex flex-col space-y-5 p-2'>
                 <div className='w-full flex flex-col items-start'>
                     <Input type="text" value={filtering} placeholder='Search' onChange={(e) => setFiltering(e.target.value)} id='searchBar' className='w-full'/>
