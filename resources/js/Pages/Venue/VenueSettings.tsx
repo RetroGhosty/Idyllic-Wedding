@@ -6,10 +6,10 @@ import { Head, router, useForm, Link } from '@inertiajs/react'
 import {AiFillCloseSquare} from 'react-icons/ai'
 import {BsBoxArrowUpRight} from 'react-icons/bs'
 import React from 'react'
-import { useToast } from '@chakra-ui/react'
+import { Select, useToast } from '@chakra-ui/react'
 
 
-const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
+const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategories, themeCategories, currentPlaceCategory, currentThemeCategory}: any) => {
 
     
 
@@ -28,9 +28,13 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
         description: venue['description'],
         limit: venue['limit'],
         price: venue['price'],
+        place_category: currentPlaceCategory['id'],
+        theme_category: currentThemeCategory['id'],
         header_image: undefined,
         sub_images: undefined,
+        
     })
+    console.log(currentPlaceCategory)
 
     const [isSubmitted, setIsSubmitted] = React.useState(false)
     const toast = useToast()
@@ -55,6 +59,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
+        console.log('printing payload')
         console.log(data)
         const payload = {
             _method: 'patch',
@@ -64,7 +69,10 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
             price: data.price,
             header_image: data.header_image,
             sub_images: data.sub_images,
+            place_category: parseInt(data.place_category),
+            theme_category: parseInt(data.theme_category),
         }
+
         if (data.header_image === undefined) delete payload.header_image
         if (data.sub_images === undefined) delete payload.sub_images
         router.post(route('admin.venue.update', venue['id']), payload, {preserveScroll: true, onStart: () => {
@@ -117,13 +125,15 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
         <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{venue ? `Edit > Venue > [ ID: ${venue['id']} ] ${venue['venue_name']}` : "Venue not found"}</h2>}>
         <Head title="Admin | Edit User" />
         <div className="py-12">
-            <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
-                <form onSubmit={handleSubmit} className='flex flex-col space-y-5'>
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="header_image">Header Image</InputLabel>
-                        <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image', 'File')} accept='image/jpeg, image/png, image/jpg'/>
-                        {errors.header_image ? errors.header_image : null}
-                        {header_image && (
+        <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
+                <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-3 gap-10">
+                      <div className="col-span-2 space-y-4">
+                        <div className="flex flex-col">
+                          <InputLabel htmlFor="header_image">Header Image</InputLabel>
+                          <input autoComplete="off"  id='header_image' type="file" onChange={(e) => handleFile(e, 'header_image', 'File')} accept='image/jpeg, image/png, image/jpg'/>
+                          {errors.header_image ? <div className='text-red-600'>{errors.header_image}</div> : null}
+                          {header_image && (
                             <div className='mt-4 space-y-3'>
                                 <div className='flex flex-row items-center'>
                                     <button type='button' onClick={() => deleteLandingPhoto(header_image['id'], venue['id'])} className='flex flex-wrap space-x-2 bg-slate-800 text-white p-2 rounded me-1 md:me-3'>
@@ -137,14 +147,13 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
                                 </div>
                             
                             </div>
-                        )}
-                    </div>
-
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="sub_images">Sub Images</InputLabel>
-                        <input autoComplete="off"  id='sub_images' type="file" multiple={true} onChange={(e) => handleFile(e, 'sub_images', 'FileList')} accept='image/jpeg, image/png, image/jpg'/>
-                        {errors.sub_images ? errors.sub_images : null}
-                        {showcase_image && (
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                          <InputLabel htmlFor="sub_images">Sub Images</InputLabel>
+                          <input autoComplete="off"  id='sub_images' type="file" onChange={(e) => handleFile(e, 'sub_images', 'FileList')} accept='image/jpeg, image/png, image/jpg' multiple={true}/>
+                          {errors.sub_images ? <div className='text-red-600'>{errors.sub_images}</div> : null}
+                          {showcase_image && (
                             <div className='mt-4 space-y-3'>
                                 {showcase_image.map((image: any, key: number) => (
                                     <div key={key} className='flex flex-wrap space-x-3 items-center'>
@@ -159,35 +168,52 @@ const VenueSettings = ({auth, venue, header_image, showcase_image}: any) => {
                                     </div>
                                 ))}
                             </div>
-                        )}
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                          <InputLabel htmlFor="venue_name">Venue Name</InputLabel>
+                          <input autoComplete="off"  id='venue_name' type="text" onChange={(e) => setData('venue_name', e.target.value)} value={data.venue_name}/>
+                          {errors.venue_name ? <div className='text-red-600'>{errors.venue_name}</div> : null}
+                        </div>
+                        <div className="flex flex-col">
+                          <InputLabel htmlFor="description">Description</InputLabel>
+                          <textarea autoComplete="off" rows={5} id='description' onChange={(e) => setData('description', e.target.value)} value={data.description}/>
+                          {errors.description ? <div className='text-red-600'>{errors.description}</div> : null}
+                        </div>
+                        <div className='flex flex-col'>
+                            <InputLabel htmlFor="limit">Limit</InputLabel>
+                            <TextInput autoComplete="off"  id='limit' type="text" value={data.limit} onChange={(e) => setData('limit', e.target.value)} />
+                            {errors.limit ? <div className='text-red-600'>{errors.limit}</div> : null}
+                        </div>
+                        <div className='flex flex-col'>
+                            <InputLabel htmlFor="price">Price</InputLabel>
+                            <TextInput autoComplete="off"  id='price' type="text" value={data.price} onChange={(e) => setData('price', e.target.value)} />
+                            {errors.price ? <div className='text-red-600'>{errors.price}</div> : null}
+                        </div>
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <div>
+                          <InputLabel htmlFor="place_category">Place Category</InputLabel>
+                          <Select name="place_category" id="place_category" value={data['place_category']} onChange={(e) => setData('place_category', e.target.value)}>
+                            <option value="">Select Place Category</option>
+                            {placeCategories.map((placeCategory: any) => {
+                              return <option key={placeCategory.id} value={placeCategory.id}>{`[${placeCategory.id}] ${placeCategory.name}`}</option>
+                            })}
+                          </Select>
+                          {errors.place_category ? <div className='text-red-600'>{errors.place_category}</div> : null}
+                        </div>
+                        <div>
+                          <InputLabel htmlFor="theme_category">Theme Category</InputLabel>
+                          <Select name="theme_category" id="theme_category" value={data['theme_category']} onChange={(e) => setData('theme_category', e.target.value)}>
+                            <option value="">Select Theme Category</option>
+                            {themeCategories.map((themeCategory: any) => {
+                              return <option key={themeCategory.id} value={themeCategory.id}>{`[${themeCategory.id}] ${themeCategory.name}`}</option>
+                            })}
+                          </Select>
+                          {errors.place_category ? <div className='text-red-600'>{errors.place_category}</div> : null}
+                        </div>
+                      </div>
                     </div>
-
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="venue_name" value='Venue Name'/> 
-                        <TextInput autoComplete="off"  id='venue_name' type="text" value={data.venue_name} onChange={(e) => setData('venue_name', e.target.value)} />
-                        {errors.venue_name ? errors.venue_name : null}
-                    </div>
-
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="description">Description</InputLabel>
-                        <textarea rows={5} autoComplete="off"  id='description' value={data.description} onChange={(e) => setData('description', e.target.value)} />
-                        {errors.description ? errors.description : null}
-                    </div>
-
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="limit">Limit</InputLabel>
-                        <TextInput autoComplete="off"  id='limit' type="text" value={data.limit} onChange={(e) => setData('limit', e.target.value)} />
-                        {errors.limit ? errors.limit : null}
-                    </div>
-                    
-                
-                    <div className='flex flex-col'>
-                        <InputLabel htmlFor="price">Price</InputLabel>
-                        <TextInput autoComplete="off"  id='price' type="text" value={data.price} onChange={(e) => setData('price', e.target.value)} />
-                        {errors.price ? errors.price : null}
-                    </div>
-
-
                     <div><PrimaryButton type='submit' disabled={processing}>Submit</PrimaryButton></div>
                 </form>
             </div>

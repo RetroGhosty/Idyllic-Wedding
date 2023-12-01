@@ -17,8 +17,8 @@ class Venue extends Model
         'description',
         'limit',
         'price',
-        'place_category_id',
-        'theme_category_id',
+        'place_category',
+        'theme_category',
     ];
 
     public function landing_photo(): HasOne{

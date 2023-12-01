@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VenuePostRequest;
 use App\Http\Requests\VenueRequest;
+use App\Models\PlaceCategory;
+use App\Models\ThemeCategory;
 use App\Models\Venue;
 use App\Models\VenueLandingPhoto;
 use App\Models\VenueShowcasePhoto;
@@ -26,7 +28,13 @@ class VenueController extends Controller
     
     public function createView(){
         $this->authorize('create', auth()->user());
-        return Inertia::render('Venue/VenueCreate');
+        $placeCategories = PlaceCategory::all();
+        $themeCategories = ThemeCategory::all();
+        $payload = [
+            'placeCategories' => $placeCategories,
+            'themeCategories' => $themeCategories
+        ];
+        return Inertia::render('Venue/VenueCreate', $payload);
     }
 
 
@@ -77,10 +85,21 @@ class VenueController extends Controller
         $serializedVenue = $venue->toArray();
         $header_image = $venue->landing_photo;
         $sub_images = $venue->showcase_photo;
+        $placeCategories = PlaceCategory::all();
+        $themeCategories = ThemeCategory::all();
+
+        $currentPlaceCategory = PlaceCategory::find($venue->place_category);
+        $currentThemeCategory = $themeCategories->find($venue->theme_category);
+
         $payload = [
             'venue' => $serializedVenue,
             'header_image' => $header_image,
-            'showcase_image' => $sub_images
+            'showcase_image' => $sub_images,
+            'placeCategories' => $placeCategories,
+            'themeCategories' => $themeCategories,
+            'currentPlaceCategory' => $currentPlaceCategory,
+            'currentThemeCategory' => $currentThemeCategory
+
         ];
         return Inertia::render('Venue/VenueSettings', $payload);
     }
