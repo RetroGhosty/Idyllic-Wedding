@@ -24,16 +24,16 @@ const NavBar = ({user, backgroundColor}: any) => {
                 </div>
                 {user ?
                 <>
-                <div className='flex space-x-reverse'>
-                        <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-2xl">
+                <div className='flex'>
+                        <ul className="hidden space-x-12 md:flex text-2xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
                         </ul>
                 </div>
-                <div className='hidden md:flex space-x-reverse'>
+                <div className='hidden md:flex space-x-4'>
+                    <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                     <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('dashboard')} active={route().current('register')}>
                         DASHBOARD
                     </NavLink>

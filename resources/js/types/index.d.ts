@@ -46,6 +46,13 @@ export interface IVenues{
     limit: number,
 }
 
+export interface ICategories{
+    id: number,
+    name: string,
+    updated_at: string,
+    created_at: string
+}
+
 
 export interface PullUsersArr extends Array<PullUsers>{}
 export interface TransactionArr extends Array<ITransaction>{}

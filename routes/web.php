@@ -11,7 +11,9 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailInquiryController;
 use App\Http\Controllers\HighlightController;
+use App\Http\Controllers\PlaceCategoryController;
 use App\Http\Controllers\PublicVenueController;
+use App\Http\Controllers\ThemeCategoryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueLandingPhotoController;
@@ -101,10 +103,17 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::get("/admin/transaction/{transaction_id}", [TransactionController::class, 'viewTransaction'])->name('admin.transaction.viewTransaction');
 
     Route::patch("/admin/transaction/{transaction_id}", [TransactionController::class, 'editVenueTransactionDetails'])->name('admin.transaction.editVenueTransactionDetails');
-
-    
-
 });    
+
+
+// For theme and place category
+Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
+    Route::post('/place-category/create', [PlaceCategoryController::class,'createPlaceCategory'])->name('admin.placeCategory.createPlaceCategory');
+    Route::post('/theme-category/create', [ThemeCategoryController::class,'createThemeCategory'])->name('admin.placeCategory.createThemeCategory');
+    Route::delete('/place-category/delete', [PlaceCategoryController::class,'deletePlaceCategory'])->name('admin.placeCategory.deletePlaceCategory');
+    Route::delete('/theme-category/delete', [ThemeCategoryController::class,'deleteThemeCategory'])->name('admin.placeCategory.deleteThemeCategory');
+
+});
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');
 

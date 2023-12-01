@@ -29,6 +29,12 @@ class VenueController extends Controller
         return Inertia::render('Venue/VenueCreate');
     }
 
+
+    // TODO:
+    // 1. Gawan ng choices sa frontend yung place category at theme category
+    // 2. Gawan ng validation sa backend
+    // 3. Gumawa ng make category page
+
     public function post(VenuePostRequest $request)
     {
         $this->authorize('create', auth()->user());

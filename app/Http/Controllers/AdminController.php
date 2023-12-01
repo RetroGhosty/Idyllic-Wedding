@@ -9,6 +9,8 @@ use App\Models\Venue;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\choices\TransactionStatusEnum;
+use App\Models\PlaceCategory;
+use App\Models\ThemeCategory;
 
 class AdminController extends Controller
 {
@@ -17,6 +19,8 @@ class AdminController extends Controller
         $customers = UnregisteredUser::all();
         $transactions = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PAID)->get();
         $refundRequests = DB::table('transactions')->where('transaction_status', "=", TransactionStatusEnum::PENDING_REFUND)->get();
+        $place_categories = PlaceCategory::all();
+        $theme_categories = ThemeCategory::all();
         $payload = [
             'transactions' => $transactions,
             'refundRequests' => $refundRequests,
@@ -24,6 +28,8 @@ class AdminController extends Controller
             'success' => session('success'),
             'error' => session('error'),
             'customers' => $customers,
+            'place_categories' => $place_categories,
+            'theme_categories' => $theme_categories
         ];
         return Inertia::render("Admin/Dashboard", $payload);
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\VenueShowcasePhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -16,6 +17,8 @@ class Venue extends Model
         'description',
         'limit',
         'price',
+        'place_category_id',
+        'theme_category_id',
     ];
 
     public function landing_photo(): HasOne{
@@ -25,4 +28,12 @@ class Venue extends Model
     public function showcase_photo(): HasMany{
         return $this->hasMany(VenueShowcasePhoto::class);
     }    
+
+    public function place_category(): BelongsTo{
+        return $this->belongsTo(PlaceCategory::class);
+    }
+    
+    public function theme_category(): BelongsTo{
+        return $this->belongsTo(ThemeCategory::class);
+    }
 }
