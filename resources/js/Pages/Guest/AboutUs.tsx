@@ -25,16 +25,17 @@ const AboutUs = ({auth}: PageProps) => {
             }}>
               <div className='md:flex'>
                 
-              <div className='relative min-h-screen py-5 max-w-7xl md:py-9 mx-auto px-4 sm:px-6 lg:px-8l w-full md:flex flex-row lg:shrink-0 justify-around mt-16'>
+              <div className='relative min-h-screen py-5 max-w-7xl md:py-9 mx-auto px-4 sm:px-6 lg:px-8l w-full md:flex flex-row lg:shrink-0 justify-around mt-5'>
               
                 <div className='relative md:ml-96 md:top-20 md:right-4 text-white p-11 rounded-2xl h-full w-full md:h-4/5 md:w-3/4' style={{
                   height: "600px",
                   backgroundColor: "rgba(52,58,64,0.7)"}}>
-                  <span className='lg:text-6xl md:text-3xl md:ml-72 w-40'>ABOUT US</span>
-                    <div className='absolute left-0 lg:left-72 md:left-52 lg:top-40 p-8 mt-4 md:w-3/5 text-sm text-justify'>
-                    
-                      <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. <br /> <br /> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</span>
-                      
+                    <div className='lg:text-4xl md:text-3xl md:ml-64 w-50 lg:mt-20 text-slate-300'>
+                           <h1 className='text-slate-100'>ABOUT US</h1>
+                             <div className='absolute text-sm py-12 pr-36 text-justify'>
+                                <p>At Idyllic, we are driven by a passion for make your wedding day extra special and unforgettable moment. Established 2023, we have been dedicated to design, plan, and unique. Our commitment to customers dream for any types of wedding venue has guided us on a journey to find the best way to make your dream wedding come true.</p>
+                                <p className='mt-4'>Idyllic Wedding is more than just a business; we are a community of understanding, Innovative, Creative, Idealists and Futuristic people. We believe in putting an effort in ecerything will be enough to create a core memory for every bride and groom and aim to be the best experience of the bride and groom for their wedding day.</p>
+                             </div>
                     </div>
                     <div className='absolute bottom-5 right-20 flex gap-4'>
                       <span className='text-xs flex items-center'>Social Media Platform:</span>
