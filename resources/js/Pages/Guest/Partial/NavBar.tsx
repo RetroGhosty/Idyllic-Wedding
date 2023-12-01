@@ -23,7 +23,7 @@ const NavBar = ({user, backgroundColor}: any) => {
     <>
     <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
         <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 bg-gray-900 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"}`}>
-            <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-32">
+            <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-24">
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
                         <Link href="/" className='text-sm'>
@@ -36,10 +36,10 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <div className='flex space-x-reverse'>
                         <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-2xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
+                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                         </ul>
                 </div>
                 <div className='hidden md:flex space-x-reverse'>
@@ -58,10 +58,10 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <div className='flex space-x-reverse'>
                         <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
+                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                         </ul>
                 </div>
                 <div className='hidden md:flex space-x-reverse'>

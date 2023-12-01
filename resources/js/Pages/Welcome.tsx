@@ -41,7 +41,7 @@ export default function Welcome({ auth, venues }: any) {
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full lg:pt-28 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
+                    <div className='relative w-full lg:pt-20 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
                             <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]'/>
@@ -52,7 +52,7 @@ export default function Welcome({ auth, venues }: any) {
                             <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
                                 <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Wedding</h1>
                                 <div>
-                                    <p className='text-base md:text-xl text-white'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
+                                    <p className='text-base md:text-xl text-white pr-40'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
                                 </div>
                                 <button type='button' className='bg-[#0066FF] text-base md:text-xl px-8 py-1 md:px-12 md:py-2 font-black text-white' 
                                 onClick={() => router.get(route('booking.home'))}
