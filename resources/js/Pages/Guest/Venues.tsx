@@ -20,7 +20,7 @@ const Venues = ({auth, venues}: any) => {
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <HeaderPopUp/>
             <NavBar user={auth.user}/>
-            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#463f3a] text-white h-24'>
+            <div className='flex items-center px-4 py-8 mt-40 sm:px-6 lg:px-8l w-full text-[#463f3a] font-bold h-24'>
                 <div className="max-w-6xl mx-auto w-full text-3xl font-black tracking-widest">
                 <Breadcrumb>
                     <BreadcrumbItem>

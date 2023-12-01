@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import NavLink from '@/Components/NavLink'
 import { Link } from '@inertiajs/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -8,13 +9,21 @@ import PhoneNavLink from '@/Components/PhoneNavLink'
 
 const NavBar = ({user, backgroundColor}: any) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
+    const [scroll, setScroll] = useState(0);
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      setScroll(window.scrollY);
+    });
+  }, []);
+
 
 
   return (
     <>
     <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
-        <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-14 md:h-32">
+        <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 bg-gray-900 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"}`}>
+            <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-32">
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
                         <Link href="/" className='text-sm'>

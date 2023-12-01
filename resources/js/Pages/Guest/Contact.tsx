@@ -62,7 +62,7 @@ const Contact = ({auth}: PageProps) => {
             }}>
             </div>
             <div className='min-h-screen pt-4 md:py-9 mx-auto lg:px-8l space-y-5'>                            
-                <div className=' relative h-[300px] md:h-[400px] flex items-center justify-center'>
+                <div className=' relative h-[300px] md:h-[500px] flex items-center justify-center'>
                   <span className='text-3xl md:text-6xl text-white font-black'>Contact Us</span> 
                 </div>
                 <div className='relative bg-white top-0 md:top-10 h-[1000px] md:h-[800px] flex flex-col items-center p-10 md:p-20'>
