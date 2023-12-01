@@ -42,7 +42,7 @@ const EachVenue = ({auth, venue, landing_photo, showcase_photo}: any) => {
                     <span className="text-3xl tracking-widest font-black">Highlights</span>
                     <div className="columns-1 md:columns-3 md:gap-5 mt-5">
                         {showcase_photo.map((photo: any, index: number) => (
-                            <Image key={index} className="w-full my-5" src={`/storage/${photo['photo_url']}`}/>
+                            <Image key={index} className="w-full my-5" src={`/storage/${photo['photo_url']}`} loading="lazy"/>
                         ))}
                     </div>
                 </div>

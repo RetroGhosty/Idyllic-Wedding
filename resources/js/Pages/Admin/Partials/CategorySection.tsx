@@ -41,9 +41,6 @@ const CategorySection = ({className, theme_categories, place_categories, tableHe
     } else{
       setCategoryTempData(theme_categories)
     }
-    console.log('data should be reloaded')
-    console.log(place_categories)
-    console.log(categoryTempData)
   }
 
   const columnHelper = createColumnHelper<ICategories>()

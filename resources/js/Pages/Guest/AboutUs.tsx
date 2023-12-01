@@ -46,9 +46,9 @@ const AboutUs = ({auth}: PageProps) => {
                     </div>
                 </div>
                 
-                  <img className='absolute hidden md:block rounded-md top-60 left-12 h-80 w-2/5 mr-8 object-cover object-center' src="http://localhost:8000/about-1.jpg" alt=""/>
+                  <img className='absolute hidden md:block rounded-md top-60 left-12 h-80 w-2/5 mr-8 object-cover object-center' src="http://localhost:8000/about-1.jpg" loading='lazy'/>
                   {/* <img className='absolute top-30 left-18 h-2/3 w-96 mr-8' src="http://localhost:8000/kap.jfif" alt=""/> */}
-                  <img className='absolute hidden md:block rounded-md top-72 left-28 h-80 w-2/5 mr-8 object-fill' src="http://localhost:8000/about-3.jpg" alt=""/>
+                  <img className='absolute hidden md:block rounded-md top-72 left-28 h-80 w-2/5 mr-8 object-fill' src="http://localhost:8000/about-3.jpg" loading='lazy'/>
     
               </div>
               </div>

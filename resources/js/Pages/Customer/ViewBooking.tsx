@@ -34,7 +34,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                 <div className='flex md:flex-row flex-col space-y-6 md:space-y-0 md:space-x-12 w-full items-center justify-center'>
                     <div className='md:flex rounded aspect-square h-[450px] relative'>
                         <div className='bg-[#00000067] hidden md:flex w-full h-[450px] top-3 rounded left-3 absolute z-0'/>
-                        <img src={`/storage/${landing_photo}`} className='rounded object-cover aspect-video h-[450px] z-10'/> 
+                        <img src={`/storage/${landing_photo}`} className='rounded object-cover aspect-video h-[450px] z-10' loading='lazy'/> 
                     </div>
                     <div className='bg-[#2A2A2A] w-full text-white p-7 rounded basis-1/2'>
                         <h1 className='md:text-3xl font-bold mb-2 md:mb-3'>{venue['venue_name']} Venue</h1>

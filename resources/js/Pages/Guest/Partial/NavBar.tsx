@@ -27,7 +27,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
                         <Link href="/" className='text-sm'>
-                            <img src={`/icon.svg`} alt="idylic logo" className='object-fit h-auto w-12 md:w-24'/>
+                            <img src={`/icon.svg`} alt="idylic logo" className='object-fit h-auto w-12 md:w-24' loading='lazy'/>
                         </Link>
                     </div>
                 </div>

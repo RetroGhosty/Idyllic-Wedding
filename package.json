@@ -34,6 +34,7 @@
         "date-fns": "^2.30.0",
         "framer-motion": "^10.16.4",
         "react-datepicker": "^4.23.0",
+        "react-dropzone": "^14.2.3",
         "react-icons": "^4.11.0",
         "react-multi-carousel": "^2.8.4",
         "react-router-dom": "^6.17.0"

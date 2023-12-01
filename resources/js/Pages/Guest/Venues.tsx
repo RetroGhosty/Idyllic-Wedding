@@ -36,7 +36,7 @@ const Venues = ({auth, venues}: any) => {
                       <div  onClick={() => navigate(venue['venue_name'])} className="md:hover:scale-105 overflow-hidden md:h-60 p-5 ease-out duration-300 relative flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-starts md:bg-[#edf2f4] rounded-xl shadow-xl">
                         <div className="hidden md:block md:w-[400px]">
                           <div className="md:basis-1/2 overflow-hidden h-44 md:h-full absolute top-0 left-0 w-[300px]">
-                          <Img src={`storage/${venue['photo_url']}`} className="w-full h-full object-cover"/>
+                          <Img src={`storage/${venue['photo_url']}`} className="w-full h-full object-cover" loading="lazy"/>
                         </div>
                         </div>
            

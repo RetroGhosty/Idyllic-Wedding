@@ -35,7 +35,7 @@ const Highlights = ({auth, highlightPhotos}: any) => {
               </div>
                 <div className='columns-2 md:columns-4 md:gap-1 mt-4 items-start'>
                   {highlightPhotos.map((photo: any, index: number) => (
-                    <img key={index} className='w-full mb-1 border-solid border-2 border-gray-500' src={`/storage/${photo['photo_url']}`}/>
+                    <img key={index} className='w-full mb-1 border-solid border-2 border-gray-500' src={`/storage/${photo['photo_url']}`} loading='lazy'/>
                     ))}
                   </div>
                   </div>   

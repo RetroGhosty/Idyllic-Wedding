@@ -43,9 +43,9 @@ export default function Welcome({ auth, venues }: any) {
                 <div className='min-h-screen overflow-hidden relative w-full'>
                     <div className='relative w-full lg:pt-20 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
                         <div className='mix-blend-multiply'>
-                            <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
-                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]'/>
-                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[100%] z-[9]'/>
+                            <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover' loading='lazy'/>
+                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]' loading="lazy"/>
+                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[100%] z-[9]' loading='lazy'/>
                         </div>
 
                         <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l lg:pt-48 relative'>
@@ -93,9 +93,9 @@ export default function Welcome({ auth, venues }: any) {
                                 </div>
                                 <div className='hidden md:flex flex-col justify-center items-center w-full h-full'>
                                     <div className='relative flex aspect-square w-[350px]'>
-                                        <img className='absolute bottom-10 right-10 aspect-square h-full z-10 rounded' src={`${backendUrl}/image1.png`}/>
+                                        <img className='absolute bottom-10 right-10 aspect-square h-full z-10 rounded' src={`${backendUrl}/image1.png`} loading='lazy'/>
                                         <div className='relative top-10 left-10 aspect-square h-full z-10'>
-                                            <img className='absolute rounded' src={`${backendUrl}/image2.png`}/>
+                                            <img className='absolute rounded' src={`${backendUrl}/image2.png`} loading='lazy'/>
                                             <div className='absolute rounded bg-white -z-[1] bottom-2 right-2 w-full h-full'/>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@ export default function Welcome({ auth, venues }: any) {
                                 {venues.map((venue: any, index: number) => (
                                     <div key={index} className='rounded w-full h-[400px] p-6'>
                                         <div  onClick={() => {router.get(route('venues.view_single', venue['venue_name']))}} className='text-white w-full h-full flex items-center justify-center relative'>
-                                            <img className='object-cover w-full h-full rounded-lg' src={`http://localhost:8000/storage/${venue['photo_url']}`}/>
+                                            <img className='object-cover w-full h-full rounded-lg' src={`http://localhost:8000/storage/${venue['photo_url']}`} loading='lazy'/>
                                             <motion.div initial={{opacity:0, backgroundColor: 'black'}} whileHover={{opacity: 0.7}} className='absolute h-full w-full bg-opacity-10 rounded-lg flex items-center justify-center'>
                                                 <div className='text-2xl'>
                                                     {venue['venue_name']}

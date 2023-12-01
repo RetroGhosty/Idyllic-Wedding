@@ -11,6 +11,7 @@ class ThemeCategory extends Model
 
     protected $fillable = [
         'name',
+        'image'
     ];
 
     public function venues(): HasMany

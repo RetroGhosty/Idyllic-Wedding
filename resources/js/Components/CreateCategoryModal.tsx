@@ -14,8 +14,9 @@ const CreateCategoryModal = ({onOpen, isOpen, onClose, successReload}: any) => {
 
     const [currentCategoryBody, setCurrentCategoryBody] = React.useState('place')
 
-    const {data, setData, post, wasSuccessful, reset, errors} = useForm({
+    const {data, setData, post, wasSuccessful, reset, errors, processing} = useForm({
         name: '',
+        image: null
     })
 
     const handleSubmit = (e: any) => {
@@ -45,10 +46,10 @@ const CreateCategoryModal = ({onOpen, isOpen, onClose, successReload}: any) => {
             }
         } else{
             if (currentCategoryBody === 'place'){
-                return <CreatePlaceCategoryFooter onOpen={onOpen} onClose={onClose}/>
+                return <CreatePlaceCategoryFooter onOpen={onOpen} onClose={onClose} processing={processing}/>
             }
             if (currentCategoryBody === 'theme'){
-                return <CreateThemeCategoryFooter onOpen={onOpen} onClose={onClose}/>
+                return <CreateThemeCategoryFooter onOpen={onOpen} onClose={onClose} processing={processing}/>
             }
         }
     }
