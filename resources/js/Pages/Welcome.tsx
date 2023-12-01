@@ -41,14 +41,14 @@ export default function Welcome({ auth, venues }: any) {
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
+                    <div className='relative w-full lg:pt-28 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover'/>
-                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[35%] z-[11]'/>
-                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[90%] z-[9]'/>
+                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]'/>
+                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[100%] z-[9]'/>
                         </div>
 
-                        <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l relative'>
+                        <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l lg:pt-48 relative'>
                             <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
                                 <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Wedding</h1>
                                 <div>
@@ -75,8 +75,8 @@ export default function Welcome({ auth, venues }: any) {
                         </div>
                     </div>
                     <div className='text-black relative z-20'>
-                        <div className='max-w-7xl py-4 md:py-12 mx-auto px-4 sm:px-6 lg:px-8l'>
-                            <div className='relative grid grid-cols-1 mb-5 md:mb-0 md:grid-cols-2 w=full min-h-[20vh] gap-10'>
+                        <div className='max-w-7xl  md:py-12 mx-auto px-4 sm:px-6 lg:px-8'>
+                            <div className='relative grid grid-cols-1 mb-5 lg:pt-60 md:mb-0 md:grid-cols-2 w=full min-h-[20vh] gap-10'>
                                 <div className='flex flex-col justify-between space-y-5'>
                                     <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
                                         <h1 className='text-base md:text-2xl tracking-widest'>Romantic Setting</h1>
