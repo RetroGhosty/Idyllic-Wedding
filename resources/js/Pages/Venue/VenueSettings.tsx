@@ -11,7 +11,7 @@ import { Select, useToast } from '@chakra-ui/react'
 
 const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategories, themeCategories, currentPlaceCategory, currentThemeCategory}: any) => {
 
-    
+    console.log(currentPlaceCategory)
 
 
     interface IVEnue{
@@ -28,14 +28,12 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
         description: venue['description'],
         limit: venue['limit'],
         price: venue['price'],
-        place_category: currentPlaceCategory['id'],
-        theme_category: currentThemeCategory['id'],
+        place_category: currentPlaceCategory !== null ? currentPlaceCategory['id'] : '',
+        theme_category: currentThemeCategory !== null ? currentThemeCategory['id'] : '',
         header_image: undefined,
         sub_images: undefined,
         
     })
-    console.log(currentPlaceCategory)
-
     const [isSubmitted, setIsSubmitted] = React.useState(false)
     const toast = useToast()
 
@@ -59,8 +57,6 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        console.log('printing payload')
-        console.log(data)
         const payload = {
             _method: 'patch',
             venue_name: data.venue_name,
@@ -194,8 +190,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
                       <div className="flex flex-col space-y-4">
                         <div>
                           <InputLabel htmlFor="place_category">Place Category</InputLabel>
-                          <Select name="place_category" id="place_category" value={data['place_category']} onChange={(e) => setData('place_category', e.target.value)}>
-                            <option value="">Select Place Category</option>
+                          <Select name="place_category" placeholder='Select place category' id="place_category" value={data['place_category']} onChange={(e) => setData('place_category', e.target.value)}>
                             {placeCategories.map((placeCategory: any) => {
                               return <option key={placeCategory.id} value={placeCategory.id}>{`[${placeCategory.id}] ${placeCategory.name}`}</option>
                             })}
@@ -204,13 +199,12 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
                         </div>
                         <div>
                           <InputLabel htmlFor="theme_category">Theme Category</InputLabel>
-                          <Select name="theme_category" id="theme_category" value={data['theme_category']} onChange={(e) => setData('theme_category', e.target.value)}>
-                            <option value="">Select Theme Category</option>
+                          <Select name="theme_category" placeholder='Select theme category' id="theme_category" value={data['theme_category']} onChange={(e) => setData('theme_category', e.target.value)}>
                             {themeCategories.map((themeCategory: any) => {
                               return <option key={themeCategory.id} value={themeCategory.id}>{`[${themeCategory.id}] ${themeCategory.name}`}</option>
                             })}
                           </Select>
-                          {errors.place_category ? <div className='text-red-600'>{errors.place_category}</div> : null}
+                          {errors.theme_category ? <div className='text-red-600'>{errors.theme_category}</div> : null}
                         </div>
                       </div>
                     </div>

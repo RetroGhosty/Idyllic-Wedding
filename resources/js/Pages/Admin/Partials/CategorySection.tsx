@@ -12,13 +12,17 @@ import React from 'react'
 const CategorySection = ({className, theme_categories, place_categories, tableHeight}: any) => {
 
   const [recentlySuccessful, setRecentlySuccessful] = React.useState(false)
-  const navigateTo = (venue_id: any) => {
-      router.get(route('admin.venue.view', {venue_id:venue_id}), {preserveScroll: true})
-  }
   
   const [currentTableCategoryData, setCurrentTableCategoryData] = React.useState<any>(
     "place"
-  )
+    )
+    const navigateTo = (category_id: any) => {
+      if (currentTableCategoryData === 'place'){
+        router.get(route('admin.editPlaceCategory.view', {category_id:category_id}), {preserveScroll: true})
+      } else{
+        router.get(route('admin.viewEditThemeCategory.view', {category_id:category_id}), {preserveScroll: true})
+      }
+    }
 
 
   const [categoryTempData, setCategoryTempData] = React.useState<any>(place_categories)
@@ -42,6 +46,7 @@ const CategorySection = ({className, theme_categories, place_categories, tableHe
       setCategoryTempData(theme_categories)
     }
   }
+  
 
   const columnHelper = createColumnHelper<ICategories>()
   const [rowSelection, setRowSelection] = React.useState<any>({})
@@ -117,7 +122,7 @@ const CategorySection = ({className, theme_categories, place_categories, tableHe
         }
       })
     } else{
-      router.delete(route('admin.placeCategory.deleteThemeCategory'), {
+      router.delete(route('admin.themeCategory.deleteThemeCategory'), {
         data: {category_id:category_id},
         preserveScroll: true,
         onSuccess: () => {

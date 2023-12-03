@@ -108,10 +108,26 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
 
 // For theme and place category
 Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
+    // Create
+
     Route::post('/place-category/create', [PlaceCategoryController::class,'createPlaceCategory'])->name('admin.placeCategory.createPlaceCategory');
     Route::post('/theme-category/create', [ThemeCategoryController::class,'createThemeCategory'])->name('admin.placeCategory.createThemeCategory');
+    
+    // Update view
+    Route::get('/place-category/{category_id}', [PlaceCategoryController::class,'viewEditPlaceCategory'])->name('admin.editPlaceCategory.view');
+    Route::get('/theme-category/{category_id}', [ThemeCategoryController::class,'viewEditThemeCategory'])->name('admin.viewEditThemeCategory.view');
+
+
+
+    // Update
+    Route::post('/theme-category/edit/{category_id}', [PlaceCategoryController::class,'editPlaceCategory'])->name('admin.placeCategory.editPlaceCategory');
+    Route::post('/theme-category/edit/{category_id}', [ThemeCategoryController::class,'editThemeCategory'])->name('admin.themeCategory.editThemeCategory');
+
+
+    // Delete
     Route::delete('/place-category/delete', [PlaceCategoryController::class,'deletePlaceCategory'])->name('admin.placeCategory.deletePlaceCategory');
-    Route::delete('/theme-category/delete', [ThemeCategoryController::class,'deleteThemeCategory'])->name('admin.placeCategory.deleteThemeCategory');
+    Route::delete('/theme-category/delete', [ThemeCategoryController::class,'deleteThemeCategory'])->name('admin.themeCategory.deleteThemeCategory');
+
 
 });
 
