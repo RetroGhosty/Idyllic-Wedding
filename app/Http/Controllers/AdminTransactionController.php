@@ -22,7 +22,8 @@ class AdminTransactionController extends Controller
             'transactions' => $transactions,
             'refundRequests' => $refundRequests,
             'emailCountInquiries' => $emailCountInquiries,
-            'latestEmailInquiries' => $latestEmailInquiries
+            'latestEmailInquiries' => $latestEmailInquiries,
+            'success' => session('success'),
         ];
         return Inertia::render("Dashboard", $payload);
     }

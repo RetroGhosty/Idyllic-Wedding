@@ -17,7 +17,7 @@ class UserRolePagePermission
      */
     public function handle(Request $request, Closure $next, $roleLevel): Response
     {
-        if (Auth::check() && Auth::user()->user_level == UserAccountLevel::from($roleLevel)) {
+        if (Auth::check() && Auth::user()->user_level == UserAccountLevel::from($roleLevel) || Auth::check() && Auth::user()->user_level == UserAccountLevel::SUPERADMIN) {
             return $next($request);
         } else{
             return to_route('profile.edit');

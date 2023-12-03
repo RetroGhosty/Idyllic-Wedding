@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageNotFoundController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\UnregisteredUserController;
 use App\Http\Controllers\VenueShowcasePhotoController;
 use App\Http\Controllers\AboutController;
@@ -73,12 +74,16 @@ Route::post("/booking/payment", [BookingController::class, "BookingPaymentSessio
 
 
 Route::middleware(['auth', 'check-disabled'])->group(function () {
+    Route::get('/setup', [SuperAdminController::class, 'makeSuperAdminView'])->name('superadmin.create.view');
+    Route::post('/setup', [SuperAdminController::class, 'makeSuperAdmin'])->name('superadmin.create');
     Route::get('/profile', [ProfileController::class, 'edit'])
     ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
+
+// Admin pages and such
+Route::middleware(['auth', 'check-disabled',  'user-level:admin'])->group(function(){
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
@@ -105,9 +110,8 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::patch("/admin/transaction/{transaction_id}", [TransactionController::class, 'editVenueTransactionDetails'])->name('admin.transaction.editVenueTransactionDetails');
 });    
 
-
 // For theme and place category
-Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(function(){
+Route::middleware(['auth', 'check-disabled', 'does-superadmin-exist', 'user-level:admin'])->group(function(){
     // Create
 
     Route::post('/place-category/create', [PlaceCategoryController::class,'createPlaceCategory'])->name('admin.placeCategory.createPlaceCategory');
@@ -128,6 +132,12 @@ Route::middleware(['auth', 'check-disabled', 'user-level:admin'])->group(functio
     Route::delete('/place-category/delete', [PlaceCategoryController::class,'deletePlaceCategory'])->name('admin.placeCategory.deletePlaceCategory');
     Route::delete('/theme-category/delete', [ThemeCategoryController::class,'deleteThemeCategory'])->name('admin.themeCategory.deleteThemeCategory');
 
+
+});
+
+// Super admin pages
+Route::middleware(['auth', 'check-disabled', 'does-superadmin-exist', 'superadmin-check'])->group(function(){
+    Route::get('/superadmin/users', [SuperAdminController::class, 'viewSuperAdminPanel'])->name('superadmin.view');
 
 });
 

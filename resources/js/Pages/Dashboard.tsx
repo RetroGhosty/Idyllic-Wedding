@@ -9,9 +9,28 @@ import { motion } from 'framer-motion';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import { parse, parseISO } from 'date-fns';
+import React from 'react';
+import { useToast } from '@chakra-ui/react';
 
 
-export default function Dashboard({ auth, transactions, refundRequests, emailCountInquiries, latestEmailInquiries }: any,) {
+export default function Dashboard({ auth, transactions, refundRequests, emailCountInquiries, latestEmailInquiries, success }: any,) {
+    const toast = useToast()
+    React.useEffect(() => {
+        if(success !== null){
+            toast({
+              title: "Success",
+              description: `${success}`,
+              position: "bottom-right",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            })
+          }
+        return () => {
+        success = null
+        }
+        
+    }, [success])
 
 
     return (
@@ -69,3 +88,7 @@ export default function Dashboard({ auth, transactions, refundRequests, emailCou
         </AuthenticatedLayout>
     );
 }
+function toast(arg0: { title: string; description: string; position: string; status: string; duration: number; isClosable: boolean; }) {
+    throw new Error('Function not implemented.');
+}
+

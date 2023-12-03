@@ -44,13 +44,11 @@ const Dashboard = ({auth, venues, customers, transactions, refundRequests, place
       <Head title="Dashboard" />
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col space-y-10">
-
           <CategorySection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" place_categories={place_categories} theme_categories={theme_categories} tableHeight={"0"}/>
           <VenueSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" venues={venues} tableHeight={"0"}/>
           <CustomerSection className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" customers={customers} tableHeight={"0"}/>
           <ReservationTable className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" transactions={transactions} tableHeight={"0"}/>
           <RefundTable className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-9" refundRequests={refundRequests} tableHeight={"0"}/>
-
         </div>
       </div>
     </AuthenticatedLayout>

@@ -19,17 +19,35 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                     </div>
                 )       
-            } else if (user === "admin"){
-                return (
-                    <>
-                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
-                            Admin Panel
-                        </NavLink>
-                    </div>
-                    </>
-                )
-            }
+            } else if (user === "admin" || user === "superadmin"){
+                if (user === "admin"){
+                    return (
+                        <>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </NavLink>
+                        </div>
+                        </>
+                    )
+                } else if (user === "superadmin"){
+                    return (
+                        <>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('superadmin.view')} active={route().current('superadmin.view')}>
+                                Super Admin Panel
+                            </NavLink>
+                        </div>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </NavLink>
+                        </div>
+                        </>
+                    )
+                }
+
+            } 
         }
 
         if (viewPortStatus === "mobile"){
@@ -40,18 +58,39 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     test
                     </>
                 )       
-            } else if (user === "admin"){
-                return (
-                    <>
-                        <Link href={route('inbox.view')} className={`w-full flex items-start pl-3 pr-4 py-2 border-l-4 border border-transparent leading-4 font-medium text-base rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
-                            <span>Inbox</span>
-                            <FaInbox/>
-                        </Link>
-                        <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
-                            Admin Panel
-                        </ResponsiveNavLink>
-                    </>
-                )
+            } else if (user === "admin" || user === "superadmin"){
+                if (user === "admin"){
+                    return (
+                        <>
+                            <Link href={route('inbox.view')} className={`w-full flex items-start pl-3 pr-4 py-2 border-l-4 border border-transparent leading-4 font-medium text-base rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
+                                <span>Inbox</span>
+                                <FaInbox/>
+                            </Link>
+    
+                            <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </ResponsiveNavLink>
+                        </>
+                    )
+                } else if (user === "superadmin"){
+                    return (
+                        <>
+                            <Link href={route('inbox.view')} className={`w-full flex items-start pl-3 pr-4 py-2 border-l-4 border border-transparent leading-4 font-medium text-base rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
+                                <span>Inbox</span>
+                                <FaInbox/>
+                            </Link>
+    
+                            <ResponsiveNavLink href={route('superadmin.view')} active={route().current('superadmin.view')}>
+                                Super Admin Panel
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </ResponsiveNavLink>
+                        </>
+                    )
+
+                }
+                
             }
         }
     }

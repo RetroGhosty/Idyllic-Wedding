@@ -1,17 +1,14 @@
 import DangerButton from '@/Components/DangerButton'
-import Dropdown from '@/Components/Dropdown'
 import { IndeterminateCheckbox } from '@/Components/IndeterminateCheckbox'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { ICustomers } from '@/types'
-import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useToast } from '@chakra-ui/react'
+import { User } from '@/types'
+import { Input, Select, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { router } from '@inertiajs/react'
 import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
-import { format, parseISO, set } from 'date-fns'
 import React from 'react'
 
-
-const CustomerSection = ({className, customers, tableHeight, success, error}: any) => {
-    const columnHelper = createColumnHelper<ICustomers>()
+const UsersTable = ({className, tableHeight, users}: any) => {
+    const columnHelper = createColumnHelper<User>()
     const [rowSelection, setRowSelection] = React.useState<any>({})
     const [sorting, setSorting] = React.useState<any>([])
     const [filtering, setFiltering] = React.useState<any>('')
@@ -42,25 +39,25 @@ const CustomerSection = ({className, customers, tableHeight, success, error}: an
             header: 'ID',
             cell: (info) => <div className='text-sm'>{info.getValue()}</div>,
         }),
-        columnHelper.accessor('fullName',{
-            header: 'Name',
+        columnHelper.accessor('first_name',{
+            header: 'First name',
             cell: (info) => <div className='text-sm'>{info.getValue()}</div>,
             
             
         }),
-        columnHelper.accessor('email', {
-            header: 'Email',
+        columnHelper.accessor('last_name', {
+            header: 'Last name',
             cell: (info) => <div className='text-sm'>{info.getValue()}</div>
         }),
-        columnHelper.accessor('phone_number', {
+        columnHelper.accessor('email', {
             header: 'Phone #',
             cell: (info) => <div className='text-sm'>{info.getValue()}</div>
         }),
-        columnHelper.accessor('created_at', {
-            header: 'Created At',
-            cell: (info) => {return <div className='text-sm'>{format(parseISO(info.getValue()), "MMM. dd yyyy").toString()}</div>}
-            // cell: (info) => {return <div>{format(parseISO(info.getValue()), "MMM. dd yyyy | h:mm a").toString()}</div>}
+        columnHelper.accessor('user_level', {
+            header: 'User level',
+            cell: (info) => <div className='text-sm'>{info.getValue()}</div>
         }),
+
         columnHelper.display({
             header: 'Actions',
             cell: (info) => 
@@ -70,7 +67,7 @@ const CustomerSection = ({className, customers, tableHeight, success, error}: an
         })
     ]
     const reactTable = useReactTable({
-        data: customers,
+        data: users,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -220,4 +217,4 @@ const CustomerSection = ({className, customers, tableHeight, success, error}: an
   )
 }
 
-export default CustomerSection
+export default UsersTable

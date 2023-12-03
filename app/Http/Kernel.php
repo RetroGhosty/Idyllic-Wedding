@@ -71,5 +71,7 @@ class Kernel extends HttpKernel
         'check-disabled' => \App\Http\Middleware\IsAccountDisabled::class,
         'booking-exist' => \App\Http\Middleware\BookingExistMiddleware::class,
         'paid-booking' => \App\Http\Middleware\PaidBookingMiddleware::class,
+        'does-superadmin-exist' => \App\Http\Middleware\DoesSuperAdminExist::class,
+        'superadmin-check' => \App\Http\Middleware\SuperAdminMiddleware::class,
     ];
 }
