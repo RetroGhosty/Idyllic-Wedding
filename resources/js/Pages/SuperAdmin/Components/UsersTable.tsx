@@ -61,7 +61,7 @@ const UsersTable = ({className, tableHeight, users}: any) => {
         columnHelper.display({
             header: 'Actions',
             cell: (info) => 
-            <PrimaryButton onClick={() => router.get(route('admin.customer.viewCustomer', info.row.original['id']))}>
+            <PrimaryButton onClick={() => router.get(route('superadmin.edit.view', info.row.original['id']))}>
                 Edit
             </PrimaryButton>
         })
@@ -90,7 +90,7 @@ const UsersTable = ({className, tableHeight, users}: any) => {
         tableRows.forEach((row: any) => {
             ids.push(row.original.id)
         })
-        router.delete(route('admin.customer.deleteBatch', {ids: ids}), {
+        router.delete(route('superadmin.deleteBatch', {ids: ids}), {
             preserveScroll: true,
             onSuccess: () => {
                 reactTable.resetRowSelection()
@@ -107,7 +107,7 @@ const UsersTable = ({className, tableHeight, users}: any) => {
     }
   return (
     <div className={className}>
-        <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Customer Details</h1>
+        <h1 className='text-[#e56b6f] text-lg font-bold mb-2'>Users</h1>
        
         <TableContainer w="100%" className='flex flex-col space-y-3 p-2'>
             <div className='w-full flex flex-row space-x-3 items-center'>

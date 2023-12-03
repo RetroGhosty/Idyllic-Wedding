@@ -83,7 +83,7 @@ Route::middleware(['auth', 'check-disabled'])->group(function () {
 });
 
 // Admin pages and such
-Route::middleware(['auth', 'check-disabled',  'user-level:admin'])->group(function(){
+Route::middleware(['auth', 'check-disabled', 'does-superadmin-exist', 'user-level:admin'])->group(function(){
     Route::get('/admin', [AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/profile/user/{user_id}', [AdminController::class,'viewUser'])->name('admin.user.view');
     Route::patch('/admin/profile/user/{user_id}', [AdminController::class,'update'])->name('admin.user.update');
@@ -138,7 +138,9 @@ Route::middleware(['auth', 'check-disabled', 'does-superadmin-exist', 'user-leve
 // Super admin pages
 Route::middleware(['auth', 'check-disabled', 'does-superadmin-exist', 'superadmin-check'])->group(function(){
     Route::get('/superadmin/users', [SuperAdminController::class, 'viewSuperAdminPanel'])->name('superadmin.view');
-
+    Route::get('/superadmin/user/{user_id}', [SuperAdminController::class, 'editUserView'])->name('superadmin.edit.view');
+    Route::patch('/superadmin/user', [SuperAdminController::class, 'editUser'])->name('superadmin.edit');
+    Route::delete('/superadmin/user', [SuperAdminController::class, 'deleteBatch'])->name('superadmin.deleteBatch');
 });
 
 Route::get('/notfound', [PageNotFoundController::class,'index'])->name('notfound');

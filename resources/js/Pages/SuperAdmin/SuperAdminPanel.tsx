@@ -3,7 +3,6 @@ import { Head } from '@inertiajs/react'
 import UsersTable from './Components/UsersTable'
 
 const SuperAdminPanel = ({auth, users}: any) => {
-    console.log(users)
   return (
     <AuthenticatedLayout user={auth.user} 
     header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Super admin panel</h2>}>

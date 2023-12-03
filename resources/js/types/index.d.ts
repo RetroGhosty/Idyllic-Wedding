@@ -5,6 +5,7 @@ export interface User {
     email: string;
     email_verified_at: string;
     user_level: string;
+    status: string;
 }
 
 export interface PullUsers{

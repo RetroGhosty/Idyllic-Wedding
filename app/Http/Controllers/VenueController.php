@@ -27,7 +27,6 @@ class VenueController extends Controller
 
     
     public function createView(){
-        $this->authorize('create', auth()->user());
         $placeCategories = PlaceCategory::all();
         $themeCategories = ThemeCategory::all();
         $payload = [
@@ -37,15 +36,8 @@ class VenueController extends Controller
         return Inertia::render('Venue/VenueCreate', $payload);
     }
 
-
-    // TODO:
-    // 1. Gawan ng choices sa frontend yung place category at theme category
-    // 2. Gawan ng validation sa backend
-    // 3. Gumawa ng make category page
-
     public function post(VenuePostRequest $request)
     {
-        $this->authorize('create', auth()->user());
         $validated = $request->validated();
         $venue = Venue::create($validated);
         if (array_key_exists('header_image', $request->files->all())) {
@@ -77,7 +69,6 @@ class VenueController extends Controller
 
     public function editView($venue_id)
     {
-        $this->authorize('view', auth()->user());
         $venue = Venue::find($venue_id);
         if ($venue == null){
             return to_route('notfound');
@@ -107,7 +98,6 @@ class VenueController extends Controller
 
     public function edit(VenueRequest $request, $venue_id)
     {
-        $this->authorize('update', auth()->user());
         $venue = Venue::find($venue_id);
         $payload = [
             'venue' => $venue
@@ -147,7 +137,6 @@ class VenueController extends Controller
     public function delete($venue_id)
     {
         try {
-            $this->authorize('delete', auth()->user());
             $venue = Venue::find($venue_id);
             if ($venue == null) {
                 return abort(404, "Venue not found");

@@ -87,7 +87,7 @@ const CustomerSection = ({className, customers, tableHeight, success, error}: an
         onGlobalFilterChange: setFiltering,
 
     })
-    const deleteFunction = (tableRows) => {
+    const deleteFunction = (tableRows: any) => {
     
         let ids: Array<any> = []
         tableRows.forEach((row: any) => {
