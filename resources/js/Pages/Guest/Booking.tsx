@@ -65,7 +65,7 @@ const Booking = ({auth, venues, session, transactions}: PageProps) => {
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             
             <NavBar user={auth.user}/>
-            <div className='min-h-screen max-w-7xl pt-4 w-full md:py-9 mx-auto px-4 sm:px-6 lg:px-8l flex flex-col space-y-10'>
+            <div className='min-h-screen max-w-7xl pt-4 w-full md:py-28 mx-auto px-4 sm:px-6 lg:px-8l flex flex-col space-y-10'>
               <div className='md:hidden'>
                 <Stepper size='lg' orientation='vertical' index={activeStep + localActiveStep}>
                 {steps.map((step: any, index: number) => (

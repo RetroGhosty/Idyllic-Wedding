@@ -41,7 +41,7 @@ export default function Welcome({ auth, venues }: any) {
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full lg:pt-20 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
+                    <div className='relative w-full lg:pt-24 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover' loading='lazy'/>
                             <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]' loading="lazy"/>
