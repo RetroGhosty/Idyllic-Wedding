@@ -1,15 +1,19 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ThemeContext } from '@/Components/ContextApi/ThemeContext'
 import NavLink from '@/Components/NavLink'
 import { Link } from '@inertiajs/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, useDisclosure } from '@chakra-ui/react'
 import HeaderPopUp from '@/Components/HeaderPopUp'
 import PhoneNavLink from '@/Components/PhoneNavLink'
+import 'boxicons'
+
 
 const NavBar = ({user, backgroundColor}: any) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [scroll, setScroll] = useState(0);
+    const { darkmode, setDarkmode } = useContext(ThemeContext);
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
@@ -22,7 +26,7 @@ const NavBar = ({user, backgroundColor}: any) => {
   return (
     <>
     <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
-        <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"}`}>
+        <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"} ${darkmode && "dark"}`}>
             <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-24">
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
@@ -39,7 +43,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
+                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>   
                         </ul>
                 </div>
                 <div className='hidden md:flex space-x-4'>
@@ -63,6 +67,9 @@ const NavBar = ({user, backgroundColor}: any) => {
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
+                            <button onClick={()=>{
+                                setDarkmode(!darkmode)
+                            }}>{darkmode ? (<box-icon name='sun' color="white" animation="spin-hover" size="md"></box-icon>) : (<box-icon  name='moon' color="black" animation="tada-hover" size="md"  ></box-icon>)}</button>   
                         </ul>
                 </div>
                 <div className='hidden md:flex space-x-reverse'>

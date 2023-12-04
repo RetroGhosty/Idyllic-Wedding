@@ -10,11 +10,16 @@ import { motion } from 'framer-motion';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { backendUrl } from '@/Helper/Backendhelper';
+import { useContext } from 'react';
+import { ThemeContext } from '@/Components/ContextApi/ThemeContext';
 
 
 
 
 export default function Welcome({ auth, venues }: any) {
+
+    const { darkmode } = useContext(ThemeContext);
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -37,11 +42,11 @@ export default function Welcome({ auth, venues }: any) {
     return (
         <>
             <Head title="Home" />
-            <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
+            <div className={`relative sm:flex sm:flex-col bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter selection:bg-red-500 selection:text-white ${darkmode ? "dark" : "light"}`}>
                 <HeaderPopUp/>
                 <NavBar user={auth.user}/>
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full lg:pt-24 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
+                    <div className='relative w-full lg:pt-24 min-h-[10vh] sm:min-h-[60vh] md:h-[100vh]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover' loading='lazy'/>
                             <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[60%] z-[11]' loading="lazy"/>
@@ -75,18 +80,18 @@ export default function Welcome({ auth, venues }: any) {
                         </div>
                     </div>
                     <div className='text-black relative z-20'>
-                        <div className='max-w-7xl  md:py-12 mx-auto px-4 sm:px-6 lg:px-8'>
-                            <div className='relative grid grid-cols-1 mb-5 lg:pt-60 md:mb-0 md:grid-cols-2 w=full min-h-[20vh] gap-10'>
-                                <div className='flex flex-col justify-between space-y-5'>
-                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                        <div className='max-w-7xl  md:py-0 mx-auto px-4 sm:px-6 lg:px-8'>
+                            <div className='relative grid grid-cols-1 mb-5 lg:pt-36 md:mb-0 md:grid-cols-2 w=full min-h-[20vh] gap-10'>
+                                <div className={`flex flex-col justify-between space-y-5 ${darkmode ? "text-slate-300": "text-slate-950"}`}>
+                                    <div className='bg-[#463f3a] p-8 rounded-xl'>
                                         <h1 className='text-base md:text-2xl tracking-widest'>Romantic Setting</h1>
                                         <p>Exchange vows in a picturesque venue surrounded by lush landscapes and blooming flowers. Our idyllic wedding reservation ensures a romantic atmosphere that will make your special day truly unforgettable.</p>
                                     </div>
-                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                                    <div className='bg-[#756d67] p-8 rounded-xl'>
                                         <h1 className='text-base md:text-2xl  tracking-widest'>Effortless Planning</h1>
                                         <p>Simplify your wedding preparations with our efficient services. From organizing the ceremony to coordinating with vendors, we handle the details, allowing you to focus on the joy of the occasion. Enjoy a stress-free journey to your dream wedding!</p>
                                     </div>
-                                    <div className='bg-[#463f3a] p-8 rounded-xl text-white'>
+                                    <div className='bg-[#463f3a] p-8 rounded-xl'>
                                         <h1 className='text-base md:text-2xl  tracking-widest'>Seamless Experience</h1>
                                         <p>Experience a seamless and delightful wedding celebration with our meticulous attention to detail. Our team is dedicated to ensuring every moment of your special day flows smoothly, creating cherished memories that last a lifetime.</p>
                                     </div>
@@ -104,7 +109,7 @@ export default function Welcome({ auth, venues }: any) {
                         </div>
 
                         <div className='max-w-7xl py-4 md:py-12 mx-auto px-4 sm:px-6 lg:px-8l'>
-                            <h1 className='text-xl md:text-4xl font-bold mb-6'>Available Venues</h1>
+                            <h1 className={`text-xl md:text-4xl font-bold mb-6 ${darkmode && "text-slate-300"}`}>Available Venues</h1>
                             <Carousel
                                 additionalTransfrom={0}
                                 arrows

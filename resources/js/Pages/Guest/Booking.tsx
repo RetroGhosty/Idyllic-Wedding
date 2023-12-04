@@ -11,6 +11,8 @@ import AwaitingConfirm from './BookingPartials/AwaitingConfirm'
 import ContactInfoForm from './BookingPartials/ContactInfoForm'
 import EmailForm from './BookingPartials/EmailForm'
 import HeaderPopUp from '@/Components/HeaderPopUp'
+import { useContext } from 'react'
+import { ThemeContext } from '@/Components/ContextApi/ThemeContext'
 
 const Booking = ({auth, venues, session, transactions}: PageProps) => {
   const [steps, setSteps] = React.useState<any>([
@@ -18,7 +20,7 @@ const Booking = ({auth, venues, session, transactions}: PageProps) => {
     {title: 'Step 2', description: 'Contact Info'},
     {title: 'Step 3', description: 'Book a venue'}
   ])
-
+const {darkmode} = useContext(ThemeContext)
   const {activeStep} = useSteps({
     index: 0,
     count: steps.length,
@@ -62,7 +64,7 @@ const Booking = ({auth, venues, session, transactions}: PageProps) => {
   return (
     <>
         <Head title="Booking" />
-        <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
+        <div className={`relative sm:flex sm:flex-col bg-dots-darker bg-center ${darkmode ? "dark text-slate-300" : "light text-slate-950"} dark:bg-dots-lighter selection:bg-red-500 selection:text-white`}>
             
             <NavBar user={auth.user}/>
             <div className='min-h-screen max-w-7xl pt-4 w-full md:py-28 mx-auto px-4 sm:px-6 lg:px-8l flex flex-col space-y-10'>

@@ -28,4 +28,5 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </phpunit>

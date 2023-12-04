@@ -11,6 +11,8 @@ import { FaPhone } from "react-icons/fa";
 import { FaLocationPin } from "react-icons/fa6";
 import { Transition } from '@headlessui/react'
 import { useToast } from '@chakra-ui/react'
+import {useContext} from 'react'
+import { ThemeContext } from '@/Components/ContextApi/ThemeContext'
 
 const Contact = ({auth}: PageProps) => {
 
@@ -19,6 +21,7 @@ const Contact = ({auth}: PageProps) => {
     email: '',
     message: '',
   })
+  const {darkmode}=useContext(ThemeContext)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -46,7 +49,7 @@ const Contact = ({auth}: PageProps) => {
   return (
     <>
         <Head title="Contact" />
-        <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
+        <div className={`relative sm:flex sm:flex-col bg-dots-darker bg-center ${darkmode ? "dark text-slate-400" : "light text-slate-950"} dark:bg-dots-lighter selection:bg-red-500 selection:text-white`}>
             
             <HeaderPopUp/>
             <NavBar user={auth.user}/>
@@ -65,7 +68,7 @@ const Contact = ({auth}: PageProps) => {
                 <div className=' relative h-[300px] md:h-[700px] flex items-center justify-center'>
                   <span className='text-3xl md:text-6xl text-white font-black'>Contact Us</span> 
                 </div>
-                <div className='relative bg-white top-0 md:top-10 h-[1000px] md:h-[800px] flex flex-col items-center p-10 md:p-20'>
+                <div className={`relative ${darkmode ? "dark" : "light"} top-0 md:top-10 h-[1000px] md:h-[800px] flex flex-col items-center p-10 md:p-20`}>
                   <div>
                   <span className=' text-base md:text-3xl '>Let's Start a Conversation</span>
                   </div>

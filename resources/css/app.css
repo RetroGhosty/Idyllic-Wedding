@@ -16,3 +16,12 @@
       minmax(1rem, 1200px)
       minmax(1rem, 1fr);
   }
+  .dark{
+    background: #111516;
+    transition: 0.5s;
+  }
+  .light{
+    background-color: #ffffff;
+    transition: 0.5s;
+  }
+ 
