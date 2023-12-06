@@ -36,6 +36,14 @@ const VenueSection = ({className, venues, tableHeight}: any) => {
           header: 'Venue Name',
           cell: (info) => <div>{info.getValue()}</div>,
       }),
+      columnHelper.accessor('place_name', {
+          header: 'Place category',
+          cell: (info) => <div>{info.getValue()}</div>,
+      }),
+      columnHelper.accessor('theme_name', {
+          header: 'Theme category',
+          cell: (info) => <div>{info.getValue()}</div>,
+      }),
       columnHelper.accessor('limit', {
           header: 'Head Capacity',
           cell: (info) => <div>{info.getValue()}</div>,

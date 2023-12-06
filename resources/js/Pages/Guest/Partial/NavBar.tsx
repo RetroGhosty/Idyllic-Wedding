@@ -22,8 +22,8 @@ const NavBar = ({user, backgroundColor}: any) => {
   return (
     <>
     <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-24">
+        <div className={`max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8`}>
+            <div className="flex justify-between items-center w-full h-14 md:h-24">
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
                         <Link href="/" className='text-sm'>
@@ -43,7 +43,6 @@ const NavBar = ({user, backgroundColor}: any) => {
                         </ul>
                 </div>
                 <div className='hidden md:flex space-x-4'>
-                    <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
                     <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('dashboard')} active={route().current('register')}>
                         DASHBOARD
                     </NavLink>

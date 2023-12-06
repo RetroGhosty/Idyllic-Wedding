@@ -45,6 +45,8 @@ export interface IVenues{
     description: string,
     price: string,
     limit: number,
+    place_name: string,
+    theme_name: string,
 }
 
 export interface ICategories{

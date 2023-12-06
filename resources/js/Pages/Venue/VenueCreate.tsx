@@ -107,7 +107,7 @@ const VenueCreate = ({auth, placeCategories, themeCategories}: any) => {
                           return <option key={themeCategory.id} value={themeCategory.id}>{themeCategory.name}</option>
                         })}
                       </Select>
-                      {errors.place_category ? <div className='text-red-600'>{errors.place_category}</div> : null}
+                      {errors.theme_category ? <div className='text-red-600'>{errors.theme_category}</div> : null}
                     </div>
                   </div>
                 </div>
