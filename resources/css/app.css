@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.container {
+    display: grid;
+    grid-template-columns: minmax(16px, 1fr), repeat(10, minmax(10px, 1fr)),
+      minmax(16px, 1fr);
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns:
+      minmax(1rem, 1fr)
+      minmax(1rem, 1200px)
+      minmax(1rem, 1fr);
+  }

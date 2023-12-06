@@ -24,6 +24,8 @@ class VenueRequest extends FormRequest
             'header_image' => ['image', new DoesVenueHeaderImgAlreadyExist('patch', $this->route('venue_id'))],
             'sub_images' => ['array', new VenueShowcasePhotoMaximumLimit('patch', $this->route('venue_id'))],
             'sub_images.*' => ['image'],
+            'place_category' => ['required'],
+            'theme_category' => ['required'],
         ];
     }
 }

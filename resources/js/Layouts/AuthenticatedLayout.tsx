@@ -5,6 +5,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
+import { FaInbox } from "react-icons/fa6";
+
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -17,34 +19,78 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                     </div>
                 )       
-            } else if (user === "admin"){
-                return (
-                    <>
-                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
-                            Admin Panel
-                        </NavLink>
-                    </div>
-                    </>
-                )
-            }
+            } else if (user === "admin" || user === "superadmin"){
+                if (user === "admin"){
+                    return (
+                        <>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </NavLink>
+                        </div>
+                        </>
+                    )
+                } else if (user === "superadmin"){
+                    return (
+                        <>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('superadmin.view')} active={route().current('superadmin.view')}>
+                                Super Admin Panel
+                            </NavLink>
+                        </div>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </NavLink>
+                        </div>
+                        </>
+                    )
+                }
+
+            } 
         }
 
         if (viewPortStatus === "mobile"){
             if (user === "vendor"){
                 return (
                     <>
+
                     test
                     </>
                 )       
-            } else if (user === "admin"){
-                return (
-                    <>
-                        <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
-                            Admin Panel
-                        </ResponsiveNavLink>
-                    </>
-                )
+            } else if (user === "admin" || user === "superadmin"){
+                if (user === "admin"){
+                    return (
+                        <>
+                            <Link href={route('inbox.view')} className={`w-full flex items-start pl-3 pr-4 py-2 border-l-4 border border-transparent leading-4 font-medium text-base rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
+                                <span>Inbox</span>
+                                <FaInbox/>
+                            </Link>
+    
+                            <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </ResponsiveNavLink>
+                        </>
+                    )
+                } else if (user === "superadmin"){
+                    return (
+                        <>
+                            <Link href={route('inbox.view')} className={`w-full flex items-start pl-3 pr-4 py-2 border-l-4 border border-transparent leading-4 font-medium text-base rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
+                                <span>Inbox</span>
+                                <FaInbox/>
+                            </Link>
+    
+                            <ResponsiveNavLink href={route('superadmin.view')} active={route().current('superadmin.view')}>
+                                Super Admin Panel
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.*')}>
+                                Admin Panel
+                            </ResponsiveNavLink>
+                        </>
+                    )
+
+                }
+                
             }
         }
     }
@@ -70,6 +116,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <Link href={route('inbox.view')} className={`inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 space-x-2 ${(route().current('inbox.view') ? "text-[#e0686c] hover:text-[#ac4848] " : null)}`} >
+                                    <span>Inbox</span>
+                                    <FaInbox/>
+                                </Link>
+                            </div>
                             <div className="ml-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -134,7 +186,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+
+                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard.*')}>
                             Dashboard
                         </ResponsiveNavLink>
                         {NavigationHeaderUserLevel("mobile", user['user_level'])}
@@ -159,12 +212,11 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     </div>
                 </div>
             </nav>
-
             {header && (
                 <header className="bg-white shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
-            )}
+            )}  
 
             <main>{children}</main>
         </div>

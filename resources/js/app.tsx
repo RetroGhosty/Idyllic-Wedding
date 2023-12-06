@@ -20,6 +20,7 @@ createInertiaApp({
         </ChakraProvider>
         );
     },
+    // progress: false
     progress: {
         color: '#4B5563',
     },

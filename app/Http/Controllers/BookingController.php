@@ -41,7 +41,7 @@ class BookingController extends Controller
         } else {
             $fetchedUser = UnregisteredUser::find($fetchedEmail->id);
 
-            $latestTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUser->id)->latest('event_date')->where('transaction_status', '=', 'paid')->whereDate('event_date', '>', Carbon::now()->format('Y-m-d'))->first();
+            $latestTransaction = DB::table('transactions')->where('customer_id', '=', $fetchedUser->id)->latest('start_date')->where('transaction_status', '=', 'paid')->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))->first();
             if ($latestTransaction != null){
                 $request->session()->put('contact_info', $fetchedEmail);
                 $request->session()->put('latest_transaction', $latestTransaction);
@@ -75,22 +75,25 @@ class BookingController extends Controller
     }
 
     public function BookingPaymentSession(BookingPaymentSessionRequest $request){
+        $request->validated();
         $paymongoSecretKey = base64_encode(env('PAYMONGO_SECRET_KEY'));
         $paymongoPublicKey = base64_encode(env('PAYMONGO_PUBLIC_KEY'));
         $fetchedUser = UnregisteredUser::find($request->user_id);
         $fetchedVenue = Venue::find($request->venue_id);
-        $dateSelected= Carbon::parse($request->dateSelected)->timezone('Asia/Manila')->format('Y-m-d');
+        $start_date= Carbon::parse($request->start_date)->timezone('Asia/Manila')->format('Y-m-d');
+        $end_date= Carbon::parse($request->end_date)->timezone('Asia/Manila')->format('Y-m-d');
     
         $transaction = Transaction::create([
             'customer_id' => $fetchedUser->id,
             'venue_id' => $fetchedVenue->id,
-            'event_date' => $dateSelected,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
             'transaction_amount' => $fetchedVenue->price,
             'transaction_status' => TransactionStatusEnum::PENDING,
         ]);
         try {
             $checkout = Paymongo::checkout()->create([
-                'livemode' => true,
+                'livemode' => false,
                 "send_email_receipt" => true,
                 'success_url' => 'http://localhost:8000/booking/payment/success',
                 'cancel_url' => 'http://localhost:8000/booking/payment/cancel',
@@ -102,7 +105,7 @@ class BookingController extends Controller
                 'description' => $fetchedVenue->venue_name.' '.'reservation',
                 'line_items' => [
                     [
-                        'name' => $dateSelected,
+                        'name' => $start_date.' to '.$end_date.' '.'reservation',
                         'description' => 'testttttt',
                         'amount' => $fetchedVenue->price * 100,
                         'currency' => 'PHP',
@@ -124,6 +127,7 @@ class BookingController extends Controller
             ]);
             $transaction->save();
             $request -> session() -> put('checkout_id', $checkout->id);
+            $request->session()->put('latest_transaction', $transaction);
     
             return Inertia::location($checkout->checkout_url);
         } catch (Exception $e) {
@@ -147,20 +151,29 @@ class BookingController extends Controller
         }
     }
 
+    // TODO:
+    // 1. Do something went wrong page
+    // 2. Do not found page
     public function venueBookingSuccess(Request $request){
-        $checkout_id = $request->session()->get('checkout_id');
-        $checkout = Paymongo::checkout()->find($checkout_id);
-        $transaction = Transaction::find($checkout->reference_number);
-        if ($checkout->payments[0]['attributes']['status'] === 'paid'){
+        try {
+            //code...
+            $checkout_id = $request->session()->get('checkout_id');
+            $checkout = Paymongo::checkout()->find($checkout_id);
             $transaction = Transaction::find($checkout->reference_number);
-            $transaction->update([
-                'payment_method' => $checkout->payments[0]['attributes']['source']['type'],
-                'transaction_status' => $checkout->payments[0]['attributes']['status'],
-            ]);
-            $transaction->save();
-            $transaction->refresh();
-        } 
-        return to_route('booking.customerViewBooking', $transaction->id);
+            if ($checkout->payments[0]['attributes']['status'] === 'paid'){
+                $transaction = Transaction::find($checkout->reference_number);
+                $transaction->update([
+                    'payment_method' => $checkout->payments[0]['attributes']['source']['type'],
+                    'transaction_status' => $checkout->payments[0]['attributes']['status'],
+                    'payment_id' => $checkout->payments[0]['id'],
+                ]);
+                $transaction->save();
+                $transaction->refresh();
+            } 
+            return to_route('booking.customerViewBooking', $transaction->id);
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
     }
     public function paymentCancel(Request $request){
         try {

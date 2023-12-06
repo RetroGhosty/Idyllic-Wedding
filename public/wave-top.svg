@@ -1,0 +1,9 @@
+<svg id="wave" style="transform:rotate(0deg); transition: 0.3s" viewBox="0 0 1440 379" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+            <stop stop-color="rgba(3, 3, 3, 1)" offset="0%"></stop>
+            <stop stop-color="rgba(3, 3, 3, 1)" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,114L1440,266L2880,0L4320,190L5760,0L7200,152L8640,228L10080,190L11520,76L12960,0L14400,152L15840,152L17280,342L18720,266L20160,152L21600,190L23040,228L24480,0L25920,342L27360,342L28800,114L30240,266L31680,114L33120,228L34560,190L34560,380L33120,380L31680,380L30240,380L28800,380L27360,380L25920,380L24480,380L23040,380L21600,380L20160,380L18720,380L17280,380L15840,380L14400,380L12960,380L11520,380L10080,380L8640,380L7200,380L5760,380L4320,380L2880,380L1440,380L0,380Z"></path>
+</svg>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 
 const AwaitingConfirm = () => {
+  
   return (
     <motion.form
     initial={{ opacity: 0, x: 200 }}

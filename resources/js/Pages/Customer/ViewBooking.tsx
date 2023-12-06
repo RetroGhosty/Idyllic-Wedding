@@ -6,7 +6,7 @@ import Footer from '../Guest/Partial/Footer'
 import { add, differenceInDays, intervalToDuration, format, parse } from 'date-fns'
 
 const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
-    const eventDate = new Date(transaction['event_date'])
+    const eventDate = new Date(transaction['start_date'])
 
     const [approximateDate, setApproximateDate] = React.useState(intervalToDuration({start: new Date(), end: eventDate}))
     React.useEffect(()=> {
@@ -20,9 +20,9 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
         <Head title="Booking details" />
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <NavBar user={auth.user}/>
-            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#a4ac86] h-16 md:h-32'>
+            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#463f3a] text-white h-16 md:h-32'>
                 <div className="max-w-6xl mx-auto w-full text-xl md:text-3xl font-black tracking-widest text-center">
-                    Thank you for booking in us!
+                    Thank you for booking with us!
                 </div>
             </div>
             <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#e07145] h-16 md:h-24'>
@@ -32,9 +32,9 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
             </div>
             <div className='min-h-screen items-center max-w-7xl py-4 w-full md:py-9 mx-auto px-4 sm:px-6 lg:px-8l flex flex-col space-y-12'>
                 <div className='flex md:flex-row flex-col space-y-6 md:space-y-0 md:space-x-12 w-full items-center justify-center'>
-                    <div className='md:flex rounded w-full relative'>
-                        <div className='bg-[#31572c] hidden md:flex w-full h-full bottom-3 rounded right-3 absolute z-0'/>
-                        <img src={`/storage/${landing_photo}`} className='rounded object-cover z-10'/> 
+                    <div className='md:flex rounded aspect-square h-[450px] relative'>
+                        <div className='bg-[#00000067] hidden md:flex w-full h-[450px] top-3 rounded left-3 absolute z-0'/>
+                        <img src={`/storage/${landing_photo}`} className='rounded object-cover aspect-video h-[450px] z-10' loading='lazy'/> 
                     </div>
                     <div className='bg-[#2A2A2A] w-full text-white p-7 rounded basis-1/2'>
                         <h1 className='md:text-3xl font-bold mb-2 md:mb-3'>{venue['venue_name']} Venue</h1>
@@ -47,7 +47,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                         </p>
                     </div>
                 </div>
-                <div className='flex md:flex-row flex-col space-y-6 md:space-y-0 md:space-x-12 w-full items-center justify-center bg-[#f7b1b1] p-7'>
+                <div className='flex md:flex-row flex-col space-y-6 md:space-y-0 md:space-x-12 w-full items-center justify-center bg-[#463f3a] text-white shadow-xl p-7 rounded'>
                     <div className='rounded w-full relative'>
                         <div className='flex flex-col md:flex-row md:items-center justify-between md:mb-3'>
                             <span className='text-3xl font-black '>Booking details</span>
@@ -58,7 +58,7 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                             <li className='flex flex-col md:flex-row md:space-x-3'>
                                 <span>Event on: </span>
                                 <span className='font-black'>
-                                    {format(parse(transaction['event_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}
+                                    {`${format(parse(transaction['start_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')} to ${format(parse(transaction['end_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}`}
                                 </span>
                             </li>
                             <li className='flex flex-col md:flex-row md:space-x-3'>

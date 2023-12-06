@@ -28,7 +28,6 @@ const Dropdown = ({ children }: PropsWithChildren) => {
 
 const Trigger = ({ children }: PropsWithChildren) => {
     const { open, setOpen, toggleOpen } = useContext(DropDownContext);
-
     return (
         <>
             <div onClick={toggleOpen}>{children}</div>
@@ -92,8 +91,23 @@ const DropdownLink = ({ className = '', children, ...props }: InertiaLinkProps) 
     );
 };
 
+const DropdownItem = ({className = '', children, ...props}: any) =>{
+    return (
+        <div
+            {...props}
+            className={
+                'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 ' +
+                className
+            }
+        >
+            {children}
+        </div>
+    )
+}
+
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
+Dropdown.Item = DropdownItem;
 
 export default Dropdown;

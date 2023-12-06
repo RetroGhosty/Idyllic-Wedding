@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\UnregisteredUser;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 class UnregisteredUserRequest extends FormRequest
 {
     /**
@@ -14,10 +16,10 @@ class UnregisteredUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-            'first_name' => ['required'],
-            'last_name' => ['required'],
+            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/'],
+            'phone_number' => ['required', 'regex:/^0?\d{10}$/'],
+            'first_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
+            'last_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
         ];
     }
 

@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         
-        // \App\Models\UnregisteredUser::factory(10)->create();
+        \App\Models\UnregisteredUser::factory(100)->create();
         // \App\Models\Transaction::factory(10)->create();
 
     }

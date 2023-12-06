@@ -1,19 +1,27 @@
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CircularProgress, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
-import { add, addDays, addMonths, format, parse, subDays } from 'date-fns'
+import { add, addDays, addMonths, addWeeks, endOfWeek, format, parse, startOfWeek, subDays } from 'date-fns'
 import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
+import { FaArrowLeft } from "react-icons/fa";
+import { ClearProgressReload, CreateProgressReload } from './FormHelper/ProgressHelper'
+
+
+
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
-    const {data, setData, errors, setError} = useForm<any>({
+    const {data, setData, errors, setError, clearErrors} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
         dateSelected: null,
     })
+
+    const [reloadState, setReloadState] = React.useState(false)
+
     const changeExcludedDates = () => {
       transactions.map((transaction: any) => {
         if (venues.length === 0){
@@ -21,9 +29,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         }
 
         if (transaction['venue_id'] === venues[data.venue_id]['id']){
-          const initialDate = parse(transaction['event_date'], 'yyyy-MM-dd', new Date())
-          const startDate = subDays(initialDate, 7)
-          const endDate = initialDate
+          const startDate = parse(transaction['start_date'], 'yyyy-MM-dd', new Date())
+          const endDate = parse(transaction['end_date'], 'yyyy-MM-dd', new Date())
           excludedDates.push({start: startDate, end: endDate})
         }
       })
@@ -35,7 +42,7 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       setCurrentVenue(e.target.value)
       changeExcludedDates()
     }
-    const dateChange = (date) => {
+    const dateChange = (date: any) => {
       setData('dateSelected', date)
     }
     changeExcludedDates()
@@ -45,7 +52,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
       const payload = {
         'user_id': session['id'],
         'venue_id': venues[currentVenue]['id'] || venues[0]['id'],
-        'dateSelected': format(data['dateSelected'], 'yyyy-MM-dd')
+        'start_date': format(startOfWeek(data['dateSelected']), 'yyyy-MM-dd'),
+        'end_date': format(endOfWeek(data['dateSelected']), 'yyyy-MM-dd'),
 
       }
       router.post(route('booking.BookingPaymentSession'), payload, {
@@ -55,7 +63,10 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
         },
         onError: (error: any) => {
           setError(error)
-        }
+        },
+        onStart: () => {CreateProgressReload(setReloadState), clearErrors()},
+        onFinish: () => {ClearProgressReload(setReloadState)},
+
       })
     }
 
@@ -71,12 +82,12 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
   return (
     <AnimatePresence>
       
-      <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7'
+      <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7 my-4'
       initial={{ opacity: 0, x: 200 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -200 }}
       >
-          <div className='font-black text-2xl'>Venue Booking</div>
+
           {isVisible ? 
           <Alert status='error'>
             <AlertIcon/>
@@ -92,20 +103,28 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               <Select autoComplete="off" id='venue_id' value={data.venue_id} onChange={handleVenueChange}>
                   {venues.map((venue: any, index: number) => (
                     <option key={index} value={index}>{venue['venue_name']}</option>
-                  ))}
+                    ))}
               </Select>
               {errors.venue_id ? errors.venue_id : null}
           </div>              
           <div className='flex flex-col space-y-4'>
             <div>
+              <InputLabel htmlFor="datePicker" value='Booking'/> 
               <span className='text-xl font-black'>
                   <DatePicker 
                   id='datePicker'
                   onChange={dateChange}
-                  minDate={addDays(new Date(), 3)}
+                  minDate={addWeeks(new Date(), 2)}
                   maxDate={addMonths(new Date(), 3)}
+                  wrapperClassName='w-full'
+                  className='w-full rounded text-center'
                   excludeDateIntervals={excludedDates}
                   selected={data['dateSelected']}
+                  placeholderText="Select a date"
+                  dateFormat="I/R"
+                  showWeekPicker
+                  showWeekNumbers
+                  withPortal
                   />
               </span>
             </div>
@@ -123,9 +142,16 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               </>
               }
             </div>
-            <div className='flex flex-row justify-between'>
-                <PrimaryButton onClick={() => {decreaseStep()}}>Back</PrimaryButton>
-                <PrimaryButton type='submit'>Next</PrimaryButton>
+            <div className='flex flex-col md:flex-row justify-between space-y-3 md:space-y-0 md:items-center'>
+                <div className='flex flex-row space-x-4 text-red-700 font-black hover:scale-105 transition ease-in-out select-none' onClick={() => {decreaseStep()}}>
+                  <FaArrowLeft className="text-xl"/>
+                  <span>Return to step 2</span>
+                </div>
+                
+                <div className='flex md:flex-row space-x-4 items-center'>
+                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
+                </div>
             </div>
           </div>
       </motion.form>

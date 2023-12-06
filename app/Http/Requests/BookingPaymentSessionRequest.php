@@ -20,7 +20,8 @@ class BookingPaymentSessionRequest extends FormRequest
             //
             'user_id' => ['required'],
             'venue_id' => ['required'],
-            'dateSelected' => ['required', new DoesDateIsReserved],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
         ];
     }
 }
