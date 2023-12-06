@@ -26,7 +26,7 @@ const NavBar = ({user, backgroundColor}: any) => {
   return (
     <>
     <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
-        <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"} ${darkmode && "dark"}`}>
+        <div className={`w-full mx-auto font-bold px-4 sm:px-6 lg:px-8 fixed z-50 ${scroll && "shadow-xl bg-slate-100 ease-in duration-500"} ${darkmode && "dark"}`}>
             <div className="flex pl-44 pr-44 justify-between items-center h-14 md:h-24">
                 <div className="flex">
                     <div className="shrink-0 flex items-center">
