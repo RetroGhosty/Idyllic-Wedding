@@ -18,7 +18,7 @@ class EmailCheckerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email"=> ["required","email"],
+            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/'],
         ];
     }
 
