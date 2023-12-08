@@ -21,7 +21,7 @@ const NavBar = ({user, backgroundColor}: any) => {
 
   return (
     <>
-    <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200` : 'bg-slate-100 border-b -border-gray-200'}>
+    <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200 relative z-20` : 'bg-slate-100 border-b -border-gray-200 relative z-20'}>
         <div className={`max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8`}>
             <div className="flex justify-between items-center w-full h-14 md:h-24">
                 <div className="flex">
@@ -36,7 +36,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <div className='flex'>
                         <ul className="hidden space-x-12 md:flex text-2xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
+                            {/* <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink> */}
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
@@ -58,7 +58,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <div className='flex space-x-reverse'>
                         <ul className="hidden space-x-12 sm:-my-px sm:ml-10 md:flex text-xl">
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('landing-page')} active={route().current('landing-page')}>HOME</NavLink>
-                            <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink>
+                            {/* <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('highlights.home')} active={route().current('highlights.*')}>HIGHLIGHTS</NavLink> */}
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('venues.home')} active={route().current('venues.*')}>VENUES</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('contacts.home')} active={route().current('contacts.*')}>CONTACTS</NavLink>
                             <NavLink className='text-black sm:flex sm:text-sm md:text-sm' href={route('about.home')} active={route().current('about.*')}>ABOUT US</NavLink>
@@ -93,7 +93,7 @@ const NavBar = ({user, backgroundColor}: any) => {
                 <DrawerBody className='flex flex-col space-y-3'>
                     <PhoneNavLink className='text-black border-b-0' href={route('landing-page')} active={route().current('landing-page')}>Home</PhoneNavLink>
                     <PhoneNavLink className='text-black border-b-0' href={route('about.home')} active={route().current('about.*')}>About us</PhoneNavLink>
-                    <PhoneNavLink className='text-black border-b-0' href={route('highlights.home')} active={route().current('highlights.*')}>Highlights</PhoneNavLink>
+                    {/* <PhoneNavLink className='text-black border-b-0' href={route('highlights.home')} active={route().current('highlights.*')}>Highlights</PhoneNavLink> */}
                     <PhoneNavLink className='text-black border-b-0' href={route('venues.home')} active={route().current('venues.*')}>Venues</PhoneNavLink>
                     <PhoneNavLink className='text-black border-b-0' href={route('contacts.home')} active={route().current('contacts.*')}>Contacts</PhoneNavLink>
                 </DrawerBody>

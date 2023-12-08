@@ -1,6 +1,6 @@
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CircularProgress, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Checkbox, CircularProgress, CloseButton, Select, useDisclosure } from '@chakra-ui/react'
 import { router, useForm } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
@@ -9,11 +9,13 @@ import DatePicker from "react-datepicker";
 import "../../../../css/react-datepicker.css"
 import { FaArrowLeft } from "react-icons/fa";
 import { ClearProgressReload, CreateProgressReload } from './FormHelper/ProgressHelper'
+import TermsAndConditions from './FormHelper/TermsAndConditions'
 
 
 
 
 const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, session}:any) => {
+  console.log(session)
     const {data, setData, errors, setError, clearErrors} = useForm<any>({
         user_id: session ? session['id'] : undefined,
         venue_id: 0,
@@ -37,8 +39,10 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
     }
     const excludedDates: any[] = []
     const [currentVenue, setCurrentVenue] = React.useState(0)
+    const [agree, setAgree] = React.useState(false)
     const handleVenueChange = (e: any) => {
-      setData('venue_id', e.target.value)
+      setData(data => ({...data, 'venue_id': e.target.value}))
+      setData(data => ({...data, 'dateSelected': null}))
       setCurrentVenue(e.target.value)
       changeExcludedDates()
     }
@@ -72,6 +76,8 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
 
   
     const { isOpen: isVisible, isOpen, onClose, onOpen } = useDisclosure({defaultIsOpen: false})
+    
+    const { isOpen: isTermOpen, onOpen: onTermOpen, onClose: onTermClose } = useDisclosure()
     React.useEffect(() => {
       if (errors['api_status'] !== undefined){
         onOpen()
@@ -79,9 +85,22 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
     }, [errors])
     
 
+    const returnBookingTimeline = () => {
+      if (data['dateSelected'] === null){
+        return "Select a date first"
+      }
+      const startDate = format(startOfWeek(data['dateSelected']), 'MMMM dd, yyyy')
+      const endDate =  format(endOfWeek(data['dateSelected']), 'MMMM dd, yyyy')
+      return `${startDate} - ${endDate}`
+    }
+    
+    const checkboxHandler = (e: any) => {
+      console.log(agree)
+      setAgree(!agree);
+    }
+
   return (
-    <AnimatePresence>
-      
+    <AnimatePresence>  
       <motion.form onSubmit={handleSubmit} className='flex flex-col space-y-7 my-4'
       initial={{ opacity: 0, x: 200 }}
       animate={{ opacity: 1, x: 0 }}
@@ -109,12 +128,12 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
           </div>              
           <div className='flex flex-col space-y-4'>
             <div>
-              <InputLabel htmlFor="datePicker" value='Booking'/> 
+              <InputLabel htmlFor="datePicker" value='Choose booking week'/> 
               <span className='text-xl font-black'>
                   <DatePicker 
                   id='datePicker'
                   onChange={dateChange}
-                  minDate={addWeeks(new Date(), 2)}
+                  minDate={startOfWeek(addWeeks(new Date(), 2))}
                   maxDate={addMonths(new Date(), 3)}
                   wrapperClassName='w-full'
                   className='w-full rounded text-center'
@@ -129,13 +148,72 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
               </span>
             </div>
             {errors.dateSelected ? errors.dateSelected : null}
-            <div>
+            <div className='shadow-lg p-6 bg-white'>
               {venues.length !== 0 ? 
-              <>
-                <span className='text-xl font-black'>Details</span>
-                <div className='text-base'>Limit: {venues[currentVenue]['limit']}</div>
-                <div className='text-base'>Price: P{venues[currentVenue]['price']}.00</div>
-              </>
+              <div className='relative'>
+                                <div>
+                  <span className='text-2xl font-black'>Booking details</span>
+                  <div className='grid grid-cols-2 grid-rows-1 gap-x-12 items-start mb-4'>
+                    <div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Venue name</span>
+                        <span className='tracking-wider'>{venues[currentVenue]['venue_name']}</span>
+                      </div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Limit</span>
+                        <span className='tracking-wider'>{venues[currentVenue]['limit']}</span>
+                      </div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Total Price</span>
+                        <span className='tracking-wider'>₱{venues[currentVenue]['price']}.00</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div className='text-lg w-full flex flex-col justify-between'>
+                          <span className='text-slate-600'>Reserving venue for</span>
+                          <span className=' border-s-4 border-[#e56b6f] ps-2'>
+                            {
+                              `${returnBookingTimeline()}`
+                            }
+                          </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span className='text-2xl font-black'>Customer details</span>
+                  <div className='grid grid-cols-2 grid-rows-1 gap-x-12 items-start mb-4'>
+                    <div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>First name</span>
+                        <span className='tracking-wider'>{session['first_name']}</span>
+                      </div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Last name</span>
+                        <span className='tracking-wider'>{session['last_name']}</span>
+                      </div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Email</span>
+                        <span className='tracking-wider'>{session['email']}</span>
+                      </div>
+                      <div className='text-lg w-full flex flex-row justify-between'>
+                        <span className='text-slate-600'>Contact #</span>
+                        <span className='tracking-wider'>{`+63 ${session['phone_number']}`}</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div className='flex flex-row items-center space-x-4'>
+                      <Checkbox type="checkbox" id="agree" onChange={checkboxHandler}/>
+                      <div>
+                        <label htmlFor='agree' className='text-slate-600 select-none'>{`I agree to the `}</label>
+                        <span onClick={onTermOpen} className='text-blue-700 hover:underline cursor-help'>terms and conditions</span>
+                      </div>
+                
+                </div>
+              </div>
               : 
               <>
                 <span className='text-xl font-black'>No venue</span>
@@ -149,12 +227,13 @@ const VenueBookingForm = ({venues, increaseStep, decreaseStep, transactions, ses
                 </div>
                 
                 <div className='flex md:flex-row space-x-4 items-center'>
-                  <PrimaryButton type='submit' disabled={reloadState ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
+                  <PrimaryButton type='submit' disabled={reloadState || !agree ? true : false} className='md:order-last md:ms-3'>Next</PrimaryButton>
                   {reloadState ? <CircularProgress isIndeterminate color='blue.700' size="20px"/> : null}
                 </div>
             </div>
           </div>
       </motion.form>
+      <TermsAndConditions isTermOpen={isTermOpen} onTermClose={onTermClose} />
     </AnimatePresence>
   )
 }

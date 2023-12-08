@@ -15,7 +15,7 @@ class EmailInquiryRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string',
-            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/'],
+            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/'],
             'message' => 'required|string',
         ];
     }

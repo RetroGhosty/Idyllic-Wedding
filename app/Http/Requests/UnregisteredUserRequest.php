@@ -16,7 +16,7 @@ class UnregisteredUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/'],
+            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/'],
             'phone_number' => ['required', 'regex:/^0?\d{10}$/'],
             'first_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
             'last_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
