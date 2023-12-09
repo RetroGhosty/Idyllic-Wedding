@@ -47,7 +47,7 @@ class AdminTransactionController extends Controller
                 'customer_id' => $transaction->customer_id,
                 'refund_id' => $refund->id,
             ]);
-            $refund->save();
+            $refund->save(); 
             return redirect()->back()->with('success', 'Refund request sent!');
         } catch (\Throwable $th) {
             $transaction->transaction_status = TransactionStatusEnum::PENDING_REFUND;

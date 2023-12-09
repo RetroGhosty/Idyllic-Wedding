@@ -18,8 +18,8 @@ class UnregisteredUserRequest extends FormRequest
         return [
             'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/'],
             'phone_number' => ['required', 'regex:/^0?\d{10}$/'],
-            'first_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
-            'last_name' => ['required', 'regex:/^[a-zA-Z]+$/'],
+            'first_name' => ['required', 'max:20', 'string'],
+            'last_name' => ['required', 'max:20', 'string'],
         ];
     }
 
