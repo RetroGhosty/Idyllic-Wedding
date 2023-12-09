@@ -201,6 +201,7 @@ class BookingController extends Controller
         $fetchedVenue = Venue::find($fetchedTransaction->venue_id);
         if ($fetchedTransaction->refund != null){
             Session::forget('latest_transaction');
+            return abort(404);
         }        
     
         $landingPhoto = $fetchedVenue->landing_photo;
