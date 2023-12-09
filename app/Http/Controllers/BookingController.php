@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Luigel\Paymongo\Facades\Paymongo;
+use Illuminate\Support\Facades\Session;
 
 class BookingController extends Controller
 {
@@ -198,6 +199,11 @@ class BookingController extends Controller
         }
 
         $fetchedVenue = Venue::find($fetchedTransaction->venue_id);
+        if ($fetchedTransaction->refund != null){
+            Session::forget('latest_transaction');
+            return abort(404);
+        }        
+    
         $landingPhoto = $fetchedVenue->landing_photo;
         $payload = [
             'transaction' => $fetchedTransaction,
