@@ -20,31 +20,34 @@ const EachVenue = ({auth, venue, landing_photo, showcase_photo}: any) => {
                     {`${venue['venue_name']} Venue`}
                 </div>
             </div>
-            <div className='min-h-screen  w-full max-w-7xl py-5 md:py-9 mx-auto px-4 space-y-12 sm:px-6 lg:px-8l'>
-                <p>{venue['description']}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 space-y-5 md:space-y-0 md:space-x-10 text-white">
-                    <div className="bg-[#333533] p-8 flex flex-col items-center space-y-5">
-                        <span className="text-9xl"><GiMoneyStack/></span>
-                        <div className="flex flex-col items-center">
-                            <div className="text-xl font-black tracking-widest">Price</div>
-                            <div className="text-xl">{venue['price']}</div>
-                        </div>
-                    </div>
-                    <div className="bg-[#333533] p-8 flex flex-col items-center space-y-5">
-                        <span className="text-9xl"><MdReduceCapacity/> </span>
-                        <div className="flex flex-col items-center">
-                            <div className="text-xl font-black tracking-widest">Capacity</div>
-                            <div className="text-xl">{venue['limit']}</div>
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2  text-white">
+                <div className="bg-[#333533] p-8 flex flex-col items-center space-y-5">
+                    <span className="text-9xl"><GiMoneyStack/></span>
+                    <div className="flex flex-col items-center">
+                        <div className="text-xl font-black tracking-widest">Price</div>
+                        <div className="text-xl">{venue['price']}</div>
                     </div>
                 </div>
+                <div className="bg-[#333533] p-8 flex flex-col items-center space-y-5">
+                    <span className="text-9xl"><MdReduceCapacity/> </span>
+                    <div className="flex flex-col items-center">
+                        <div className="text-xl font-black tracking-widest">Capacity</div>
+                        <div className="text-xl">{venue['limit']}</div>
+                    </div>
+                </div>
+            </div>
+            <div className='min-h-screen  w-full max-w-7xl py-5 md:py-9 mx-auto px-4 space-y-12 sm:px-6 lg:px-8l'>
                 <div>
                     <span className="text-3xl tracking-widest font-black">Highlights</span>
                     <div className="columns-1 md:columns-3 md:gap-5 mt-5">
                         {showcase_photo.map((photo: any, index: number) => (
-                            <Image key={index} className="w-full my-5" src={`/storage/${photo['photo_url']}`} loading="lazy"/>
+                            <Image key={index} className="w-full mb-5" src={`/storage/${photo['photo_url']}`} loading="lazy"/>
                         ))}
                     </div>
+                </div>
+                <div className="bg-white p-10 shadow-lg">
+                    <h2 className="border-s-4 border-black px-3 text-2xl font-black mb-5">Description</h2>
+                    <p className="text-xl tracking-wider px-4">{venue['description']}</p>
                 </div>
             </div>
             <Footer/>
