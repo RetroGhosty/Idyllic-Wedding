@@ -12,7 +12,7 @@ import ContactInfoForm from './BookingPartials/ContactInfoForm'
 import EmailForm from './BookingPartials/EmailForm'
 import HeaderPopUp from '@/Components/HeaderPopUp'
 
-const Booking = ({auth, venues, session, transactions}: PageProps) => {
+const Booking = ({auth, venues, session, transactions, place_categories, theme_categories}: PageProps) => {
   const [steps, setSteps] = React.useState<any>([
     {title: 'Step 1', description: 'Email'},
     {title: 'Step 2', description: 'Contact Info'},
@@ -43,7 +43,7 @@ const Booking = ({auth, venues, session, transactions}: PageProps) => {
   const stepComponenets = [
     {title: 'Step 1', description: 'Email', component: <EmailForm session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
     {title: 'Step 2', description: 'Contact Info', component: <ContactInfoForm venues={venues} session={session} increaseStep={increaseStep} decreaseStep={decreaseStep}/>},
-    {title: 'Step 3', description: 'Book a venue', component: <VenueBookingForm venues={venues} session={session} transactions={transactions} increaseStep={increaseStep} decreaseStep={decreaseStep}/>}
+    {title: 'Step 3', description: 'Book a venue', component: <VenueBookingForm place_categories={place_categories} theme_categories={theme_categories} venues={venues} session={session} transactions={transactions} increaseStep={increaseStep} decreaseStep={decreaseStep}/>}
   ]
 
   const handleFormSteps = (stepIntent: string) => {
