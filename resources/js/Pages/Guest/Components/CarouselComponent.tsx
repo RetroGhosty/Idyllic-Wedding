@@ -73,7 +73,19 @@ const CarouselComponent = ({theme_name, venues, theme}: any) => {
     }
 
   return (
-    <div className='flex flex-col space-y-2'>
+    <div className='flex flex-col space-y-2 z-20 relative'>
+        <div className='flex flex-row items-center'>
+            <h1 className="text-3xl font-black px-4 relative z-20 tracking-wider">{theme_name}</h1>
+
+            <div className='w-full flex flex-row justify-end space-x-2 px-4 text-md'>
+                <motion.div initial={{backgroundColor: "#242423", color: "white", borderRadius: "500px"}} whileHover={{backgroundColor: "#fb8500", scale:1.1}} whileTap={{ scale: 0.9 }} className='p-4 text-lg select-none' onClick={() => goPrev()}>
+                    <GrPrevious />
+                </motion.div>
+                <motion.div initial={{backgroundColor: "#242423", color: "white", borderRadius: "500px"}} whileHover={{backgroundColor: "#fb8500", scale:1.1}} whileTap={{ scale: 0.9 }}  className='p-4 text-lg select-none' onClick={() => goNext()}>
+                    <GrNext />
+                </motion.div>
+            </div>
+        </div>
         <Slider 
         slidesToShow={countCategorizedVenues(theme_name, venues) ? 2 : 1} infinite={countCategorizedVenues(theme_name, venues)} 
         {...settings}>
@@ -116,14 +128,7 @@ const CarouselComponent = ({theme_name, venues, theme}: any) => {
             ) : null
             ))}
         </Slider>
-        <div className='w-full flex flex-row justify-end space-x-2 px-4 text-md'>
-            <motion.div whileHover={{backgroundColor: "#fb8500", scale:1.1}} whileTap={{ scale: 0.9 }} className='py-1 px-3 select-none' onClick={() => goPrev()}>
-                <GrPrevious />
-            </motion.div>
-            <motion.div whileHover={{backgroundColor: "#fb8500", scale:1.2}} whileTap={{ scale: 0.9 }}  className='py-1 px-3 select-none' onClick={() => goNext()}>
-                <GrNext />
-            </motion.div>
-        </div>
+
     </div>
   )
 }

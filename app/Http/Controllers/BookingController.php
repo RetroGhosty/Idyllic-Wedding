@@ -6,6 +6,8 @@ use App\Http\Requests\BookingPaymentSessionRequest;
 use App\Http\Requests\BookingRequest;
 use App\Http\Requests\EmailCheckerRequest;
 use App\Http\Requests\UnregisteredUserRequest;
+use App\Models\PlaceCategory;
+use App\Models\ThemeCategory;
 use App\Models\Transaction;
 use App\Models\UnregisteredUser;
 use App\Models\Venue;
@@ -16,17 +18,29 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Query\JoinClause;
 
 class BookingController extends Controller
 {
     public function view(Request $request){
-
-        $venues = Venue::all('id', 'venue_name', 'limit', 'price');
+        $venues = DB::table('venues')
+        ->join('venue_landing_photos', function(JoinClause $join){
+            $join->on('venues.id', '=', 'venue_landing_photos.venue_id');
+        })->join('theme_categories', function(JoinClause $join){
+            $join->on('venues.theme_category', '=', 'theme_categories.id');
+        })->join('place_categories', function(JoinClause $join){
+            $join->on('venues.place_category', '=', 'place_categories.id');
+        })->select('venues.*', 'venue_landing_photos.photo_url', 'theme_categories.name as theme_name', 'theme_categories.image as theme_cover', 'place_categories.name as place_name')
+        ->get(['id', 'venue_name', 'limit', 'price', 'theme_name', 'place_name', 'photo_url']);
         $transactions = DB::table('transactions')->where('transaction_status', '!=', TransactionStatusEnum::CANCELLED)->get();
+        $place_categories = PlaceCategory::all('id', 'name');
+        $theme_categories = ThemeCategory::all('id', 'name');
         $payload = [
             'venues' => $venues,
             'session' => $request->session()->get('contact_info'),
             'transactions' => $transactions,
+            'place_categories' => $place_categories,
+            'theme_categories' => $theme_categories
         ];
         
         return Inertia::render('Guest/Booking', $payload);
@@ -152,9 +166,7 @@ class BookingController extends Controller
         }
     }
 
-    // TODO:
-    // 1. Do something went wrong page
-    // 2. Do not found page
+
     public function venueBookingSuccess(Request $request){
         try {
             //code...
