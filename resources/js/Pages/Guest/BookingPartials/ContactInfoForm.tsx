@@ -13,9 +13,9 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
 
     const {data, setData, errors, setError, post, clearErrors} = useForm<any>({
         email: session ? session['email'] : "",
-        phone_number: session ? session['phone_number'] : "",
-        first_name: session ? session['first_name'] : "",
-        last_name: session ? session['last_name'] : "",
+        phone_number: "",
+        first_name: "",
+        last_name: "",
     })
 
     const [reloadState, setReloadState] = React.useState(false)
@@ -54,7 +54,7 @@ const ContactInfoForm = ({venues, increaseStep, decreaseStep, session}: any) => 
             <div className='font-black text-2xl'>Contact Info</div>
             <div className='flex flex-col'>
                 <InputLabel htmlFor="email" value='Email'/> 
-                <TextInput autoComplete="off"  id='email' type="text" value={data.email} onChange={(e) => setData('email', e.target.value)} disabled/>
+                <TextInput autoComplete="off"  id='email' type="text" value={data.email} onChange={(e) => setData('email', e.target.value)}/>
                 {errors.email ? errors.email : null}
             </div>               
             <div className='flex flex-col'>
