@@ -20,11 +20,6 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
         <Head title="Booking details" />
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <NavBar user={auth.user}/>
-            <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#463f3a] text-white h-16 md:h-32'>
-                <div className="max-w-6xl mx-auto w-full text-xl md:text-3xl font-black tracking-widest text-center">
-                    Thank you for booking with us!
-                </div>
-            </div>
             <div className='flex items-center px-4 sm:px-6 lg:px-8l w-full bg-[#e07145] h-16 md:h-24'>
                 <div className="max-w-6xl mx-auto w-full text-xl md:text-3xl font-black tracking-widest text-center">
                     {`${approximateDate.days} days, ${approximateDate.hours} hours, ${approximateDate.minutes} minutes left before the wedding event`}
@@ -59,12 +54,6 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                                 <span>Event on: </span>
                                 <span className='font-black'>
                                     {`${format(parse(transaction['start_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')} to ${format(parse(transaction['end_date'], 'yyyy-MM-dd', new Date()), 'MMMM dd, yyyy')}`}
-                                </span>
-                            </li>
-                            <li className='flex flex-col md:flex-row md:space-x-3'>
-                                <span>Payment Method:</span>
-                                <span className='font-black'>
-                                    {transaction['payment_method']}
                                 </span>
                             </li>
                         </ul>

@@ -7,6 +7,7 @@ use App\Http\Requests\BookingRequest;
 use App\Http\Requests\EmailCheckerRequest;
 use App\Http\Requests\UnregisteredUserRequest;
 use App\Models\PlaceCategory;
+use App\Models\Refund;
 use App\Models\ThemeCategory;
 use App\Models\Transaction;
 use App\Models\UnregisteredUser;
@@ -206,12 +207,15 @@ class BookingController extends Controller
     public function customerViewBooking(Request $request, $reference_id){
         $fetchedTransaction = Transaction::find($reference_id);
 
+
         if ($fetchedTransaction == null){
             return abort(404);
         }
 
+        
         $fetchedVenue = Venue::find($fetchedTransaction->venue_id);
-        if ($fetchedTransaction->refund != null){
+        $fetchedRefund = DB::table('refunds')->where('transaction_id', '=', $fetchedTransaction->id)->first();
+        if ($fetchedRefund != null){
             Session::forget('latest_transaction');
             return abort(404);
         }        
