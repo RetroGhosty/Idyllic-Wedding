@@ -18,6 +18,7 @@ class VenuePostRequest extends FormRequest
         return [
             'venue_name' => ['required'],
             'description' => ['required'],
+            'address' => ['required'],
             'limit' => ['numeric', 'required', 'min:10', 'max:1000'],
             'price' => ['numeric', 'required', 'min:0', 'max:20000'],
             'place_category' => ['required'],

@@ -218,8 +218,10 @@ class BookingController extends Controller
         if ($fetchedRefund != null){
             Session::forget('latest_transaction');
             return abort(404);
-        }        
-    
+        } 
+
+
+
         $landingPhoto = $fetchedVenue->landing_photo;
         $payload = [
             'transaction' => $fetchedTransaction,

@@ -44,7 +44,7 @@ const Venues = ({auth, venues}: any) => {
         <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-[#f4f3ee] dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
             <HeaderPopUp/>
             <NavBar user={auth.user}/>
-            lmao
+            
 
             <div className='min-h-screen w-full max-w-7xl py-5 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
                 <div className="flex flex-col space-y-10">

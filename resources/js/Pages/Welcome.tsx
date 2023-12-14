@@ -50,7 +50,7 @@ export default function Welcome({ auth, venues }: any) {
 
                         <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l lg:pt-48 relative'>
                             <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
-                                <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Wedding</h1>
+                                <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Weddings</h1>
                                 <div>
                                     <p className='text-base md:text-xl text-white pr-40'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
                                 </div>
@@ -63,7 +63,7 @@ export default function Welcome({ auth, venues }: any) {
                                     <motion.div whileHover={{scale: 1.3, color: '#4064AC'}}>
                                         <FaFacebookSquare/>
                                     </motion.div>
-                                    <motion.div whileHover={{scale: 1.3, color: '#4064AC'}}>
+                                    <motion.div whileHover={{scale: 1.3, color: '#e500a4'}}>
                                         <BsMessenger/>
                                     </motion.div>
                                     <motion.div whileHover={{scale: 1.3, color: '#e56b6f'}}>

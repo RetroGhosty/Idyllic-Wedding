@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('venue_name');
             $table->longText('description');
+            $table->longText('address');
             $table->foreignId('theme_category')->nullable()->constrained('theme_categories')->onDelete('set null');
             $table->foreignId('place_category')->nullable()->constrained('place_categories')->onDelete('set null');
             $table->integer('limit');   

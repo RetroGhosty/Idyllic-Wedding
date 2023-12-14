@@ -17,6 +17,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
     interface IVEnue{
         venue_name: string,
         description: string,
+        address: string,
         limit: number | string,
         price: number | string,
         header_image?: File | undefined,
@@ -26,6 +27,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
     const {data, setData, patch, errors, setError, setDefaults, clearErrors, processing } = useForm<any>({
         venue_name: venue['venue_name'],
         description: venue['description'],
+        address: venue['address'],
         limit: venue['limit'],
         price: venue['price'],
         place_category: currentPlaceCategory !== null ? currentPlaceCategory['id'] : '',
@@ -61,6 +63,7 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
             _method: 'patch',
             venue_name: data.venue_name,
             description: data.description,
+            address: data.address,
             limit: data.limit,
             price: data.price,
             header_image: data.header_image,
@@ -205,6 +208,12 @@ const VenueSettings = ({auth, venue, header_image, showcase_image, placeCategori
                             })}
                           </Select>
                           {errors.theme_category ? <div className='text-red-600'>{errors.theme_category}</div> : null}
+                        </div>
+                        <div>
+                          <InputLabel htmlFor="address">Address</InputLabel>
+                          <textarea className='w-full' rows={5} name="address" id="address" value={data['address']} onChange={(e) => setData('address', e.target.value)}/>
+
+                          {errors.address ? <div className='text-red-600'>{errors.address}</div> : null}
                         </div>
                       </div>
                     </div>

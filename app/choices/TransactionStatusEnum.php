@@ -9,4 +9,5 @@ enum TransactionStatusEnum:string{
     case PAID = 'paid';
     case REFUNDED = 'refunded';
     case PENDING_REFUND = 'pending_refund';
+    case ENDED = "ended";
 }

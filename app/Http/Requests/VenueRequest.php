@@ -21,6 +21,7 @@ class VenueRequest extends FormRequest
             'description' => ['required'],
             'limit' => ['numeric', 'required', 'min:10'],
             'price' => ['numeric', 'required', 'min:0'],
+            'address' => ['required'],
             'header_image' => ['image', new DoesVenueHeaderImgAlreadyExist('patch', $this->route('venue_id'))],
             'sub_images' => ['array', new VenueShowcasePhotoMaximumLimit('patch', $this->route('venue_id'))],
             'sub_images.*' => ['image'],

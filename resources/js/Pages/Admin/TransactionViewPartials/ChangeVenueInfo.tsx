@@ -85,8 +85,8 @@ const ChangeVenueInfo = ({users, transaction, allTransaction, allVenue, transact
           <DatePicker 
           id='datePicker'
           onChange={dateChange}
-          minDate={addWeeks(new Date(), 2)}
-          maxDate={addMonths(new Date(), 3)}
+          minDate={startOfWeek(addWeeks(new Date(), 2))}
+          maxDate={endOfWeek(addMonths(new Date(), 3))}
           wrapperClassName='w-full bg-transparent'
           className='w-full rounded text-center bg-transparent'
           excludeDateIntervals={excludedDates}

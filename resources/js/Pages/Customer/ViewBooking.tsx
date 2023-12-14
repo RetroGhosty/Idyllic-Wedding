@@ -46,7 +46,6 @@ const ViewBooking = ({auth, transaction, venue, landing_photo}: any) => {
                     <div className='rounded w-full relative'>
                         <div className='flex flex-col md:flex-row md:items-center justify-between md:mb-3'>
                             <span className='text-3xl font-black '>Booking details</span>
-                            <span className='font-black'> Reference ID: {transaction['id']}</span>
 
                         </div>
                         <ul className='text-2xl'>

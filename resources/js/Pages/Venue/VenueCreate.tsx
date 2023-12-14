@@ -9,6 +9,7 @@ import React from "react"
 const VenueCreate = ({auth, placeCategories, themeCategories}: any) => {
   interface IVenue{
     venue_name: string,
+    address: string,
     description: string,
     limit: number | string,
     price: number | string,
@@ -23,6 +24,7 @@ const VenueCreate = ({auth, placeCategories, themeCategories}: any) => {
   const {data, setData, errors, post, setError, clearErrors, processing} = useForm<any>({
     venue_name: "",
     description: "",
+    address: "",
     limit: "",
     price: "",
     place_category: "",
@@ -108,6 +110,12 @@ const VenueCreate = ({auth, placeCategories, themeCategories}: any) => {
                         })}
                       </Select>
                       {errors.theme_category ? <div className='text-red-600'>{errors.theme_category}</div> : null}
+                    </div>
+                    <div>
+                      <InputLabel htmlFor="address">Address</InputLabel>
+                      <textarea className='w-full' rows={5} name="address" id="address" value={data['address']} onChange={(e) => setData('address', e.target.value)}/>
+
+                      {errors.address ? <div className='text-red-600'>{errors.address}</div> : null}
                     </div>
                   </div>
                 </div>

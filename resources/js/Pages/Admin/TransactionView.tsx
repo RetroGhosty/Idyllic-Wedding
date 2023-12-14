@@ -29,6 +29,11 @@ return (
             <h1 className='text-lg'>Payment details</h1>
             <h1 className={`text-[10px] uppercase px-4 border-2  ${dataChecker(paymentDetails, 'status') !== "paid" ? "border-yellow-200 bg-yellow-100" : "border-green-200 bg-green-100"}`}>{dataChecker(paymentDetails, 'status')}</h1>
           </div>
+          <div className='p-0 m-0 flex items-center space-x-2'>
+              <span>
+                {`Pay ID: ${transaction['payment_id']}`}
+              </span>
+            </div>
           <div className='grid grid-cols-2 grid-rows-3 w-[50%]'>
             <h1 className='text-sm'>Gross amount</h1>
             <h1 className='text-sm text-end'>{convertToMoney(dataChecker(paymentDetails, 'amount'))}</h1>
@@ -40,7 +45,8 @@ return (
         </div>
         <div>
           <div className='flex flex-col items-start'>
-            <h1 className='text-lg mb-2'>Billing details</h1>
+            <h1 className='text-lg mb-2'>Paymongo billing details</h1>
+
             <div className='font-black p-0 m-0'>{dataChecker(paymentDetails, 'billingName')}</div>
             <div className='p-0 m-0 flex items-center space-x-2'>
               <MdEmail/>

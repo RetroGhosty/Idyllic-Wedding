@@ -43,6 +43,7 @@ export interface IVenues{
     id: number,
     venue_name: string,
     description: string,
+    address: string,
     price: string,
     limit: number,
     place_name: string,

@@ -40,6 +40,7 @@ class VenueController extends Controller
     {
         $validated = $request->validated();
         $venue = Venue::create($validated);
+        
         if (array_key_exists('header_image', $request->files->all())) {
             if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $validated['header_image'])) {
                 return abort(500, "Failed to upload header image");
@@ -103,7 +104,8 @@ class VenueController extends Controller
             'venue' => $venue
         ];
         $validated = $request->validated();
-        $venue->update($validated);
+        $venue->update();
+        $venue->address = $request->address;
         if (array_key_exists('header_image', $request->files->all())) {
             if (! Storage::putFile('public/venue/landing_images/'.$venue->id, $validated['header_image'])) {
                 return abort(500, "Failed to upload header image");
