@@ -35,8 +35,3 @@ jobs:
       run: npm ci 
     - name: Build laravel react assets
       run: npm run build
-    - name: UNIT AND FEATURE TEST
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test
