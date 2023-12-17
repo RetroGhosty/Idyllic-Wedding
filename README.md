@@ -6,13 +6,7 @@
         1. Click fetch
         2. Click pull
 2. Laging mag test muna ng code `php artisan test` bago mag `git push`
-
-# TO-DO
-
-1. Create email verification in custom info
-2. Create session to save user details
-3. send email verification to fetch unregistered user
-
+   
 # Installation
 
 1. `sudo apt install php8.1 (check: php --version)`
