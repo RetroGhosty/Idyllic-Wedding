@@ -1,8 +1,8 @@
 # I. Important
 
 ### Ubuntu directory
-`/etc/nginx`
-`/etc/nginx/sites-available`
+`/etc/nginx` <br/>
+`/etc/nginx/sites-available` <br/>
 `/var/www/{project_name}`
 
 ### Nginx Access and Error log helps alot
@@ -30,26 +30,26 @@ What | Why
 `sudo apt install php8.2-cli php8.2-fpm curl php8.2mbstring php8.2-xml unzip`
 
 5. install the cloned repository
-`composer install`
+`composer install` <br/>
 `npm install`
 
 6. Set permission, get inside the cloned repository then type
-`chown -R www-data storage
-``chown -R www-data bootstrap/cache`
+`chown -R www-data storage` <br/>
+`chown -R www-data bootstrap/cache` <br/>
 `sudo ls -l (for checking)`
 
 7. symbolically link the file to the /etc/nginx/sites-enabled
-`sudo ln -s /etc/nginx/sites-available/{project_name} /etc/nginx/sites-enabled`
+`sudo ln -s /etc/nginx/sites-available/{project_name} /etc/nginx/sites-enabled` <br/>
 `sudo nginx -t`
 
 8. Cleaning up
-`systemctl restart nginx`
-`php artisan migrate`
+`systemctl restart nginx` <br/>
+`php artisan migrate` <br/>
 `npm run build`
 
 
 ## Database refresher
 
-1. `php artisan migrate:reset`
+1. `php artisan migrate:reset` <br/>
 2. `php artisan migrate`
 
