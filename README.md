@@ -17,32 +17,32 @@ What | Why
 
 # II. Installation \ Production
 
-1. install node.js with ubuntu node manager nvm
+1. install node.js with ubuntu node manager nvm <br/>
 `https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating`
 
-2. install node.js version 21 
+2. install node.js version 21 <br/>
 `nvm use 21 (means version 21)`
 
-3. install php
+3. install php <br/>
 `sudo apt install --no-install-recommends php8.2-cli`
 
-4. install the necessary
+4. install the necessary <br/>
 `sudo apt install php8.2-cli php8.2-fpm curl php8.2mbstring php8.2-xml unzip`
 
-5. install the cloned repository
+5. install the cloned repository <br/>
 `composer install` <br/>
 `npm install`
 
-6. Set permission, get inside the cloned repository then type
+6. Set permission, get inside the cloned repository then type <br/>
 `chown -R www-data storage` <br/>
 `chown -R www-data bootstrap/cache` <br/>
 `sudo ls -l (for checking)`
 
-7. symbolically link the file to the /etc/nginx/sites-enabled
+7. symbolically link the file to the /etc/nginx/sites-enabled <br/>
 `sudo ln -s /etc/nginx/sites-available/{project_name} /etc/nginx/sites-enabled` <br/>
 `sudo nginx -t`
 
-8. Cleaning up
+8. Cleaning up <br/>
 `systemctl restart nginx` <br/>
 `php artisan migrate` <br/>
 `npm run build`
