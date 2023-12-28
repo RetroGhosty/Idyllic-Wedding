@@ -23,6 +23,9 @@ What | Why
 1. Nginx returns 502 bad gateaway : PHP-FPM is not running
 
 # II. Installation \ Production
+ALL STEPS ARE FOLLOWED FROM THIS LINK
+https://codewithsusan.com/notes/deploy-laravel-on-nginx
+
 
 1. install node.js with ubuntu node manager nvm <br/>
 `https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating`
