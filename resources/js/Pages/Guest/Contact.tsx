@@ -11,6 +11,7 @@ import { FaPhone } from "react-icons/fa";
 import { FaLocationPin } from "react-icons/fa6";
 import { Transition } from '@headlessui/react'
 import { useToast } from '@chakra-ui/react'
+import { backendUrl } from '@/Helper/Backendhelper'
 
 const Contact = ({auth}: PageProps) => {
 
@@ -57,8 +58,7 @@ const Contact = ({auth}: PageProps) => {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              
-              backgroundImage: 'url(http://localhost:8000/contact-2.jpg)'
+              backgroundImage: 'url(' + backendUrl + '/contact-2.jpg)'
             }}>
             </div>
             <div className='min-h-screen pt-4 md:py-9 mx-auto lg:px-8l space-y-5'>                            

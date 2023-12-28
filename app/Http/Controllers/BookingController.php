@@ -111,8 +111,8 @@ class BookingController extends Controller
             $checkout = Paymongo::checkout()->create([
                 'livemode' => false,
                 "send_email_receipt" => true,
-                'success_url' => 'http://localhost:8000/booking/payment/success',
-                'cancel_url' => 'http://localhost:8000/booking/payment/cancel',
+                'success_url' => env('APP_URL').'/booking/payment/success',
+                'cancel_url' => env('APP_URL').'/booking/payment/cancel',
                 'billing' => [
                     'name' => $fetchedUser->first_name.' '.$fetchedUser->last_name,
                     'email' => $fetchedUser->email,

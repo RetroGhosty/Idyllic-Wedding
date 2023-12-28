@@ -128,7 +128,7 @@ export default function Welcome({ auth, venues }: any) {
                                 {venues.map((venue: any, index: number) => (
                                     <div key={index} className='rounded w-full h-[400px] p-6'>
                                         <div  onClick={() => {router.get(route('venues.view_single', venue['venue_name']))}} className='text-white w-full h-full flex items-center justify-center relative'>
-                                            <img className='object-cover w-full h-full rounded-lg' src={`http://localhost:8000/storage/${venue['photo_url']}`} loading='lazy'/>
+                                            <img className='object-cover w-full h-full rounded-lg' src={`${backendUrl}/storage/${venue['photo_url']}`} loading='lazy'/>
                                             <motion.div initial={{opacity:0, backgroundColor: 'black'}} whileHover={{opacity: 0.7}} className='absolute h-full w-full bg-opacity-10 rounded-lg flex items-center justify-center'>
                                                 <div className='text-2xl'>
                                                     {venue['venue_name']}

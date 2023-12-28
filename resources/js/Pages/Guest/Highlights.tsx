@@ -6,6 +6,7 @@ import Footer from './Partial/Footer'
 import HeaderPopUp from '@/Components/HeaderPopUp'
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { backendUrl } from '@/Helper/Backendhelper'
 
 
 type Props = {}
@@ -25,8 +26,7 @@ const Highlights = ({auth, highlightPhotos}: any) => {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              
-              backgroundImage: 'url(http://localhost:8000/wedding-bg3.jpg)'
+              backgroundImage: 'url(' + backendUrl + '/wedding-bg3.jpg)'
             }}>
             </div>
             <div className='relative w-full max-w-7xl pt-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
