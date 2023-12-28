@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignUlid('transaction_id')->nullable()->constrained('transactions', 'id')->onDelete('SET NULL');
-            $table->foreignId('customer_id')->nullable()->constrained('Unregistered_users', 'id')->onDelete('SET NULL');
+            $table->foreignId('customer_id')->nullable()->constrained('unregistered_users', 'id')->onDelete('SET NULL');
             $table->string('refund_id');
         });
     }

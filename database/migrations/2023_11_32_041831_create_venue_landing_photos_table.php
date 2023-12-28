@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('venue_landing_photos', function (Blueprint $table) {
             $table->id();
             $table->string('photo_url');
-            $table->foreignId('venue_id')->constrained('Venues', 'id')->onDelete('cascade');
+            $table->foreignId('venue_id')->constrained('venues', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }
