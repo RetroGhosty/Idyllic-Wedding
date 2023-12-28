@@ -1,21 +1,21 @@
-# Important
+# I. Important
 
-## Ubuntu directory
+### Ubuntu directory
 `/etc/nginx`
 `/etc/nginx/sites-available`
 `/var/www/{project_name}`
 
-## Nginx Access and Error log helps alot
+### Nginx Access and Error log helps alot
 `/var/log/nginx/`
 
-## Checking nginx current user
+### Checking nginx current user
 `ps aux | grep "nginx: worker process" | awk '{print $1}' | grep -v root`
    
-## PREVIOUSLY ENCOUNTERED ERRORS
+### PREVIOUSLY ENCOUNTERED ERRORS
 What | Why
 1. Nginx returns 502 bad gateaway : PHP-FPM is not running
 
-# Installation \ Production
+# II. Installation \ Production
 
 1. install node.js with ubuntu node manager nvm
 `https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating`
