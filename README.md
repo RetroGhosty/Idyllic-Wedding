@@ -1,4 +1,11 @@
 # I. Important
+### Software Requirements
+1. NGINX
+2. UBUNTU
+3. LARAVEL
+4. INERTIA.JS
+5. REACT.JS
+6. POSTGRES or MySQL 
 
 ### Ubuntu directory
 `/etc/nginx` <br/>
