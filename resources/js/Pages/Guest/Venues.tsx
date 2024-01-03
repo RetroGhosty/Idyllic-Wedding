@@ -49,15 +49,9 @@ const Venues = ({auth, venues}: any) => {
             <div className='min-h-screen w-full max-w-7xl py-5 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l'>
                 <div className="flex flex-col space-y-10">
                   {theme.map((eachTheme: any, index: number) => (
-                    <div key={index} className="relative overflow-hidden shadow-lg">
+                    <div key={index} className="relative overflow-hidden shadow-lg bg-white">
                       <div className="p-6 rounded-xl">
                         <CarouselComponent theme_name={eachTheme['theme_name']} venues={venues} theme={theme}/>
-                      </div>
-                      <div>
-                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-30% from-[#edede9] z-[11]"/>
-                        <div className="h-[100%] w-[70%] absolute bottom-0 right-0 z-10">
-                          <img className="object-cover object-center  aspect-video" src={`${backendUrl}/storage/${eachTheme['theme_cover']}`}/>
-                        </div>
                       </div>
                     </div>
                   ))}

@@ -21,7 +21,7 @@ const NavBar = ({user, backgroundColor}: any) => {
 
   return (
     <>
-    <nav className={backgroundColor !== undefined ? `${backgroundColor} border-b border-gray-200 relative z-20` : 'bg-slate-100 border-b -border-gray-200 relative z-20'}>
+    <nav className={backgroundColor !== undefined ? `${backgroundColor} z-[200] fixed top-0 w-full transition ease-in-out duration-200 ${scroll > 200 ? "bg-[#F1F5F9] border-b-2 border-gray-200" : null}` : 'bg-slate-100 border-b -border-gray-200 sticky top-0 z-[200]'}>
         <div className={`max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8`}>
             <div className="flex justify-between items-center w-full h-14 md:h-24">
                 <div className="flex">

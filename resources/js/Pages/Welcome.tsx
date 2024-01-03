@@ -39,37 +39,26 @@ export default function Welcome({ auth, venues }: any) {
             <Head title="Home" />
             <div className="relative sm:flex sm:flex-col bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter selection:bg-red-500 selection:text-white">
                 <HeaderPopUp/>
-                <NavBar user={auth.user}/>
+                <NavBar user={auth.user} backgroundColor="#5000"/>
+           
                 <div className='min-h-screen overflow-hidden relative w-full'>
-                    <div className='relative w-full min-h-[10vh] sm:min-h-[60vh] md:h-[100vh] md:max-h-[70vh]'>
+                    <div className='relative w-full h-[400px] md:h-[100vh] xl:h-[800px]'>
                         <div className='mix-blend-multiply'>
                             <img src={`${backendUrl}/hero-image.png`} className='pointer-events-none absolute z-5 h-full w-full object-cover' loading='lazy'/>
-                            <img src={`${backendUrl}/wave-top.svg`} className='absolute top-[45%] md:top-[35%] z-[11]' loading="lazy"/>
-                            <img src={`${backendUrl}/wave-bottom.svg`} className='absolute top-[90%] z-[9]' loading='lazy'/>
                         </div>
 
-                        <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl py-4 md:py-9 mx-auto px-4 sm:px-6 lg:px-8l lg:pt-48 relative'>
-                            <div className='flex flex-col space-y-3 md:space-y-5 col-span-2 grid-rows-3 justify-center items-start relative z-10'>
-                                <h1 className='text-xl md:text-4xl tracking-widest font-black text-[#e56b6f]'>Idyllic Weddings</h1>
-                                <div>
-                                    <p className='text-base md:text-xl text-white pr-40'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
+                        <div className='grid grid-cols-3 grid-row-3 gap-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8l relative'>
+                            <div className='flex flex-col space-y-3 md:space-y-5 col-span-3 md:col-span-2 grid-rows-3 justify-center items-center md:items-start relative z-10'>
+                                <div className='flex flex-col items-center md:items-start text-center md:text-start'>
+                                    <p className='text-[14px] md:text-[1.2rem] text-[#35383a] w-[90%]'>Your idyllic love story begins here. Discover enchanting venues and seamless planning for your special day.</p>
+                                    <h1 className='text-4xl md:text-7xl tracking-widest text-black font-black'>Idyllic Weddings</h1>
                                 </div>
-                                <button type='button' className='bg-[#0066FF] text-base md:text-xl px-8 py-1 md:px-12 md:py-2 font-black text-white' 
+                                <button type='button' className='bg-[#ffffff] text-base md:text-xl px-8 py-1 md:px-12 md:py-2 font-black text-black' 
                                 onClick={() => router.get(route('booking.home'))}
                                 >
                                     Book now
                                 </button>
-                                <div className='col-start-1 col-end-7 flex flex-row items-end justify-center text-3xl space-x-1 md:space-x-3 text-white'>
-                                    <motion.div whileHover={{scale: 1.3, color: '#4064AC'}}>
-                                        <FaFacebookSquare/>
-                                    </motion.div>
-                                    <motion.div whileHover={{scale: 1.3, color: '#e500a4'}}>
-                                        <BsMessenger/>
-                                    </motion.div>
-                                    <motion.div whileHover={{scale: 1.3, color: '#e56b6f'}}>
-                                        <FaYoutube/>
-                                    </motion.div>
-                                </div>
+
                             </div>
                             
                         </div>
