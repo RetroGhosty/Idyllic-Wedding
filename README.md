@@ -1,9 +1,10 @@
 ![Mock](https://github.com/RetroGhosty/Idyllic-Wedding/assets/54449218/438de10f-3e6f-4593-a22d-0563c1eb3075)
+### Made by Laravel and React with Inertia.js
 
 ✅ A web application to book a venue for wedding events   
 ✅ A superadmin access that manages the account of the staff account   
-✅ Customizable menu that will help you add and manage venues
-✅ Search button, city and wedding theme filter
+✅ Customizable menu that will help you add and manage venues   
+✅ Search button, city and wedding theme filter   
 ✅ Fully functional e-wallet and credit card payment using Paymongo gateway   
 
 # Installation
