@@ -1,12 +1,9 @@
-# Important
+![Mock](https://github.com/RetroGhosty/Idyllic-Wedding/assets/54449218/438de10f-3e6f-4593-a22d-0563c1eb3075)
 
-1. Laging mag git pull bago magsimula mag code
-    - kung bash ang gamit: `git pull`
-    - kung naka github desktop
-        1. Click fetch
-        2. Click pull
-2. Laging mag test muna ng code `php artisan test` bago mag `git push`
-   
+✅ A web application to book a venue for wedding events
+✅ A superadmin access that manages the account of the staff account
+✅ Fully functional e-wallet and credit card payment using Paymongo gateway
+
 # Installation
 
 1. `sudo apt install php8.1 (check: php --version)`
