@@ -8,8 +8,6 @@ Made by Laravel and React with Inertia.js
 ✅ Search button, city and wedding theme filter<br/>
 ✅ Fully functional e-wallet and credit card payment using Paymongo gateway<br/>   
 
-
-
 # Installation
 
 1. `sudo apt install php8.1 (check: php --version)`
@@ -17,7 +15,7 @@ Made by Laravel and React with Inertia.js
 3. install composer (check: composer --version)
 4. `composer install`
 5. `npm install`
-6. ilagay sa .env yung mga database details
+6. put the authorization details in the .env file
 7. `php artisan migrate`
 
 ## Database refresher
@@ -27,6 +25,6 @@ Made by Laravel and React with Inertia.js
 
 ## How to run the website
 
-1. Mag open ng dalawang CLI
+1. Open two command prompt
 2. First CLI (backend) `php artisan serve`
 3. Second CLI (frontend) `npm run dev`
